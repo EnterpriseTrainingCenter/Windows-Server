@@ -36,74 +36,21 @@ After you installed Windows Admin Center, you want to find out, what you can do 
 
 1. [Connect](#exercise-1-connect)
 1. [Manage connections](#exercise-2-manage-connections)
-1. [Install extensions](#exercise-3-install-extensions)
-1. [Update extensions](#exercise-4-update-extensions)
-1. [Explore the available administration features](#exercise-5-explore-the-available-administration-features)
-1. [Use tags](#exercise-6-use-tags)
+1. [Explore the available administration features](#exercise-3-explore-the-available-administration-features)
+1. [Use tags](#exercise-4-use-tags)
 
 ## Exercise 1: Connect
 
-1. [Using Microsoft Edge, navigate to http://admincenter](#task-1-using-microsoft-edge-navigate-to-httpadmincenter).
-
-    > What is the resulting URL?
-
-1. [Using Microsoft Edge, navigate to https://admincenter.ad.adatum.com](#task-2-using-microsoft-edge-navigate-to-httpsadmincenteradadatumcom).
+[Using Microsoft Edge, navigate to https://admincenter.ad.adatum.com](#task-using-microsoft-edge-navigate-to-httpsadmincenteradadatumcom).
 
     > Why do you need to enter username and password?
 
-1. [Add https://admincenter.ad.adatum.com to the Intranet zone](#task-3-add-httpsadmincenteradadatumcom-to-the-intranet-zone).
-
-    > How could this change be accomplished for a large group of users?
-
-1. [Verify the effects of adding a site to the Intranet zone](#task-4-verify-the-effects-of-adding-a-site-to-the-intranet-zone).
-
-    > Do you still need to enter username and password when navigating to https://admincenter.ad.adatum.com?
-
-### Task 1: Using Microsoft Edge, navigate to http://admincenter
-
-Perform this task on CL1.
-
-1. On the taskbar, click the **Microsoft Edge** icon.
-1. On page **Welcome to Microsoft Edge, the best performing browser on Windows** , press ESC.
-1. Navigate to http://admincenter.
-
-    > You will be redirected to https://admincenter.
-
-### Task 2: Using Microsoft Edge, navigate to https://admincenter.ad.adatum.com
+### Task: Using Microsoft Edge, navigate to https://admincenter.ad.adatum.com
 
 Perform this task on CL1.
 
 1. In Microsoft Edge, navigate to https://admincenter.ad.adatum.com.
-1. In Windows Security, sign in with **ad\Administrator**.
-
-    > You have to enter username and password, because all sites containing a dot are assigned to the Internet zone by default. Moreover, Microsoft Edge does not send the Windows credentials to sites in the Internet zone by default.
-
-### Task 3: Add https://admincenter.ad.adatum.com to the Intranet zone
-
-Perform this task on CL1.
-
-1. Click **Start**, and type **Internet Options**.
-1. Click **Internet Options**.
-1. In Internet Properties, click the tab **Security**.
-1. On tab Security, click **Local intranet**.
-1. Click the button **Sites**.
-1. In Local intranet, click the button **Advanced**.
-1. In Local intranet, under **Add this website to the zone**, enter **https://admincenter.ad.adatum.com** and click **Add**.
-1. Click **Close**.
-1. In Local intranet, click **OK**.
-1. in Internet Properties, click **OK**.
-
-> A group policy could be used to add a site or domain to the Intranet zone for a large group of users.
-
-### Task 4: Verify the effects of adding a site to the Intranet zone
-
-Perform this task on CL1.
-
-1. Close all instances of Microsoft Edge.
-1. Launch Microsoft Edge again.
-1. In Microsoft Edge, navigate to https://admincenter.ad.adatum.com.
-
-> You should not need to enter username or password.
+1. On page Sign in- Windows Admin Center, sign in with **ad\Administrator**.
 
 ## Exercise 2: Manage connections
 
@@ -131,33 +78,7 @@ Perform this task on CL1.
 1. Enter **VN1-\*** and click **Search**.
 1. Activate the checkbox left to the column header **Name** to select all servers and click **Add**.
 
-## Exercise 3: Install extensions
-
-[Install the Active Directory extension](#task-install-the-active-directory-extension).
-
-### Task: Install the Active Directory extension
-
-Perform all tasks on CL1.
-
-1. In Windows Admin Center, click the icon **Settings**.
-1. In Settings, click **Extensions**.
-1. On tab Available extensions, click **Active Directory** and click **Install**.
-
-## Exercise 4: Update extensions
-
-[Update all installed extensions of Windows Admin Center to the latest version](#task-update-all-installed-extensions-of-windows-admin-center-to-the-latest-version).
-
-### Task: Update all installed extensions of Windows Admin Center to the latest version
-
-Perform this task on CL1.
-
-1. In Windows Admin Center, click the icon **Settings** (the gear icon).
-1. In Settings, click **Extensions**.
-1. In Extensions, click the tab **Installed extensions**.
-1. Click the column **Status** to sort the extensions.
-1. Click every extension with the status **Update available** and click **Update**.
-
-## Exercise 5: Explore the available administration features
+## Exercise 3: Explore the available administration features
 
 1. [Explore networks, updates, and the settings for power configuration and Remote Desktop](#task-1-explore-networks-updates-and-the-settings-for-power-configuration-and-remote-desktop) on VN1-SRV1
 2. [Find installed apps and running processes](#task-2-find-installed-apps-and-running-processes) on VN1-SRV4
@@ -203,7 +124,7 @@ Perform this task on CL1.
 1. In the Tools pane, click **Apps & features** and explore the available features.
 1. In the Tools pane, click **Devices** and explore the available features.
 
-## Exercise 6: Use tags
+## Exercise 4: Use tags
 
 1. [Add tags to the connections according to table below](#task-1-add-tags-to-the-connections).
 

@@ -45,7 +45,7 @@ Adatum wants to use Windows Admin Center for server management. After installing
 1. [Request a certificate](#task-3-request-a-certificate) on VN1-SRV4 using the web server template
 1. [Install Windows Admin Center](#task-4-install-windows-admin-center)
 1. [Add a DNS host record for Windows Admin Center](#task-5-add-a-dns-host-record-for-windows-admin-center)
-1. [Add URL with the FQDN of Windows Admin Center to intranet zone and verify Windows Admin Center loads](#task-6-add-url-with-the-fqdn-of-windows-admin-center-to-intranet-zone-and-verify-windows-admin-center-loads)
+1. [Verify Windows Admin Center loads](#task-6-verify-windows-admin-center-loads)
 
     > Are there any connections added by default?
 
@@ -87,19 +87,15 @@ You do not need to wait for the completion of the installation.
 
 Perform these steps on CL1.
 
-1. Open Microsoft Edge and navigate to <https://www.microsoft.com/en-us/windows-server/windows-admin-center>.
-1. On page Windows Admin Center | Microsoft, click **Download Windows Admin Center**.
-
-    Wait for the download to finish.
-
+1. Open Microsoft Edge and navigate to <https://aka.ms/WACDownload>.
 1. Open **Terminal**.
 1. Copy the setup file to **C:\LabResources** on **VN1-SRV4**.
 
     ````powershell
     $pSSession = New-PSSession -ComputerName VN1-SRV4
     Copy-Item `
-        -Path ~\Downloads\WindowsAdminCenter*.msi `
-        -Destination C:\LabResources\WindowsAdminCenter.msi `
+        -Path ~\Downloads\WindowsAdminCenter*.exe `
+        -Destination C:\LabResources\WindowsAdminCenter.exe `
         -ToSession $pSSession
     Remove-PSSession -Session $pSSession
     ````
@@ -109,13 +105,13 @@ Perform these steps on CL1.
 Perform these steps on CL1.
 
 1. Open **Terminal**.
-1. On **VN1-SRV4**, download Windows Admin Center from **https://aka.ms/WACDownload** and save it as **C:\LabResource\WindowsAdminCenter.msi**.
+1. On **VN1-SRV4**, download Windows Admin Center from **https://aka.ms/WACDownload** and save it as **C:\LabResource\WindowsAdminCenter.exe**.
 
     ````powershell
     Invoke-Command -ComputerName VN1-SRV4 -ScriptBlock {
         Start-BitsTransfer `
             -Source 'https://aka.ms/WACDownload' `
-            -Destination 'C:\LabResources\WindowsAdminCenter.msi'
+            -Destination 'C:\LabResources\WindowsAdminCenter.exe'
     }
     ````
 
@@ -137,7 +133,7 @@ Perform this task on VN1-SRV4.
         Get-Certificate `
             -Template 'WebServer' `
             -SubjectName "CN=$fQDN" `
-            -DnsName $hostName, $fQDN `
+            -DnsName $fQDN `
             -CertStoreLocation 'Cert:\LocalMachine\My'
         ).Certificate
     ````
@@ -151,21 +147,16 @@ Perform this task on VN1-SRV4.
 1. Launch the installer.
 
     ````powershell
-    msiexec.exe /i C:\LabResources\WindowsAdminCenter.msi
+    C:\LabResources\WindowsAdminCenter.exe
     ````
 
-1. In Windows Admin Center Setup, on page MICROSOFT SOFTWARE LICENSE TERMS, activate **I accept these terms** and click **Next**.
-1. On page Send diagnostic data to Microsoft, select your preferred option and click **Next**.
-1. On page Use Microsoft Update to help keep your computer secure and up-to-date, ensure **I don't want to use Microsoft Update** is selected and click **Next**.
-1. On page Install Windows Admin Center on Windows Server, click **Next**.
-1. On page Installing Windows Admin Center, leave the default options activated as follows and click **Next**.
-
-    | Option                                                                        | State       |
-    |-------------------------------------------------------------------------------|-------------|
-    | **Allow Windows Admin Center to modify this machine's trusted host settings** | Activated   |
-    | **Use WinRM over HTTP only**                                                  | Deactivated |
-    | **Automatically update Windows Admin Center**                                 | Activated   |
-
+1. In Windows Admin Center (v2) installer, on page Welcome to the Microsoft Admin Center setup wizard, click **Next**.
+1. On page License Terms and Privacy Statement, click **I accept these terms and understand the privacy statement** and click **Next**.
+1. On page Select installation mode, click **Custom setup** and click **Next**.
+1. On page Network access, ensure **Remote access. Use Machine name or FQDN to access Windows Admin Center on other devices.** is selected and click **Next**.
+1. On page Login Authentication/Authorization Selection, ensure **HTML Form Login** is selected and cick **Next**.
+1. On page Port numbers, under **External Port**, ensure **443** is filled in and click **Next**.
+1. On page Select TLS certificate, click **Use the pre-installed TLS certificate** and click **Next**.
 1. Switch to **C:\Windows\system32\cmd.exe**.
 1. Get the certificate. If you left everything open and the variable ````$certificate```` contains a value from the previous task, you may skip this step.
 
@@ -184,19 +175,26 @@ Perform this task on VN1-SRV4.
 1. Copy the thumbprint of the requested certificate to the clipboard.
 
     ````powershell
+    $certificate.Thumbprint
     Set-Clipboard -Value $certificate.Thumbprint
     ````
 
-1. Switch to **Configure Gateway Endpoint**.
-1. On page Installing Windows Admin Center, under **Select a port for the Windows Admin Center site**, ensure **443** is filled in. Click **Use an SSL certificate installed on this computer**. Under **Provide the thumbprint for the gateway SSL certificate**, paste the copied thumbprint.Activate **Redirect HTTP port 80 traffic to HTTPS** and click **Install**.
+1. Switch to **Windows Admin Center (v2) Installer**.
+1. On page TLS certificate thumbprint, under **Select Thumbprint of TLS certificate**, either press CTRL + V to paste the thumbprint from the clipboard or select the thumbprint you found out in the previous steps from the drop-down. Verify that in the text box below certificate details appear, where **Subject** is **CN=admincenter.ad.adatum.com** and **DnsNameList** contains **admincenter.ad.adatum.com**. Click **Next**.
+1. On page Fully qualified domain name, under **FQDN**, type **admincenter.ad.adatum.com** and click **Next**.
+1. On page Trusted Hosts, ensure **Allow access to any computer** is selected and click **Next**.
+1. On page WinRM over HTTPS, ensure **HTTP. Default communication mechanism** is selected and click **Next**.
+1. On page Automatic updates, verify that **Install updates automatically (recommended) is selected** and click **Next**.
+1. On page Send diagnostic data to Microsoft, select your preferred option and click **Next**.
+1. On page Ready to install, verify all options and click **Install**.
 
     Wait for the installation to complete. This should take about a minute.
 
-1. On page Ready to connect from a PC, click **Finish**.
-1. In C:\Windows\system32\cmd.exe, restart the computer.
+1. On page Completing the Windows Admin Center (v2) Setup Wizard, click to clear **Start Windows Admin Center: https://admincenter.ad.adatum.com:443** and click **Finish**.
+1. In C:\Windows\system32\cmd.exe, start the service **windowsadmincenter**
 
     ````powershell
-    Restart-Computer
+    Start-Service windowsadmincenter
     ````
 
 #### PowerShell
@@ -220,15 +218,42 @@ Perform this task on VN1-SRV4.
 1. Install Windows Admin Center.
 
     ````powershell
-    msiexec.exe /i C:\LabResources\WindowsAdminCenter.msi /qb+ /L*v 'C:\WAC-Install.log' CHK_REDIRECT_PORT_80=1 SME_PORT=443 SSL_CERTIFICATE_OPTION=installed SME_THUMBPRINT=$($certificate.Thumbprint)
+    Start-Process `
+        -FilePath 'C:\LabResources\WindowsAdminCenter.exe' `
+        -ArgumentList '/VERYSILENT' `
+        -Wait
     ````
 
     Wait for the installation to complete. This should take about a minute.
 
-1. Restart the computer.
+1. Import the Windows Admin Center Configuration module.
 
     ````powershell
-    Restart-Computer
+    Import-Module `
+        'C:\Program Files\WindowsAdminCenter\PowerShellModules\Microsoft.WindowsAdminCenter.Configuration\Microsoft.WindowsAdminCenter.Configuration.psd1'
+    ````
+
+1. Configure Windows Admin Center to use the certificate.
+
+    ````powershell
+    Remove-WACSelfSignedCertificate
+    Set-WACCertificateSubjectName `
+        -SubjectName $certificate.Subject `
+        -Thumbprint $certificate.thumbprint `
+        -Target All
+    Set-WACCertificateAcl -SubjectName $certificate.Subject
+    ````
+
+1. Set the FQDN for the endpoint to **admincenter.ad.adatum.com**.
+
+    ````powershell
+    Set-WACEndpointFqdn -EndpointFqdn 'admincenter.ad.adatum.com'
+    ````
+
+1. Start the WAC service.
+
+    `````powershell
+    Start-WACService
     ````
 
 ### Task 5: Add a DNS host record for Windows Admin Center
@@ -260,21 +285,13 @@ Perform this task on CL1.
         -IPv4Address 10.1.1.32
     ````
 
-### Task 6: Add URL with the FQDN of Windows Admin Center to intranet zone and verify Windows Admin Center loads
+### Task 6: Verify Windows Admin Center loads
 
 Perform this task on CL1.
 
-1. Click **Start**, and type **Internet Options**.
-1. Click **Internet Options**.
-1. In Internet Properties, click the tab **Security**.
-1. On tab Security, click **Local intranet**.
-1. Click the button **Sites**.
-1. In Local intranet, click the button **Advanced**.
-1. In Local intranet, under **Add this website to the zone**, enter **https://admincenter.ad.adatum.com**, click **Add** and click **Close**.
-1. In **Local intranet**, click **OK**.
-1. In **Internet Properties**, click **OK**.
 1. Open **Microsoft Edge**.
 1. In Microsoft Edge, navigate to **https://admincenter.ad.adatum.com**.
+1. On page Sign in to Windows Admin Center, sign in as **ad\Administrator**.
 
     Windows Admin Center should load.
 
@@ -339,35 +356,52 @@ Perform this task on CL1.
     $pSSession = New-PSSession -ComputerName VN1-SRV4
     ````
 
-1. Create the path for Windows PowerShell modules.
-
-    ````powershell
-    $destination = '~\Documents\WindowsPowerShell\Modules\'
-    New-Item -Path $destination -ItemType Directory
-    ````
-
-1. Copy the Windows Admin Center Connection Tools module to the client.
+1. Copy the PowerShell modules for Windows Admin Center to VN1-CL1.
 
     ````powershell
     Copy-Item `
         -FromSession $pSSession `
-        -Path `
-            "$env:ProgramFiles\Windows Admin Center\PowerShell\Modules\*\" `
-        -Destination $destination `
-        -Container `
+        -Path "$env:ProgramFiles\WindowsAdminCenter\PowerShellModules\*" `
+        -Destination '~\Documents\Windows PowerShell\Modules\' `
         -Recurse
     ````
 
-1. Remove the remote PowerShell session.
+1. Import the Connection Tools module.
 
-    ````Powershell
-    Remove-PSSession $pSSession
+    ````powershell
+    Import-Module `
+        '~\Documents\Windows PowerShell\Modules\Microsoft.WindowsAdminCenter.ConnectionTools\Microsoft.WindowsAdminCenter.ConnectionTools.psd1'
+    ````
+
+1. Store the credentials for **ad\Administrator** in a variable.
+
+    ````powershell
+    $credentials = Get-Credential
+    ````
+
+1. In Windows PowerShell Credential Request, enter the credentials of **ad\Administrator**.
+1. Open **Microsoft Edge**.
+1. In Microsoft Edge, navigate to **https://admincenter.ad.adatum.com**.
+1. On page Sign in to Windows Admin Center, sign in as **ad\Administrator**.
+1. Click *Settings*.
+1. In Settings, under **Gateway**, click **Access**.
+1. On page Gateway access, click to activate **Reveal Access key**. Below, beside the access key, click **Copy**.
+1. Switch back to **Terminal**.
+1. Save the access key to a variable.
+
+    ````powershell
+    # Replace the string with the text from your clipboard
+    $accessKey = 'QR[D;t@2GXr9GrCJScF[$|Ne!b9esOos'
     ````
 
 1. Import connections from the CSV file.
 
     ````powershell
-    Import-Connection -GatewayEndpoint admincenter.ad.adatum.com -fileName $path
+    Import-WACConnection `
+        -FileName $path `
+        -Endpoint 'https://admincenter.ad.adatum.com' `
+        -Credential $credential `
+        -AccessKey $accessKey
     ````
 
 1. Open **Microsoft Edge** and navigate to <https://admincenter.ad.adatum.com>.
@@ -390,13 +424,36 @@ Perform this task on CL1.
 
 Perform this task on CL1.
 
+1. Open **Microsoft Edge**.
+1. In Microsoft Edge, navigate to **https://admincenter.ad.adatum.com**.
+1. On page Sign in to Windows Admin Center, sign in as **ad\Administrator**.
+1. Click *Settings*.
+1. In Settings, under **Gateway**, click **Access**.
+1. On page Gateway access, click to activate **Reveal Access key**. Below, beside the access key, click **Copy**.
 1. Open **Terminal**.
+1. Save the access key to a variable.
+
+    ````powershell
+    # Replace the string with the text from your clipboard
+    $accessKey = 'QR[D;t@2GXr9GrCJScF[$|Ne!b9esOos'
+    ````
+
+1. Store the credentials for **ad\Administrator** in a variable.
+
+    ````powershell
+    $credentials = Get-Credential
+    ````
+
+1. In Windows PowerShell Credential Request, enter the credentials of **ad\Administrator**.
 1. Export all Windows Admin Center connections to a CSV file.
 
     ````powershell
     $fileName = '~\Documents\WAC-connections.csv'
-    Export-Connection `
-        -GatewayEndpoint admincenter.ad.adatum.com -fileName $fileName
+    Export-WACConnection `
+        -Endpoint 'https://admincenter.ad.adatum.com' `
+        -FileName $fileName `
+        -Credentials $credentials `
+        -AccessKey $accessKey
     ````
 
 1. Import the CSV file.
@@ -422,7 +479,7 @@ Perform this task on CL1.
     }
     ````
 
-1. Open **Microsoft Edge** and navigate to <https://admincenter.ad.adatum.com>.
+1. Swich back to **Microsoft Edge**.
 1. Click **vn1-srv5.ad.adatum.com**.
 
     You should be connected without having to enter additional credentials.
@@ -435,7 +492,7 @@ Perform this task on CL1.
 1. Click *Settings*.
 1. In Settings, click **Extensions**.
 1. In Extensions, ensure the switch **Automatically update extension** is enabled.
-1. On tab Available Extensions, **Active Directory** and click **Install**.
+1. On tab Available Extensions, **GPUs** and click **Install**.
 
     Wait for Windows Admin Center to reload.
 
@@ -548,43 +605,6 @@ Perform this task on CL1.
 1. In Create Group: Windows Admin Center users, click **OK**.
 1. In Active Directory Administrative Center, under Entitling Groups, in the pane **Tasks**, click **New**, **Group**.
 1. In Create Group, in **Group name**, type **Windows Admin Center administrators**. Under **Group scope**, click **Domain local**. Click **OK**.
-
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. Under Active Directory Domain Services, click the tab **Browse**.
-1. Click **DC=ad, DC=adatum, DC=com**.
-1. In the right pane, click **Create**, **OU**.
-1. In the pane Add Organizational Unit, in **Name**, enter **Entitling groups** and click **Create**.
-1. In the tree pane, click **Entitling Groups**.
-1. In the right pane, click **Create**, **Group**.
-1. In the pane Add Group, in **Name**, type **Windows Admin Center users**.
-1. Under **Group Scope**, ensure **Domain local** is selected.
-1. In **Sam Account Name**, type **Windows Admin Center users**.
-1. Right to **Create in**, click **Change...**.
-1. In Select Path, click **Entitling Groups**.
-1. Click **Select**.
-1. Click **Create**.
-1. In the right pane, left to the search box, click the icon *Refresh*.
-1. Click the group **Windows Admin Center users**.
-1. Click **Properties**.
-1. In Group properties: Windows Admin Center users, on the left, click **Membership**.
-1. Click **Add**.
-1. In the pane Add Group Membership, under **User SamAccountname**, type **IT** and click **Add**.
-1. Click **Save**.
-1. Click **Close**.
-1. In the right pane, click **Create**, **Group**.
-1. In the pane Add Group, in **Name**, type **Windows Admin Center administrators**.
-1. Under **Group Scope**, ensure **Domain local** is selected.
-1. In **Sam Account Name**, type **Windows Admin Center users**.
-1. Right to **Create in**, click **Change...**.
-1. In Select Path, click **Entitling Groups**.
-1. Click **Select**.
-1. Click **Create**.
 
 #### PowerShell
 

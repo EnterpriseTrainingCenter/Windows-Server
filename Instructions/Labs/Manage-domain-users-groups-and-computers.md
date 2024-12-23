@@ -90,33 +90,6 @@ Perform this task on CL1.
 1. In **User UPN logon** and **User SamAccountName logon**, enter the first name.
 1. In **Password** and **Confirm password**, enter a secure password and click **OK**.
 
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-
-    > Note: If you do not see **Active Directory**, you have to install the extension first. Refer to [Lab: Explore Windows Admin Center, Exercise 3](Explore-Windows-Admin-Center.md#exercise-3-install-extensions) for detailed instructions.
-
-1. In Active Directory Domain Service, click **Create**, **User**.
-1. In the panel Add User, under **Name**, type the **First name** and **Last name**, separated by a space.
-1. Under **Sam Account Name**, type **First name**.
-1. Under **Password**, type a secure password.
-1. Under **Given Name**, type **First name**.
-1. Under **Surname**, type **Last name**.
-1. Click **Change...**.
-1. Click the organizational unit for the new user and click **Select**.
-1. Click **Create**.
-1. In **Search Active Directory**, type parts of the user name and click **Search**.
-1. Click the user.
-1. Click **Properties**.
-1. In User properties: ..., under **User UPN logon**, type **First name**, followed by **@ad.adatum.com**
-1. Click **Save**.
-1. Click **Close**.
-
-
 #### PowerShell
 
 Perform this task on CL1.
@@ -209,21 +182,6 @@ Perform this task on CL1.
 1. Double-click the found user.
 1. Change **Last name** to the new last name and click **OK**.
 
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. In Active Directory Domain Service, in **Search Active Directory**, type parts of the user name to rename and click **Search**.
-1. Click the user to rename.
-1. Click **Properties**.
-1. In User properties: ..., under **Name**, change the last name to the new last name.
-1. Change **Last Name** to the new last name.
-1. Click **Save**.
-1. Click **Close**.
-
 #### PowerShell
 
 Perform this task on CL1.
@@ -280,19 +238,6 @@ Perform this task on CL1.
 1. In the context-menu of the found user, click **Reset password...**
 1. In Reset Password, in **New password** and **Confirm password** enter a secure password.
 1. If possible, activate the checkbox **Unlock account** and click **OK**.
-
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. In Active Directory Domain Services, in **Search Active Directory**, type the user's name and click **Search**.
-1. Click the found user.
-1. Click **Reset Password**.
-1. In Reset Password, click **Confirm**.
-1. Notice the temporary password and click **OK**.
 
 #### PowerShell
 
@@ -402,14 +347,6 @@ Perform this task on CL1.
 1. Click **OK**.
 1. Click **OK**.
 
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-
 ##### Variant A
 
 4. In Active Directory Domain Services, in **Search Active Directory**, type the user's name and click **Search**.
@@ -468,18 +405,6 @@ Perform this task on CL1.
 1. In the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
 1. In Create Organizational Unit, in **Name**, enter **Organizational Groups** and click **OK**.
 
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. Under Active Directory Domain Services, click the tab **Browse**.
-1. Click **DC=ad, DC=adatum, DC=com**.
-1. In the right pane, click **Create**, **OU**.
-1. In the pane Add Organizational Unit, in **Name**, enter **Organizational Groups** and click **Create**.
-
 #### PowerShell
 
 Perform this task on CL1.
@@ -527,33 +452,6 @@ Perform this task on CL1.
 1. In Select Groups, Contacts, Computers, Service Accounts, or Groups, in **Enter the object names to select**, type the name of the user. You can type multiple users separted by semicolon.
 1. Click **OK**.
 1. Click **OK**.
-
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. Under Active Directory Domain Services, click the tab **Browse**.
-1. In the tree pane, click **Organizational Groups**.
-1. In the right pane, click **Create**, **Group**.
-1. In the pane Add Group, in **Name**, type the name of the new group.
-1. Under **Group Scope**, click **Global**.
-1. In **Sam Account Name**, type the name of the new group again.
-1. Right to **Create in**, click **Change...**.
-1. In Select Path, click **Organizational Groups**.
-1. Click **Select**.
-1. Click **Create**.
-1. In the right pane, left to the search box, click the icon *Refresh*.
-1. Click the new group.
-1. click **Properties**.
-1. In Group properties: ..., on the left, click **Membership**.
-1. Click **Add**.
-1. In the pane Add Group Membership, under **User SamAccountname**, type the first name of the user and click **Add**.
-1. Repeat the last two steps for additional users.
-1. Click **Save**.
-1. Click **Close**.
 
 #### PowerShell
 
@@ -605,18 +503,6 @@ Perform this task on CL1.
 1. Under GLOBAL SEARCH, in **Search**, type **Pilot Users** and click **Search**.
 1. In the context menu of **Pilot Users**, click **Delete**.
 1. In the message box **Are you sure you want to delete the Group 'Pilot Users'?**, click **Yes**.
-
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. In Active Directory Domain Services, in **Search Active Directory**, type **Pilot Users** and click **Search**.
-1. Click the found group.
-1. Click **Delete**.
-1. In the message box **Delete group** click **Confirm**.
 
 #### PowerShell
 
@@ -743,18 +629,6 @@ Perform this task on CL1.
 1. Under GLOBAL SEARCH, in **Search**, type **CL2** and click **Search**.
 1. In the context-menu of **CL2**, click **Delete**.
 1. In the message box **Are you sure you want to delete the Computer 'CL2'?**, click **Yes**.
-
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft Edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. Unter Active Directory Domain Services, in **Search Active Directory**, type **CL2** and click **Search**.
-1. Click **CL2**.
-1. Click **Delete**.
-1. In the message box **Delete computer**, click **Confirm**.
 
 #### PowerShell
 

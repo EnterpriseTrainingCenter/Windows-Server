@@ -78,18 +78,6 @@ Perform this task on CL1.
 1. In the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
 1. In Create Organizational Unit, in **Name**, type **Entitling groups** and click **OK**.
 
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. Under Active Directory Domain Services, click the tab **Browse**.
-1. Click **DC=ad, DC=adatum, DC=com**.
-1. In the right pane, click **Create**, **OU**.
-1. In the pane Add Organizational Unit, in **Name**, type **Entitling groups** and click **Create**.
-
 #### PowerShell
 
 Perform this task on CL1.
@@ -138,33 +126,6 @@ Perform this task on CL1.
 1. In Select Groups, Contacts, Computers, Service Accounts, or Groups, in **Enter the object names to select**, type the name of the user. You can type multiple users separted by semicolon.
 1. Click **OK**.
 1. Click **OK**.
-
-#### Windows Admin Center
-
-Perform this task on CL1.
-
-1. Using Microsoft edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. Under Active Directory Domain Services, click the tab **Browse**.
-1. In the tree pane, click **Entitling Groups**.
-1. In the right pane, click **Create**, **Group**.
-1. In the pane Add Group, in **Name**, type the name of the new group.
-1. Under **Group Scope**, ensure **Domain local** is selected.
-1. In **Sam Account Name**, type the name of the new group again.
-1. Right to **Create in**, click **Change...**.
-1. In Select Path, click **Entitling Groups**.
-1. Click **Select**.
-1. Click **Create**.
-1. In the right pane, left to the search box, click the icon *Refresh*.
-1. Click the new group.
-1. Click **Properties**.
-1. In Group properties: ..., on the left, click **Membership**.
-1. Click **Add**.
-1. In the pane Add Group Membership, under **User SamAccountname**, type the name of the member and click **Add**.
-1. Repeat the last two steps for additional members.
-1. Click **Save**.
-1. Click **Close**.
 
 #### PowerShell
 
