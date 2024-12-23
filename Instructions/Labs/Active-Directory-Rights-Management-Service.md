@@ -74,36 +74,6 @@ Perform this task on CL1.
 1. Activate the checkbox **Password never expires**.
 1. Click **OK**.
 
-#### Windows Admin Center
-
-Perform these steps on CL1.
-
-1. Using Microsoft Edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click *Settings*.
-1. In Settings, click **Extensions**.
-1. In Extensions, on tab **Available extensions**, click **Active Directory** and click **Install**. Wait for Windows Admin Center page to refresh.
-1. On the top-left, click **Windows Admin Center** to return to the connections page.
-1. On the tab **Add one**, in **Server name**, enter **VN1-SRV1**.
-1. After VN1-SRV1 was found, click **Add**.
-1. Click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. In Active Directory Domain Service, click **Create**, **OU**.
-1. In the panel Add Organizational Unit, under **Name**, type **Service Accounts**. In **Create in**, ensure **DC=ad, DC=adatum, DC=com** is selected and click **Create**.
-1. Click **Create**, **User**.
-1. In the panel Add User, under **Name**, type **Active Directory Rights Management Service Account**.
-1. Under **Sam Account Name**, type **SvcRMS**.
-1. Under **Password**, type a secure password.
-1. Click **Change...**.
-1. Click **Service Accounts** and click **Select**.
-1. Click **Create**.
-1. In **Search Active Directory**, type **Active Directory Rights** click **Search**.
-1. Click the user **Active Directory Rights Management Service Account**.
-1. Click **Properties**.
-1. In User properties: SvcRMS, under **User UPN logon**, type **svcrms@ad.adatum.com**.
-1. Activate the checkbox **Password never expires**.
-1. Click **Save**.
-1. Click **Close**.
-
 #### PowerShell
 
 Perform this task on CL1.
@@ -163,31 +133,6 @@ Perform this task on CL1.
 1. In the dialog **The host record rms.ad.adatum.com was successfully created.**, click **OK**.
 1. In **New Host**, under **Name**, type **rmsdb**, under IP address, type **10.1.1.24** and click **Add Host**.
 1. In **New Host**, click **Done**.
-
-#### Windows Admin Center
-
-Perform these steps on CL1.
-
-1. Using Microsoft Edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click *Settings*.
-1. In Settings, click **Extensions**.
-1. In Extensions, on tab **Available extensions**, click **DNS (Preview)** and click **Install**. Wait for Windows Admin Center page to refresh.
-1. On the top-left, click **Windows Admin Center** to return to the connections page.
-1. On the tab **Add one**, in **Server name**, enter **VN1-SRV1**.
-1. After VN1-SRV1 was found, click **Add**.
-1. Click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **DNS**.
-1. If a message **The PowerShell tools (RSAT) are not installed** is displayed, click **Install** and wait for the installation to complete.
-1. In DNS, click **ad.adatum.com**.
-1. In the bottom panel, cick **Create a new DNS record**.
-1. In the panel Create a new DNS record, under **DNS record type**, ensure **Host (A)** is selected.
-1. Under **Record name (uses FQDN if blank)**, type **rms**.
-1. Under **IP address**, type **10.1.2.8**.
-1. Click **Create**.
-1. Under **Record name (uses FQDN if blank)**, type **rms**.
-1. Under **IP address**, type **10.1.2.16**.
-1. Click **Create**.
-1. Click **Cancel**.
 
 #### PowerShell
 

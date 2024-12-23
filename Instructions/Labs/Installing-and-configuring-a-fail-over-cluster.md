@@ -9,6 +9,10 @@
 * VN1-SRV5
 * VN1-SRV10
 
+## Known Issues
+
+As of December 2024, Microsoft release Windows Admin Center V2 without any documentation on how to set up Windows Admin Center on a cluster. Therefore, exercise 4 should be skipped. Repectively, in exercise 5 instructions and questions regarding Windows Admin Center should be ignored.
+
 ## Setup
 
 1. On **VN1-SRV2**, sign in as **ad\Administrator**.
