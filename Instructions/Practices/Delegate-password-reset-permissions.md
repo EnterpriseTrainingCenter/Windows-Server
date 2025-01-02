@@ -47,14 +47,14 @@ Perform these steps on CL1.
 1. Sign in as **Ida@ad.adatum.com**.
 1. Open **Active Directory Administrative Center**.
 1. In Active Directory Administrative Center, on the menu, click **Manage**, **Add Navigation Nodes...**.
-1. In Add Navigation Nodes, in the middle pane, click **Sales**, click **>>**, and click **OK**.
-1. In **Active Directory Administrative Center**, in the left pane, click **ad-Sales**.
-1. In ad Sales, in the context-menu of **Abbie Parsons**, click **Properties**.
+1. In Add Navigation Nodes, in the middle pane, click **Marketing**, click **>>**, and click **OK**.
+1. In **Active Directory Administrative Center**, in the left pane, click **ad-Marketing**.
+1. In ad-Marketing, in the context-menu of **Ada Russell**, click **Properties**.
 
     > You cannot edit any properties.
 
 1. In Abbie Parsons, click **Cancel**.
 1. In **Active Directory Administrative Center**, in **ad-Sales**, in the context-menu of **Abbie Parsons**, click **Reset password...**.
-1. In Reset Password, in **Password** and **Confirm password**, type a secure password and click **OK**.
+1. In Reset Password, in **Password** and **Confirm password**, type a secure password. Click to deactivate **User msut change password at next log on** and click **OK**.
 
     > You have reset the password of a user successfully.
