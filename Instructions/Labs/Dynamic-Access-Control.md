@@ -18,7 +18,7 @@ Adatum wants to use dynamic access control to streamline permissions and fulfill
 
 ## Known issues
 
-[Exercise 3: Manage access based on device properties does not work as expected](<https://github.com/EnterpriseTrainingCenter/WindowsServer/issues/191>)
+In [Exercise 3: Manage access based on device properties does not work as expected, Task 3: Verify access to the share from authorized computer](#task-3-verify-access-to-the-share-from-authorized-computer), Claire will not have access to the share. This seems to be a bug which is discussed under <https://learn.microsoft.com/en-us/answers/questions/77378/dynamic-access-control-(dac)-user-claims-work-devi>. It is recommended to skip exercise 3.
 
 ## Exercises
 
