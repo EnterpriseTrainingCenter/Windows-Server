@@ -60,6 +60,8 @@ Perform this task on CL1.
 
 ### Task 1: Enable firewall rules to allow for remote event log and volume management
 
+*Important*: To configure VN1-SRV10, you cannot use Desktop experience. Please use one of the other methods for VN1-SRV10.
+
 #### Desktop experience
 
 Perform this task on CL2.
@@ -79,8 +81,6 @@ Perform this task on CL2.
     * Remote Volume Management - Virtual Disk Service (RPC)
     * Remote Volume Management - Virtual Disk Service Loader (RPC)
     * Remote Volume Management (RPC-EPMAP)
-
-*Important*: To configure VN1-SRV10, you cannot use Desktop experience. Please use one of the other methods for VN1-SRV10.
 
 #### Windows Admin Center
 
