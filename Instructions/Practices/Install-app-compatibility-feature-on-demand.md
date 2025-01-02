@@ -11,7 +11,7 @@ On **VN1-SRV5**, logon as **ad\Administrator**.
 
 ### Task
 
-On VN1-SRV5, install the application compatibility feature and Internet Explorer 11 and verify the functionality.
+On VN1-SRV5, install the application compatibility feature and verify the functionality.
 
 ### Instructions
 
