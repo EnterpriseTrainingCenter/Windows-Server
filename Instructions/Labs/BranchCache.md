@@ -17,9 +17,9 @@
 
     ````powershell
     C:\Labs\Resources\Move-VMtoVNet.ps1 `
-        -VMName WIN-CL3 -SwitchName VNet2 -NewSwitchName VNet3 -SubnetValue 3
+        -VMName WIN-CL3 -SwitchName VNet2 -NewSwitchName VNet3 -SubnetValue 2
     C:\Labs\Resources\Move-VMtoVNet.ps1 `
-        -VMName WIN-CL4 -SwitchName VNet1 -NewSwitchName VNet3 -SubnetValue 3
+        -VMName WIN-CL4 -SwitchName VNet1 -NewSwitchName VNet3 -SubnetValue 2
     ````
 
 1. At the prompt Enter the password of the local Administrator account of WIN-CL*, enter the local Administrator password of CL*.
