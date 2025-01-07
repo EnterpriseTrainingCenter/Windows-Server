@@ -365,7 +365,7 @@ Perform this task on VN1-SRV5.
 1. Mount the Windows Server Languages and Optional Features ISO image file.
 
     ````powershell
-    $isoPath = 'C:\LabResources\20348.1.210507-1500.fe_release_amd64fre_SERVER_LOF_PACKAGES_OEM.iso'
+    $isoPath = 'C:\LabResources\26100.1.240331-1435.ge_release_amd64fre_SERVER_LOF_PACKAGES_OEM.iso'
     $fodIso = Mount-DiskImage -ImagePath $isoPath
     $fodDriveLetter = ($fodIso | Get-Volume).DriveLetter
     ````

@@ -78,14 +78,14 @@ Perform these steps on VN1-SRV10.
 Perform these steps on CL1.
 
 1. Open **Terminal**.
-1. Measure the time it takes to copy **\\\\VN1-SRV10\\c$\\LabResources\\20348.1.210507-1500.fe_release_amd64fre_SERVER_LOF_PACKAGES_OEM.iso** to **C:\\**.
+1. Measure the time it takes to copy **\\\\VN1-SRV10\\c$\\LabResources\\26100.1.240331-1435.ge_release_amd64fre_SERVER_LOF_PACKAGES_OEM.iso** to **C:\\**.
 
    ````powershell
    Get-Date
    Measure-Command { 
       Copy-Item `
          -Path `
-            '\\VN1-SRV10\c$\LabResources\20348.1.210507-1500.fe_release_amd64fre_SERVER_LOF_PACKAGES_OEM.iso' `
+            '\\VN1-SRV10\c$\LabResources\26100.1.240331-1435.ge_release_amd64fre_SERVER_LOF_PACKAGES_OEM.iso' `
          -Destination 'c:\' `
          -Force 
       }
