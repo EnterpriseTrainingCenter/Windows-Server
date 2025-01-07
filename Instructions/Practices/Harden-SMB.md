@@ -7,9 +7,13 @@
 * VN1-SRV10
 * CL1
 
+## Setup
+
+If you skipped the practice [Install prerequisites for file server](./Install-prerequisites-for-file-serving.md), on CL1, run ````C:\LabResources\Solutions\New-Shares.ps1````.
+
 ## Task
 
-Disable SMB 1.0 on VN1-SRV10 and verify the shares are still accessible. Then remove SMB 1.0 from VN1-SRV10.
+Verify that SMB 1.0 is disabled and uninstalled on VN1-SRV10.
 
 Enable SMB encryption on server VN1-SRV5 and on the share \\\\VN1-SRV10\\IT.
 
@@ -25,31 +29,28 @@ Perform these steps on CL1.
     Enter-PSSession -ComputerName VN1-SRV10
     ````
 
-1. Disable SMB 1.0.
+1. Verify that SMB 1.0 is disabled.
 
     ````powershell
-    Set-SmbServerConfiguration -EnableSMB1Protocol $false
+    Get-SmbServerConfiguration | Select-Object EnableSMB1Protocol
     ````
 
-1. Under **Confirm**, enter **y**.
+    The value of EnableSMB1Protocol should be False.
+
+1. Verify that SMB 1.0 is not installed.
+
+    ````powershell
+    Get-WindowsFeature -Name FS-SMB1*
+    ````
+
+    The features FS-SMB1, FS-SMB1-CLIENT, and FS-SMB1-SERVER should have an Install State of Available.
+
 1. Exit the remote PowerShell session, but leave Terminal open.
 
     ````powershell
     Exit-PSSession
     ````
 
-1. Switch to **File Explorer** and navigate to **\\\\VN1-SRV10** and try to navigate into the shares.
-
-    > Can you still access the shares?
-
-1. Switch to **Terminal**.
-1. Uninstall SMB 1.0.
-
-    ````powershell
-    Remove-WindowsFeature -Name FS-SMB1 -ComputerName VN1-SRV10
-    ````
-
-1. Verify, you are still able to access the shares on **VN1-SRV10**.
 1. Create a remote PowerShell session with **VN1-SRV5**.
 
     ````powershell
@@ -69,7 +70,7 @@ Perform these steps on CL1.
     Exit-PSSession
     ````
 
-1. Enable encyprtion for the share **\\\\VN1-SRV10\\IT**.
+1. Enable encryption for the share **\\\\VN1-SRV10\\IT**.
 
     ````powershell
     Invoke-Command -ComputerName VN1-SRV10 -ScriptBlock {
