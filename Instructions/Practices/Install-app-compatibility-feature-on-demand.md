@@ -21,16 +21,16 @@ Perform this task on VN1-SRV5.
 1. Mount the Windows Server Languages and Optional Features ISO image file.
 
     ````powershell
-    $isoPath = 'C:\LabResources\26100.1.240331-1435.ge_release_amd64fre_SERVER_LOF_PACKAGES_OEM.iso'
-    $fodIso = Mount-DiskImage -ImagePath $isoPath
-    $fodDriveLetter = ($fodIso | Get-Volume).DriveLetter
+    $imagePath = 'C:\LabResources\26100.1.240331-1435.ge_release_amd64fre_SERVER_LOF_PACKAGES_OEM.iso'
+    $diskImage = Mount-DiskImage -ImagePath $imagePath
+    $driveLetter = ($diskImage | Get-Volume).DriveLetter
     ````
 
 1. Install the Application Compatibility Feature.
 
     ````powershell
     $name = 'ServerCore.AppCompatibility~~~~0.0.1.0'
-    $source = "${fodDriveLetter}:\LanguagesAndOptionalFeatures\"
+    $source = "${driveLetter}:\LanguagesAndOptionalFeatures\"
     Add-WindowsCapability -Online -Name $name -Source $source -LimitAccess
     ````
 
@@ -42,7 +42,7 @@ Perform this task on VN1-SRV5.
 
 1. Login as **ad\Administrator**.
 1. In SConfig, enter **15**.
-1. Try to run the follwoing tools.
+1. Try to run the following tools.
 
     ````powershell
     mmc.exe
@@ -54,6 +54,8 @@ Perform this task on VN1-SRV5.
     powershell_ise.exe
     diskmgmt.msc
     CluAdmin.msc
+    taskschd.msc
+    virtmgmt.msc
     ````
 
 1. Close all open graphical applications.
