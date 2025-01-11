@@ -22,11 +22,34 @@ You must have completed the lab [Deploy Remote Desktop Services](Deploy-Remote-D
 
 ## Introduction
 
+To provide a consistent user experience, you want to be the user profiles to be independent of the session hosts. For this reason, you want to implement and verify FSLogix with local profile containers.
+
 ## Exercises
+
+1. [Implement FSLogix](#exercise-1-implement-fslogix)
+1. [Verify Profile Containers](#exercise-2-verify-profile-containers)
 
 ## Exercise 1: Implement FSLogix
 
-### Task 1: Create an organizational units
+1. [Create organizational units](#task-1-create-organizational-units) in the domain: Servers\Remote Desktop Services\Session hosts
+1. [Move session hosts to the organizational unit](#task-2-move-session-hosts-to-the-organizational-unit) Session hosts
+1. [Install the file server role](#task-3-install-the-file-server-role) on VN1-SRV5
+1. [Configure a volume](#task-4-configure-a-volume) on VN1-SRV5
+1. [Create a file share](#task-5-create-a-file-share) on VN1-SRV5 on the new volume with the name Profiles
+1. [Download and install FSLogix](#task-6-download-and-install-fslogix) on all session hosts
+1. [Copy the group policy template](#task-7-copy-the-group-policy-templates) of Windows 11 and FSLogix to the central store on the domain's SYSVOL
+1. [Configure settings for FSLogix](#task-8-configure-settings-for-fslogix) using a GPO
+
+    * Set the VHD location to the file share
+    * Set the VHD size to 1000000 MB
+    * Set Temp Folder to Local path
+    * Remove orphaned OST Files on Logoff
+    * Enable Outlook Cached Mode
+    * Delete local profile when VHD should apply
+    * Roam identity
+    * Enable FSLogix
+
+### Task 1: Create organizational units
 
 #### Active Directory Users and Computers
 
@@ -130,7 +153,7 @@ Perform these steps on CL1.
 1. On page Confirm selections, verify your selections ([figure 2]) and click **Create**.
 1. On page Results, click **Close**.
 
-### Task 6: Create a file share
+### Task 5: Create a file share
 
 Perform these steps on CL1.
 
@@ -145,7 +168,7 @@ Perform these steps on CL1.
 1. On page Confirmation, verify your selections ([figure 3]) and click **Create**.
 1. On page Results, click **Close**.
 
-### Task 7: Download and install FSLogix
+### Task 6: Download and install FSLogix
 
 Perform this task on CL1.
 
@@ -209,7 +232,7 @@ Perform this task on CL1.
     }
     ````
 
-### Task 8: Copy the group policy templates
+### Task 7: Copy the group policy templates
 
 Perform these steps on CL1.
 
@@ -238,7 +261,7 @@ Perform these steps on CL1.
             \\ad.adatum.com\SYSVOL\ad.adatum.com\Policies\PolicyDefinitions\en-US\    
     ````
 
-### Task 9: Configure settings for FSLogix
+### Task 8: Configure settings for FSLogix
 
 Perform this task on CL1.
 
@@ -273,6 +296,13 @@ Perform this task on CL1.
 1. In the dialog Are you sure you want to restart these servers, click **OK**.
 
 ## Exercise 2: Verify Profile Containers
+
+1. [Verify the user experience with FSLogix](#task-1-verify-the-user-experience-with-fslogix)
+1. [Verify the files created by FSLogix](#task-2-verify-the-files-created-by-fslogix)
+
+    > Which files are created on the share?
+
+    > What remains on the local server after the user signs out?
 
 ### Task 1: Verify the user experience with FSLogix
 
