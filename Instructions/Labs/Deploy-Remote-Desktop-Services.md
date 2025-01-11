@@ -25,6 +25,7 @@ Your company wants to create a full Remote Desktop Services session deployment. 
 
 1. [Create an initial Remote Desktop Services deployment](#exercise-1-create-an-initial-remote-desktop-services-deployment)
 1. [Verify the functionality of the Remote Desktop Services deployment](#exercise-2-verify-the-functionality-of-the-remote-desktop-services-deployment)
+1. Configure session collection settings
 
 ## Exercise 1: Create an initial Remote Desktop Services deployment
 
@@ -33,6 +34,7 @@ Your company wants to create a full Remote Desktop Services session deployment. 
 1. [Install the certificate for RD Web](#task-3-install-the-certificate-for-rd-web)
 1. [Install RD Licensing](#task-4-install-rd-licensing) on VN2-SRV1
 1. [Create a collection](#task-5-create-a-collection) with the name Standard Desktop including all session hosts
+1. [Configure session collection settings](#task-6-configure-session-collection-settings): Disconnected session should end after 3 hours, idle sessions should be disconnected after 5 minutes.
 
 ### Task 1: Create a Remote Desktop Services Installation
 
@@ -121,6 +123,17 @@ Perform these steps on CL1.
     Wait for the collection to be created successfully.
 
 1. On page Progress, click **Close**.
+
+### Task 6: Configure session collection settings
+
+Perform these steps on CL1.
+
+1. Open **Server Manager**.
+1. In Server Manager, click **Remote Desktop Services**.
+1. In Remote Desktop Services > Overview, in the left pane, click **Standard desktop**.
+1. In Standard desktop, under Properties, click **TASKS**, **Edit Properties...**
+1. In Standard desktop Properties, click the page Session.
+1. On the page Session, beside **End a disconnected session**, click 3 hours. Beside Idle session limit, click **5 Minutes**. Click **OK**.
 
 ## Exercise 2: Verify the functionality of the Remote Desktop Services deployment
 
