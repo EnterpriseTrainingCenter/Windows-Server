@@ -3,6 +3,7 @@
 ## Required VMs
 
 * VN1-SRV1
+* VM1-SRV3
 * VN1-SRV8
 * VN1-SRV9
 * VN1-SRV10
@@ -14,7 +15,7 @@
 
 ## Setup
 
-1. On **CL1**, sign in as **ad\\Administrator**.
+On **CL1**, sign in as **ad\\Administrator**.
 
 You must have completed the lab [Configure external access to Remote Desktop Services](Configure-external-access-to-Remote-Desktop-Services.md).
 

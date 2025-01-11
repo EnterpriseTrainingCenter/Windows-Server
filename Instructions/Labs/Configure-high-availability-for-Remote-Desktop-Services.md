@@ -407,7 +407,6 @@ Perform these steps on CL1.
 1. Open **File Explorer**.
 1. In File Explorer, navigate to **Downloads**.
 1. Delete the file **cpub-Standard_desktop-Standard_desktop-CmsRdsh**, if it is present.
-
 1. Open **Microsoft Edge**.
 1. In Microsoft Edge, navigate to <https://remote.adatum.com/RDWeb>.
 1. On page Work Resources, sign in as **AD\Ada**.
