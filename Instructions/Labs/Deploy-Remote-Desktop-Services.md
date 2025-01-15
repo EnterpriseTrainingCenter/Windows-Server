@@ -19,13 +19,12 @@ You must have completed the practice [Request and export certificates for the co
 
 ## Introduction
 
-Your company wants to create a full Remote Desktop Services session deployment. For the first tests, you want to implemnt a simple deployment consisting of a connection broker, three session hosts, an RD web and RD licensing. Moreover, you want to test the load balancing and reconnection of users between session hosts.
+Your company wants to create a full Remote Desktop Services session deployment. For the first tests, you want to implement a simple deployment consisting of one connection broker server, three session host servers, one RD web server and one RD licensing server. Moreover, you want to test the load balancing and reconnection of users between session hosts.
 
 ## Exercises
 
 1. [Create an initial Remote Desktop Services deployment](#exercise-1-create-an-initial-remote-desktop-services-deployment)
 1. [Verify the functionality of the Remote Desktop Services deployment](#exercise-2-verify-the-functionality-of-the-remote-desktop-services-deployment)
-1. Configure session collection settings
 
 ## Exercise 1: Create an initial Remote Desktop Services deployment
 
