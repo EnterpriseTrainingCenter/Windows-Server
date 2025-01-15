@@ -90,7 +90,7 @@ Perform this task on CL1.
 
 #### PowerShell
 
-Perform this task on VN2-SRV2.
+Perform this task on CL1.
 
 1. Run **Windows PowerShell** as Administrator.
 1. Update the group policies.
@@ -160,7 +160,6 @@ Perform this task on VN2-SRV2.
 1. Export the certificate.
 
     ````powershell
-    New-Item -Path c:\Certs -ItemType Directory
     Export-PfxCertificate `
         -Cert $enrollmentResult.Certificate `
         -Password $password `
