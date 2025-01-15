@@ -114,7 +114,7 @@ Perform these steps on CL1.
 1. In Collections, under COLLECTIONS, click **Tasks**, **Create Session Collection...**
 1. In the Create Collection wizard, click **Next >**.
 1. On page Collection Name, under **Name**, type **Standard desktop** and click **Next >**.
-1. On page RD Session Host, click **VN1-SRV.ad.adatum.com** and click the arrow button between the lists. Repeat this for **VN1-SRV9.ad.adatum.com** and **VN1-SRV10.ad.adatum.com**. Click **Next >**.
+1. On page RD Session Host, click **VN1-SRV8.ad.adatum.com** and click the arrow button between the lists. Repeat this for **VN1-SRV9.ad.adatum.com** and **VN1-SRV10.ad.adatum.com**. Click **Next >**.
 1. On page User Groups, ensure, under User Groups AD\Domain Users is listed. Click **Next >**.
 1. On page User Profile Disks, click to deactivate **Enable user profile disks**. Click **Next >**.
 1. On page Confirmation, confirm your selections and click **Create**.
