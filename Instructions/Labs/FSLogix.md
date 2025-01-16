@@ -239,7 +239,7 @@ Perform these steps on CL1.
 1. Open **Terminal**.
 1. Copy the Windows 11 group policy templates to the central store.
 
-    `````powershell
+    ````powershell
     Copy-Item `
         -Path \Windows\PolicyDefinitions\ `
         -Destination \\ad.adatum.com\SYSVOL\ad.adatum.com\Policies\ `
