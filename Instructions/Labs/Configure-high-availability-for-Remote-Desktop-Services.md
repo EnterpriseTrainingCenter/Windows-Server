@@ -336,9 +336,9 @@ Perform these steps on CL1.
 1. Open **DNS**.
 1. In DNS Manager, expand **VN1-SRV1.ad.adatum.com**, **Forward Lookup Zones**, and click **ad.adatum.com**.
 1. In the context-menu of **ad.adatum.com**, click **New Host (A or AAAA)...**
-1. In New Host, under **Name (uses parent domain if blank)**, type **rdcb**. Ensure, that under **Fully qualified domain name (FQDN)**, **remote.adatum.com** appears. Under **IP address**, type **10.1.2.8**. Click **Add Host**.
+1. In New Host, under **Name (uses parent domain if blank)**, type **rdcb**. Ensure, that under **Fully qualified domain name (FQDN)**, **rdcb.ad.adatum.com** appears. Under **IP address**, type **10.1.2.8**. Click **Add Host**.
 1. In The host record remote.adatum.com was successfully created, click **OK**.
-1. In New Host, under **Name (uses parent domain if blank)**, type **rdcb**. Ensure, that under **Fully qualified domain name (FQDN)**, **remote.adatum.com** appears. Under **IP address**, type **10.1.2.16**. Click **Add Host**.
+1. In New Host, under **Name (uses parent domain if blank)**, type **rdcb**. Ensure, that under **Fully qualified domain name (FQDN)**, **rdcb.ad.adatum.com** appears. Under **IP address**, type **10.1.2.16**. Click **Add Host**.
 1. In New Host, click **Done**.
 
 ### Task 8: Configure high availability for the connection broker
