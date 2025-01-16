@@ -44,7 +44,7 @@ Perform these steps on CL1.
 1. Create a remote PowerShell session to **VN2-SRV1**.
 
     ````powershell
-    $pSSession = New-PSSession VN2-SRV2
+    $pSSession = New-PSSession VN2-SRV1
     ````
 
 1. Export the RD Connection Broker - Publishing certificate into a CER file on VN2-SRV1.
