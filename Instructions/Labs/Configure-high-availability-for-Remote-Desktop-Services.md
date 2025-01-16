@@ -424,7 +424,7 @@ Perform these steps on CL1.
 [figure 1]: /images/Add-RD-Licensing-Servers-Confirm-selections.png
 [figure 2]: /images/Add-RD-Web-Access-Servers-Confirm-selections.png
 [figure 3]: /images/Add-RD-Gateway-Servers-Confirm-selections.png
-[figure 4]: /images\SQL-Login-New.png
+[figure 4]: /images/SQL-Login-New.png
 [figure 5]: /images/Microsoft-Visual-C++-2017-Redistributable.png
 [figure 6]: /images/Microsoft-ODBC-Driver-18-for-SQL-Server-Setup.png
 [figure 7]: /images/Configure-RD-Connection-Broker-for-High-Availability.png
