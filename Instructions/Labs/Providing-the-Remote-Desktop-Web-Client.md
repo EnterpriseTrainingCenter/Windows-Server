@@ -118,10 +118,11 @@ Perform these steps on CL1.
     Install-Module -Name PowerShellGet -MinimumVersion 2.0.0 -Force
     ````
 
-1. Unload the PowerShellGet module.
+1. Exit the remote session and reconnect.
 
     ````powershell
-    Remove-Module -Name PowerShellGet
+    Exit-PSSession
+    Enter-PSSession PM-SRV3
     ````
 
 1. Install the Remote Desktop web client management PowerShell module.
