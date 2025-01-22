@@ -77,13 +77,13 @@ Perform this task on CL1.
 1. Download and install the base image for Nano server.
 
     ````powershell
-    docker pull mcr.microsoft.com/windows/nanoserver:ltsc2022
+    docker image pull mcr.microsoft.com/windows/nanoserver:ltsc2022
     ````
 
 1. Query your local docker image repository.
 
     ````powershell
-    docker images
+    docker image ls
     `````
 
     You should see the image of microsoft/nanoserver.
@@ -108,7 +108,7 @@ Perform this task on CL1.
 1. In Terminal, start a container with an interactive session from the nanoserver image.
 
     ````powershell
-    docker run --interactive --tty --user ContainerAdministrator mcr.microsoft.com/windows/nanoserver:ltsc2022 cmd.exe
+    docker container run --interactive --tty --user ContainerAdministrator mcr.microsoft.com/windows/nanoserver:ltsc2022 cmd.exe
     ````
 
     This command starts a new container using the Nano server image. The -i or --interactive option tells Docker to keep STDIN open even if not attached. The -t or --tty option tells Docker to allocate a pseudo-TTY. Within the container, cmd.exe is executed.
@@ -136,7 +136,7 @@ Perform this task on VN2-SRV2.
 1. In Terminal, get the container ID for the container you just existed.
 
     ````powershell
-    docker ps --all
+    docker container ls --all
     ````
 
     Take a note of the CONTAINER ID of your container.
@@ -144,13 +144,13 @@ Perform this task on VN2-SRV2.
 1. Create a new **heloworld** image that includes the changes in the first container you ran. Replace the first parameter with the container ID noted in the previous step.
 
     ````powershell
-    docker commit bb91a76b8023 helloworld
+    docker container commit bb91a76b8023 helloworld
     ````
 
 1. List the image in your local repository.
 
     ````powershell
-    docker images
+    docker image ls
     ````
 
     You should see the helloworld image in addition to the Nano server image.
@@ -158,7 +158,7 @@ Perform this task on VN2-SRV2.
 1. Run the new container, type the content of **C:\\Users\\ContainerUser\\Hello.txt** and remove the container.
 
     ````powershell
-    docker run --rm helloworld cmd.exe /s /c type Hello.txt
+    docker container run --rm helloworld cmd.exe /s /c type Hello.txt
     ````
 
     You should see the content of Hello.txt.
@@ -276,7 +276,7 @@ Peform this task on VN2-SRV2.
 1. Build the container from the dockerfile.
 
     ````powershell
-    docker build -t my-asp-app .
+    docker buildx build -t my-asp-app .
     ````
 
     Wait for the build to complete. This takes a few minutes or two.
@@ -284,7 +284,7 @@ Peform this task on VN2-SRV2.
 1. Run the container detached in hyper-v isolation mode, map port **5000** on the host to port **80** in the container and give the container the convenient name **myapp**.
 
     ````powershell
-    docker run -d -p 5000:80 --isolation hyperv --name myapp my-asp-app
+    docker container run -d -p 5000:80 --isolation hyperv --name myapp my-asp-app
     ````
 
     *Note:* The container must be run in Hyper-V isolation mode, because it is based on an older version of Windows Server.
