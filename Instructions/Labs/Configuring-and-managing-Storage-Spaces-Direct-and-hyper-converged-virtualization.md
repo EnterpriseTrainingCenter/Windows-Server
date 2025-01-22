@@ -428,7 +428,7 @@ Perform this task on the owner node of VN1-SRV23.
 
 Perform this task on CL1.
 
-1. In **File Explorer** navigate to **\\\\vn1-clst2\\Hyper-V Data** and browse through the folders.
+1. In **File Explorer** navigate to **\\\\vn1-clst2-sofs\\Hyper-V Data** and browse through the folders.
 
    > The following folders are in the share:
    >
