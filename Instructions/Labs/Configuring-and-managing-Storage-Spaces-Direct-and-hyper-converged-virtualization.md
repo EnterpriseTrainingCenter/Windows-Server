@@ -9,6 +9,7 @@
 * VN1-SRV7
 * VN1-SRV8
 * VN1-SRV9
+* VN1-SRV10
 * CL1
 
 ## Setup
