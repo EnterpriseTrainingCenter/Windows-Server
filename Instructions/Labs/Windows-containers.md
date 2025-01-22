@@ -3,13 +3,8 @@
 ## Required VMs
 
 * VN1-SRV1
-* VN1-SRV4
-* VN2-SRV2
+* PM-SRV1
 * CL1
-
-## Setup
-
-On **CL1**, sign in as **ad\Administrator**.
 
 ## Introduction
 
@@ -31,10 +26,10 @@ On **CL1**, sign in as **ad\Administrator**.
 Perform this task on the host.
 
 1. Open **Windows PowerShell (Admin)**.
-1. In Windows PowerShell (Admin), for **WIN-VN2-SRV2**, shut down the virtual machine, expose the virtualtion extensions to the virtual machine, enable MAC address spoofing, disable dynamic memory and set the startup memory to **4 GB**, and start the virtual machine again.
+1. In Windows PowerShell (Admin), for **WIN-PM-SRV1**, shut down the virtual machine, expose the virtualtion extensions to the virtual machine, enable MAC address spoofing, disable dynamic memory and set the startup memory to **4 GB**, and start the virtual machine again.
 
     ````powershell
-    $vMName = 'WIN-VN2-SRV2'
+    $vMName = 'WIN-PM-SRV1'
     Stop-VM -VMName $vMName
     Set-VMProcessor -VMName $vMName -ExposeVirtualizationExtensions $true
     Get-VMNetworkAdapter -VMName $vMName |
@@ -45,50 +40,41 @@ Perform this task on the host.
 
 ### Task 2: Download and install Docker CE
 
-Perform this task on CL1.
+Perform this task on PM-SRV1.
 
-1. Open **Terminal**.
-1. In Terminal, connect a remote PowerShell session to VN2-SRV2.
-
-    ````powershell
-    Enter-PSSession VN2-SRV2
-    `````
-
-1. On VN2-SRV2, download and install Docker CE from Github.
+1. Sign in as **Administrator**.
+1. In SConfig, enter **15**.
+1. Download and install Docker CE from Github.
 
     ````powershell
-    Set-Location ~\Downloads
+    Set-Location c:\LabResources
     Invoke-WebRequest `
         -Uri 'https://raw.githubusercontent.com/microsoft/Windows-Containers/Main/helpful_tools/Install-DockerCE/install-docker-ce.ps1' `
         -OutFile install-docker-ce.ps1 `
         -UseBasicParsing
-    .\install-docker-ce.ps1
+    .\install-docker-ce.ps1 -HyperV
     ````
 
-    Wait for the instalation to finish. This will take less than a minute.
+    Wait for the instalation to finish. This will take less than a minute. The computer will during the installation.
 
-1. Exit the remote PowerShell session.
-
-    ````powershell
-    Exit-PSSession
-    ````
-
-1. Restart VN2-SRV2.
-
-    ````powershell
-    Restart-Computer -ComputerName VN2-SRV2 -Protocol WSMan
-    ````
-
-### Task 3: Pull the Nano server base image
-
-Perform this task on VN2-SRV2.
-
-1. Sign in as **ad\Administrator**.
+1. After the computer finished starting, sign in as **Administrator**.
 
     The PowerShell script should start automatically. After a few seconds, the script should complete.
 
+1. Close the windows with the script.
+
+### Task 3: Pull the Nano server base image
+
+Perform this task on CL1.
+
 1. Open **Terminal**.
-1. In Terminal, download and install the base image for Nano server.
+1. In Terminal, enter a remote PowerShell session to PM-SRV1.
+
+    ````powershell
+    Enter-PSSession PM-SRV1
+    `````
+
+1. Download and install the base image for Nano server.
 
     ````powershell
     docker pull mcr.microsoft.com/windows/nanoserver:ltsc2022
@@ -102,12 +88,23 @@ Perform this task on VN2-SRV2.
 
     You should see the image of microsoft/nanoserver.
 
+1. Exit the remote PowerShell session
+
+    ````powershell
+    Exit-PSSession
+    ````
+
 ### Task 4: Run the Nano server image in a container
 
-Perform this task on VN2-SRV2.
+Perform this task on CL1.
 
-1. Sign in as **ad\Administrator**.
 1. Open **Terminal**.
+1. In Terminal, enter a remote PowerShell session to PM-SRV1.
+
+    ````powershell
+    Enter-PSSession PM-SRV1
+    `````
+
 1. In Terminal, start a container with an interactive session from the nanoserver image.
 
     ````powershell
@@ -121,10 +118,15 @@ Perform this task on VN2-SRV2.
 1. In the container, create a simple text file **Hello.txt** in **C:\\Users\\ContainerUser** and exit from the container.
 
     ````shell
-    cd Users\ContainerUser
     echo "Hello World!" > Hello.txt
     exit
     `````
+
+1. Exit the remote PowerShell session
+
+    ````powershell
+    Exit-PSSession
+    ````
 
 ### Task 5: Create a new container image
 
@@ -156,7 +158,7 @@ Perform this task on VN2-SRV2.
 1. Run the new container, type the content of **C:\\Users\\ContainerUser\\Hello.txt** and remove the container.
 
     ````powershell
-    docker run --rm helloworld cmd.exe /s /c type C:\Users\ContrainerUser\Hello.txt
+    docker run --rm helloworld cmd.exe /s /c type Hello.txt
     ````
 
     You should see the content of Hello.txt.
@@ -164,13 +166,13 @@ Perform this task on VN2-SRV2.
 ## Exercise 2: Containerize a sample app
 
 1. [Install Git](#task-1-install-git) on VN2-SRV2
-1. [Install Visual Studio Code](#task-2-install-visual-studio-code) on VN2-SRV2
+1. [Install Visual Studio Code](#task-2-install-visual-studio-code) on VN2-SRV2 and add the Docker extension
 1. [Clone the app repository](#task-3-clone-the-app-repository) <https://github.com/MicrosoftDocs/Virtualization-Documentation.git>
 1. [Build and run the app](#task-4-build-and-run-the-app): To build the app, you must change the base image for the build environment to mcr.microsoft.com/dotnet/sdk:6.0.406-nanoserver-ltsc2022. Run the container in Hyper-V isolation mode and map port 80 of the container to port 5000 on the host.
 
 ### Task 1: Install Git
 
-Perform this task on VN2-SRV2.
+Perform this task on CL1.
 
 1. Run **Terminal**.
 1. In Terminal, install **Git** using winget.
@@ -179,11 +181,11 @@ Perform this task on VN2-SRV2.
     winget install Git.Git --accept-source-agreements
     ````
 
-    Wait for the installation to complete. This takes a minute or two.
+    Wait for the installation to complete. This takes less than a minute.
 
 ### Task 2: Install Visual Studio Code
 
-Perform this task on VN2-SRV2.
+Perform this task on CL1.
 
 1. Open **Terminal**.
 1. In Terminal, install **Visual Studio Code** using winget.
@@ -192,7 +194,7 @@ Perform this task on VN2-SRV2.
     winget install Microsoft.VisualStudioCode --accept-source-agreements
     ````
 
-    Wait for the installation to complete. This takes a minute or two.
+    Wait for the installation to complete. This takes less than a minute.
 
 1. Open **Visual Studio Code**.
 1. In Visual Studio Code, close the tab **Walkthrough: Setup VS Code**.
@@ -223,9 +225,11 @@ Perform this task on VN2-SRV2.
 Peform this task on VN2-SRV2.
 
 1. Open **Visual Studio Code**.
-1. In Visual Studio Code, if the repository **VIRTUALIZATION-DOCUMENTATION** is not open, on the menu, click **File**, **Open Folder...**
+1. In Visual Studio Code, if the repository **VIRTUALIZATION-DOCUMENTATION** is not open:
 
-    In Open Folder, navigate to **C:\\LabResources\Virtualization-Documentation** and click **Select Folder**.
+    1. On the menu, click **File**, **Open Folder...**
+    1. In Open Folder, navigate to **C:\\LabResources\Virtualization-Documentation** and click **Select Folder**.
+    1. In Do you trust the authors of the files in the folder, click **Yes, I trust the authors**
 
 1. In Explorer view, click **windows-container-samples**, **asp-net-getting-started** and **dockerfile**.
 1. Change the first line to base the container on the following image.
@@ -236,11 +240,37 @@ Peform this task on VN2-SRV2.
 
     Take a look at the file content. You can find a line-by-line explanation under <https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/building-sample-app#write-the-dockerfile>
 
-1. On the menu, clic **View**, **Terminal**.
-1. In the TERMINAL pane, navigate to the directory, where the dockerfile resides.
+    *Note*:  For building containers, hyper-v isolation is not available. The source image has to be changed, because the original image does not run on Windows Server 2025 in process isolation mode. Therefore, we need an image of a more recent operating system that runs in process isolation mode on Windows Server 2025. Alternatively, you could build the container on an older version of Windows Server.
+
+1. On the menu, click **View**, **Terminal**.
+1. In the TERMINAL pane, create a new remote PowerShell session to PM-SRV1 and store it in a variable.
 
     ````powershell
-    Set-Location .\windows-container-samples\asp-net-getting-started\
+    $pSSession = New-PSSession PM-SRV1
+    ````
+
+1. Copy the source files of the sample application to PM-SRV1.
+
+    ````powershell
+    Copy-Item `
+        -Path `
+            C:\LabResources\Virtualization-Documentation\windows-container-samples\asp-net-getting-started\ `
+        -ToSession $psSession `
+        -Destination c:\LabResources\ `
+        -Container `
+        -Recurse
+    ````
+
+1. Enter the session to PM-SRV1.
+
+    ````powershell
+    Enter-PSSession $psSession
+    `````
+
+1. Navigate to the directory of the sample application with the dockerfile.
+
+    ````powershell
+    Set-Location C:\LabResources\asp-net-getting-started\
     `````
 
 1. Build the container from the dockerfile.
@@ -249,16 +279,18 @@ Peform this task on VN2-SRV2.
     docker build -t my-asp-app .
     ````
 
-    Wait for the build to complete. This takes a minute or two.
+    Wait for the build to complete. This takes a few minutes or two.
 
 1. Run the container detached in hyper-v isolation mode, map port **5000** on the host to port **80** in the container and give the container the convenient name **myapp**.
 
     ````powershell
-    docker run -d -p 5000:80 --isolaton hyperv --name myapp my-asp-app
+    docker run -d -p 5000:80 --isolation hyperv --name myapp my-asp-app
     ````
 
+    *Note:* The container must be run in Hyper-V isolation mode, because it is based on an older version of Windows Server.
+
 1. Open **Microsoft Edge**.
-1. In Microsoft Edge, navigate to <http://localhost:5000>.
+1. In Microsoft Edge, navigate to <http://pm-srv1:5000>.
 
     You should see a sample web site.
 
