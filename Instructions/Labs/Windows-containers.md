@@ -267,6 +267,12 @@ Peform this task on CL1.
     docker buildx build -t my-asp-app .
     ````
 
+    If the command fails with an unknow switch error, try the alias command instead:
+
+    ````powershell
+    docker buildx build -t my-asp-app .
+    ````
+
     Wait for the build to complete. This takes a few minutes or two.
 
 1. Run the container detached in hyper-v isolation mode, map port **5000** on the host to port **80** in the container and give the container the convenient name **myapp**.
