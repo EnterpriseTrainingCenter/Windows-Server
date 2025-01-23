@@ -195,7 +195,7 @@ Perform this task on CL1.
 
 ### Task 3: Clone the app repository
 
-Perform this task on VN2-SRV2.
+Perform this task on CL1.
 
 1. Open **Visual Studio Code**.
 1. In Visual Studio Code, on the menu, click **View**, **Command Palette...** or press CTRL + SHIFT + P.
@@ -210,7 +210,7 @@ Perform this task on VN2-SRV2.
 
 ### Task 4: Build and run the app
 
-Peform this task on VN2-SRV2.
+Peform this task on CL1.
 
 1. Open **Visual Studio Code**.
 1. In Visual Studio Code, if the repository **VIRTUALIZATION-DOCUMENTATION** is not open:
