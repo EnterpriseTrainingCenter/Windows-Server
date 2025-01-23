@@ -96,16 +96,10 @@ Perform this task on CL1.
 
 ### Task 4: Run the Nano server image in a container
 
-Perform this task on CL1.
+Perform this task on PM-SRV1.
 
-1. Open **Terminal**.
-1. In Terminal, enter a remote PowerShell session to PM-SRV1.
-
-    ````powershell
-    Enter-PSSession PM-SRV1
-    `````
-
-1. In Terminal, start a container with an interactive session from the nanoserver image.
+1. In SConfig, enter **15**.
+1. Start a container with an interactive session from the nanoserver image.
 
     ````powershell
     docker container run --interactive --tty --user ContainerAdministrator mcr.microsoft.com/windows/nanoserver:ltsc2022 cmd.exe
@@ -122,18 +116,12 @@ Perform this task on CL1.
     exit
     `````
 
-1. Exit the remote PowerShell session
-
-    ````powershell
-    Exit-PSSession
-    ````
-
 ### Task 5: Create a new container image
 
-Perform this task on VN2-SRV2.
+Perform this task on PM-SRV1.
 
-1. Open **Terminal**.
-1. In Terminal, get the container ID for the container you just existed.
+1. In SConfig, enter **15**.
+1. Get the container ID for the container you just existed.
 
     ````powershell
     docker container ls --all
