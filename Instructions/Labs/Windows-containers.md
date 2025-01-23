@@ -230,6 +230,7 @@ Peform this task on CL1.
 
     *Note*:  For building containers, hyper-v isolation is not available. The source image has to be changed, because the original image does not run on Windows Server 2025 in process isolation mode. Therefore, we need an image of a more recent operating system that runs in process isolation mode on Windows Server 2025. Alternatively, you could build the container on an older version of Windows Server.
 
+1. On the menu click **File**, **Save**.
 1. On the menu, click **View**, **Terminal**.
 1. In the TERMINAL pane, create a new remote PowerShell session to PM-SRV1 and store it in a variable.
 
