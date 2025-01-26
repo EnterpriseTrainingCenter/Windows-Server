@@ -6,7 +6,6 @@
 * VN1-SRV10
 * CL1
 
-
 ## Setup
 
 1. On **CL1**, sign in as **ad\\Administrator**.

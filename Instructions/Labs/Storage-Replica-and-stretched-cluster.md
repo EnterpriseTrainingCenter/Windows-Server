@@ -25,7 +25,7 @@
 ## Exercise 1: Preparing for Storage Replica and stretched cluster
 
 1. [Configure nested virtualization](#task-1-configure-nested-virtualization) on WIN-VN2-SRV1 and WIN-VN3-SRV1 and assign them 3 GB of memory
-1. [Configure iSCSI target and disks](#task-2-configure-iscsi-targets-and-disks): 2 tagets for VN2-SRV1 and VN3-SRV1, with 2 disks each with 20 GB and 10 GB capacity
+1. [Configure iSCSI target and disks](#task-2-configure-iscsi-targets-and-disks): 2 targets for VN2-SRV1 and VN3-SRV1, with 2 disks each with 20 GB and 10 GB capacity
 1. [Connect to to iSCSI targets](#task-3-connect-to-iscsi-targets) on VN2-SRV1 and VN3-SRV1
 1. [Create volumes](#task-4-create-volumes): name the 20 GB disks Data and assign them the drive letter D, and the 10 GB disks Log and assign them the drive letter E on VN2-SRV1 and VN3-SRV1
 1. [Install Storage Replica feature](#task-5-install-storage-replica-feature) on VN2-SRV1 and VN3-SRV1
@@ -86,7 +86,7 @@ Perform this task on CL1.
 1. In Add initiator ID, ensure **Query initiator computer for ID** is selected, type **VN2-SRV1** and click **OK**.
 1. In **New iSCSI Virtual Disk Wizard**, on page **Specify access servers**, click **Add...**.
 1. In Add initiator ID, ensure **Query initiator computer for ID** is selected and click **Browse...**.
-1. In Select Computer, under **Enter the object name to select**, type **VN2-SRV1** and click **OK**.
+1. In Select Computer, under **Enter the object name to select**, type **VN3-SRV1** and click **OK**.
 1. In **Add initiator ID**, click **OK**.
 1. In **New iSCSI Virtual Disk Wizard**, on page **Specify access servers**, click **Next >**.
 1. On page Enable Authentication, click **Next >**.
@@ -109,7 +109,7 @@ Perform this task on CL1.
 1. In Add initiator ID, ensure **Query initiator computer for ID** is selected, type **VN3-SRV1** and click **OK**.
 1. In **New iSCSI Virtual Disk Wizard**, on page **Specify access servers**, click **Add...**.
 1. In Add initiator ID, ensure **Query initiator computer for ID** is selected and click **Browse...**.
-1. In Select Computer, under **Enter the object name to select**, type **VN3-SRV1** and click **OK**.
+1. In Select Computer, under **Enter the object name to select**, type **VN2-SRV1** and click **OK**.
 1. In **Add initiator ID**, click **OK**.
 1. In **New iSCSI Virtual Disk Wizard**, on page **Specify access servers**, click **Next >**.
 1. On page Enable Authentication, click **Next >**.
@@ -342,7 +342,7 @@ Repeat the steps of this task to install the role on **VN3-SRV1**.
 Perform this task on CL1.
 
 1. Open **Terminal**.
-1. Install **Failover Clustering** on **VN1-SRV4** and **VN1-SRV5**.
+1. Install **Failover Clustering** on **VN2-SRV1** and **VN3-SRV1**.
 
     ````powershell
     Invoke-Command -ComputerName VN2-SRV1, VN3-SRV1 -ScriptBlock {
