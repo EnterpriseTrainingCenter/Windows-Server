@@ -119,8 +119,8 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. Open **Settings**.
-1. In Settings, click **Apps**.
-1. In Apps, click **Optional features**.
+1. In Settings, click **System**.
+1. In System, click **Optional features**.
 1. In Optional features, at the bottom, click **More Windows features**.
 1. In Windows Features, expand **Internet Information Services**, **Web Management Tools**, activate **IIS Management Console** and click **OK**.
 1. On page Windows completed the requested changes, click **Close**.
