@@ -8,7 +8,7 @@
 
 ## Task
 
-On PM-SRV1, create a new virtual machine with the name PM-SRV20. The virtual machine should have 1 GB of memory, 4 virtual processor, time synchronization disabled, and should install Windows Server Core from 2022_x64_EN_Eval.iso.
+On PM-SRV1, create a new virtual machine with the name PM-SRV20. The virtual machine should have 1 GB of memory, 4 virtual processor, time synchronization disabled, and should install Windows Server Core from 2025_x64_EN_Eval.iso.
 
 > Why would you want to deactivate time synchronization?
 
@@ -28,7 +28,7 @@ Perform these steps on CL1.
 1. On page Connect virtual hard disk, ensure **Create a virtual hard disk** is selected. In **Name**, ensure **PM-SRV20.vhdx**, and, in location **C:\\hyper-v\\Virtual Hard Disks\\** is filled in. Click **Next >**.
 1. On page Installation Options, click **Install an operating system from a bootable image file** and click **Browse...**
 1. In Open, expand **pm-srv1.ad.adatum.com**, **Local Disk (C:)** and click **LabResources**.
-1. Click **2022_x64_EN_Eval.iso** and click **Open**.
+1. Click **2025_x64_EN_Eval.iso** and click **Open**.
 1. In **New Virtual Machine Wizard**, on page **Installation Options**, click **Next >**.
 1. On page Summary, click **Finish**.
 1. In **Hyper-V Manager**, under **Virtual machines**, in the context-menu of **PM-SRV20**, click **Settings...**.
@@ -44,20 +44,13 @@ Perform these steps on CL1.
 1. Click **OK**.
 1. In **Hyper-V Manager**, under **Virtual machines**, in the context-menu of **PM-SRV20**, click **Connect...**.
 1. In PM-SRV20 on PM-SRV1 - Virtual Machine Connection, in the menu, click **Action**, **Start**.
-1. On the message **Press any key to boot from CD or DVD...**, press any key.
+1. On the message Press any key to boot from CD or DVD, press any key within a few seconds. If fail to do so, and the VM tries to start PXE over IPv4, on the menu, click **Action**, **Reset...**.
+1. In Windows Server Setup, on page Select language settings, configure **Time and currency format**  as you wish and click **Next**.
+1. On page Select keyboard settings, configure the **Keyboard or input method** as you wich and click **Next**.
+1. On page Select setup option, ensure **Install Windows Server** is selected, click **I agree everything will be deleted including files, apps, and settings** and click **Next**.
+1. On page Select image, click **Windows Server 2025 Datacenter Evaluation** and click **Next**.
+1. On page Applicable notices and license terms, click **Accept**.
+1. On page Select location to install Windows Server, explore the options and click **Next**.
+1. On page Ready to install, click **Install**.
 
-    If you cannot press a key fast enough, perform these steps:
-
-    1. In the menu, click **Action**, **Reset...**.
-    1. In the message box Reset machine, click **Reset**.
-
-    Now, try again to press any key.
-
-1. In Microsoft Server Operating System Setup, select a **Time and currency format** and a **Keyboard or input method** applicable to you and click **Next**.
-1. Click **Install now**.
-1. On page Select the operating system you want to install, click **Windows Server 2022 Datacenter Evaluation** and click **Next**.
-1. On page Applicable notices and license terms, activate **I accept the Microsoft Software License Terms. If an organization is licensing it, I am authorized to bind the organization** and click **Next**.
-1. On page Which type of installation do you want, click **Custom: Install Microsoft Windows Server Operating System only (advanced)**
-1. On page Where do you want to install the operating system, click **Next**.
-
-The installation takes less than 5 minutes.
+Do not wait for the installation to finish.
