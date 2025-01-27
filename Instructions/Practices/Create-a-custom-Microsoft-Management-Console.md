@@ -31,4 +31,7 @@ Perform these steps on CL1.
 1. Type **Basic Administration** and press ENTER.
 1. On the menu, click **File**, **Save As...**.
 1. Save the console as **C:\Users\Public\Desktop\Basic Administration.msc**.
+
+   *Note*: In the dialog, the folder Desktop is displayed as **Public Desktop**.
+
 1. Close the console.
