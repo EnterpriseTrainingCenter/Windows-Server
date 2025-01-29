@@ -347,28 +347,6 @@ Perform this task on CL1.
 1. Click **OK**.
 1. Click **OK**.
 
-##### Variant A
-
-4. In Active Directory Domain Services, in **Search Active Directory**, type the user's name and click **Search**.
-1. Click the found user.
-1. Click **Properties**.
-1. In User properties: ..., on the left, click **Membership**.
-1. Click **Add**.
-1. In the pane Add Group Membership, under **Group Sam Account Name**, type the name of the group and click **Add**.
-1. Click **Save**.
-1. Click **Close**.
-
-##### Variant B
-
-4. In Active Directory Domain Services, in **Search Active Directory**, type the group's name and click **Search**.
-1. Click the found group.
-1. Click **Properties**.
-1. In Group properties: ..., on the left, click **Membership**.
-1. Click **Add**.
-1. In the pane Add Group Membership, under **User SamAccountname**, type the first name of the user and click **Add**.
-1. Click **Save**.
-1. Click **Close**.
-
 #### PowerShell
 
 Perform this task on CL1.
