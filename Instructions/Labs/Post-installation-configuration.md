@@ -30,10 +30,6 @@ After the initial setup, Windows Servers require some post-installation configur
 1. [Set the default Administrator password on Windows Server with Desktop Experience](#task-1-set-the-default-administrator-password-on-windows-server-with-desktop-experience)
 1. [Configure the Ethernet adapter on Windows Server with Desktop Experience](#task-2-configure-the-ethernet-adapter-on-windows-server-with-desktop-experience) with the IPv4 address 10.1.1.160/24, default gateway 10.1.1.1 and DNS server 10.1.1.8
 1. [Set the computer name and join the domain on Windows Server with Desktop Experience](#task-3-set-the-computer-name-and-join-the-domain-on-windows-server-with-desktop-experience): the computer name should be VN1-SRV20
-1. [Add the Windows Server with Desktop Experience to Windows Admin Center](#task-4-add-the-windows-server-with-desktop-experience-to-windows-admin-center)
-
-    > Why does single sign-on not work with the new server?
-
 1. [Set the time zone on Windows Server with Desktop Experience](#task-5-set-the-time-zone-on-windows-server-with-desktop-experience)
 
 ### Task 1: Set the default Administrator password on Windows Server with Desktop Experience
@@ -136,33 +132,7 @@ Perform this task on VN1-SRV20.
 
 1. Enter the credentials for **ad\Administrator**.
 
-### Task 4: Add the Windows Server with Desktop Experience to Windows Admin Center
-
-Perform this task von CL1.
-
-1. Using Microsoft Edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **Add**.
-1. In Add or create resources, under **Servers**, click **Add**.
-1. Click the tab **Search Active Directory**.
-1. Enter **VN1-SRV20** and click **Search**.
-1. Activate the checkbox left to **VN1-SRV20.ad.adatum.com** and click **Add**.
-1. In Windows Admin Center, click **VN1-SRV20.ad.adatum.com.**.
-
-    > A pane **Specify your credentials** opens. Single sign-on does not work, because you did not set up Kerberos constrained delegation for the new server.
-
-1. Click **Cancel**.
-1. In Windows Admin Center, click **VN1-SRV1.ad.adatum.com**.
-1. Connected to VN1-SRV1.ad.adatum.com, under Tools, click **Active Directory**.
-1. Under Active Directory Domain Services, in **Search Active Directory**, type **VN1-SRV20** and click **Search**.
-1. In the results, click **VN1-SRV20** and click **Properties+*.
-1. In Computer properties: VN1-SRV20$, click **Add a Windows Admin Center gateway**.
-1. In the pane Trust a Windows Admin Center gateway, in **SamAccountName**, enter **VN1-SRV4** and click **OK**.
-1. On the top-left, click **Windows Admin Center**.
-1. In Windows Admin Center, click **VN1-SRV20.ad.adatum.com.**.
-
-    > Windows Admin Center should connect to the server without additional credentials. If a pane **Specify your credentials** appears, click **Cancel** and try again.
-
-### Task 5: Set the time zone on Windows Server with Desktop Experience
+### Task 4: Set the time zone on Windows Server with Desktop Experience
 
 #### Desktop Experience
 
@@ -192,10 +162,6 @@ Perform this task on CL1.
 1. [Set the default Administrator password on Windows Server](#task-1-set-the-default-administrator-password-on-windows-server)
 1. [Configure the Ethernet adapter on Windows Server](#task-2-configure-the-ethernet-adapter-on-windows-server) with the IPv4 address 10.1.1.168/24, default gateway 10.1.1.1 and DNS server 10.1.1.8
 1. [Set the computer name and join the domain on Windows Server](#task-3-set-the-computer-name-and-join-the-domain-on-windows-server): the computername should be VN1-SRV21
-1. [Add the Windows Server to Windows Admin Center](#task-4-add-the-windows-server-to-windows-admin-center)
-
-    > Why does single sign-on not work with the new server?
-
 1. [Set the time zone on Windows Server](#task-5-set-the-time-zone-on-windows-server)
 
 ### Task 1: Set the default Administrator password on Windows Server
@@ -300,29 +266,7 @@ Perform this task on VN1-SRV21.
 
 1. Enter the credentials for **ad\Administrator**.
 
-### Task 4: Add the Windows Server to Windows Admin Center
-
-Perform this task von CL1.
-
-1. Open **Terminal**.
-1. Configure Kerberos constrained delegation to allow the computer account of **VN1-SRV20** to be delegated to the Windows Admin Center gateway **VN1-SRV4**.
-
-    ````powershell
-    $gateway = Get-ADComputer VN1-SRV4
-    Set-ADComputer VN1-SRV21 -PrincipalsAllowedToDelegateToAccount $gateway
-    ````
-
-1. Using Microsoft Edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, click **Add**.
-1. In Add or create resources, under **Servers**, click **Add**.
-1. Click the tab **Search Active Directory**.
-1. Enter **VN1-SRV21** and click **Search**.
-1. Activate the checkbox left to **VN1-SRV21.ad.adatum.com** and click **Add**.
-1. In Windows Admin Center, click **VN1-SRV21.ad.adatum.com.**.
-
-    > Windows Admin Center should connect to the server without additional credentials. If it does not work initially, wait a minute, refresh the page and try again.
-
-### Task 5: Set the time zone on Windows Server
+### Task 4: Set the time zone on Windows Server
 
 #### SConfig
 
