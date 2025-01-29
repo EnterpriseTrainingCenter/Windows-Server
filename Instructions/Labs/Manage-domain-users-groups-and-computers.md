@@ -15,7 +15,7 @@ On **CL2**, logon as **.\LocalAdmin**.
 
 If you skipped the practice [Manage local groups](../Practices/Manage-local-groups.md), on CL1, run ````C:\LabResources\Solutions\Add-LocalAdministratorsMember.ps1````.
 
-If you skipped the practice [Enable the Active Directory Recycle Bin](../Practices/Enable-the-Active-Directory-Recycle-Bin.md), on CL1, run ````C:\LabResources\Solutions\C:\LabResources\Solutions\Add-WACServers.ps1````.
+If you skipped the practice [Enable the Active Directory Recycle Bin](../Practices/Enable-the-Active-Directory-Recycle-Bin.md), on CL1, run ````C:\LabResources\Solutions\Enable-ADRecycleBin.ps1````.
 
 If you skipped the lab [Explore Windows Admin Center](../Labs/Explore-Windows-Admin-Center.md), on VN1-SRV4, run ````C:\LabResources\Solutions\Add-WACServers.ps1````.
 
