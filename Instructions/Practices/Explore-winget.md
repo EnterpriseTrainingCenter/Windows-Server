@@ -19,7 +19,7 @@ Perform these steps on VN1-SRV9.
 
 1. Sign in as **.\Administrator**.
 1. Run **Terminal** as Administrator.
-1. Update the sources for winget and list 
+1. Update the sources for winget and list.
 
     ````powershell
     winget source update

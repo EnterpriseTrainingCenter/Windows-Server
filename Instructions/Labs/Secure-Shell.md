@@ -23,24 +23,25 @@ For secure remote command line administration, Adatum wants to deploy the proven
 
 ## Exercise 1: Installing and verifying OpenSSH server
 
-1. [Install OpenSSH server](#task-1-install-openssh-server) on VN1-SRV5.
+1. [Enable the OpenSSH server](#task-1-enable-the-openssh-server) on VN1-SRV5.
 1. [Using SSH with a password connect to server](#task-2-using-ssh-with-a-password-connect-to-server) VN1-SRV5
 
-### Task 1: Install OpenSSH server
+### Task 1: Enable the OpenSSH server
 
 Perform this task on VN1-SRV5.
 
-1. Install the OpenSSH server.
-
-    ````powershell
-    Get-WindowsCapability -Online -Name OpenSSH.Server* |
-    Add-WindowsCapability -Online
-    ````
-
-1. Start the **sshd** service.
+1. Check the status of the OpenSSH SSH Server service.
 
     ````powershell
     $name = 'sshd'
+    Get-Service -Name $name
+    ````
+
+    The service should be stopped.
+
+1. Start the OpenSSH SSH Server service.
+
+    ````powershell
     Start-Service -Name $name
     ````
 
