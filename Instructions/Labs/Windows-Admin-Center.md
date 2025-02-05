@@ -188,7 +188,7 @@ Perform this task on VN1-SRV4.
 1. On page Send diagnostic data to Microsoft, select your preferred option and click **Next**.
 1. On page Ready to install, verify all options and click **Install**.
 
-    Wait for the installation to complete. This should take about a minute.
+    Wait for the installation to complete. This should take less than a minute.
 
 1. On page Completing the Windows Admin Center (v2) Setup Wizard, click to clear **Start Windows Admin Center: https://admincenter.ad.adatum.com:443** and click **Finish**.
 1. In C:\Windows\system32\cmd.exe, start the service **windowsadmincenter**
@@ -376,7 +376,7 @@ Perform this task on CL1.
 1. Store the credentials for **ad\Administrator** in a variable.
 
     ````powershell
-    $credentials = Get-Credential
+    $credential = Get-Credential
     ````
 
 1. In Windows PowerShell Credential Request, enter the credentials of **ad\Administrator**.
@@ -404,7 +404,8 @@ Perform this task on CL1.
         -AccessKey $accessKey
     ````
 
-1. Open **Microsoft Edge** and navigate to <https://admincenter.ad.adatum.com>.
+1. Switch to **Microsoft Edge**.
+1. In Microsoft Edge, click **Windows Admin Center**.
 
     You should see connections to all servers and clients in Active Directory.
 
@@ -414,77 +415,8 @@ Perform this task on CL1.
     All imported connections are shared connections and are visible for all users.
 
 1. Click **Windows Admin Center** to return to the connections page.
-1. Click **vn1-srv5.ad.adatum.com**.
 
-    > The pane Specify your credentials opens, because single sign-on with Kerberos constrained delegation is not configured yet.
-
-1. Either enter the credentials of **ad\Administrator** and click **Continue** or click **Cancel**.
-
-### Task 2: Configure single sign-on
-
-Perform this task on CL1.
-
-1. Open **Microsoft Edge**.
-1. In Microsoft Edge, navigate to **https://admincenter.ad.adatum.com**.
-1. On page Sign in to Windows Admin Center, sign in as **ad\Administrator**.
-1. Click *Settings*.
-1. In Settings, under **Gateway**, click **Access**.
-1. On page Gateway access, click to activate **Reveal Access key**. Below, beside the access key, click **Copy**.
-1. Open **Terminal**.
-1. Save the access key to a variable.
-
-    ````powershell
-    # Replace the string with the text from your clipboard
-    $accessKey = 'QR[D;t@2GXr9GrCJScF[$|Ne!b9esOos'
-    ````
-
-1. Store the credentials for **ad\Administrator** in a variable.
-
-    ````powershell
-    $credentials = Get-Credential
-    ````
-
-1. In Windows PowerShell Credential Request, enter the credentials of **ad\Administrator**.
-1. Export all Windows Admin Center connections to a CSV file.
-
-    ````powershell
-    $fileName = '~\Documents\WAC-connections.csv'
-    Export-WACConnection `
-        -Endpoint 'https://admincenter.ad.adatum.com' `
-        -FileName $fileName `
-        -Credentials $credentials `
-        -AccessKey $accessKey
-    ````
-
-1. Import the CSV file.
-
-    ````powershell
-    $wACConnections = Import-Csv -Path $fileName
-    ````
-
-    You may want to take a look at the contents of the variable ````$wACConnections````.
-
-1. Get the computer account of the Windows Admin Center gateway and save it in a variable.
-
-    ````powershell
-    $wACGatewayComputer = Get-ADComputer -Identity 'VN1-SRV4$'
-    ````
-
-1. Allow the computers from the CSV to be delegated to the Windows Admin Center gateway.
-
-    ````powershell
-    $wACConnections.name | ForEach-Object { 
-        Get-ADComputer -Filter "DNSHostName -eq '$PSItem'" |
-        Set-ADComputer -PrincipalsAllowedToDelegateToAccount $wACGatewayComputer
-    }
-    ````
-
-1. Swich back to **Microsoft Edge**.
-1. Click **vn1-srv5.ad.adatum.com**.
-
-    You should be connected without having to enter additional credentials.
-
-### Task 3: Manage extensions
+### Task 2: Manage extensions
 
 Perform this task on CL1.
 
@@ -522,6 +454,8 @@ Perform this task on CL1.
 
     1. Open a new tab.
     1. Navigate to <https://portal.azure.com> and sign in if necessary.
+    1. On the top-right, click your user avatar and click **Switch directory**.
+    1. If your Directory is not Current, beside your Directory name, click **Switch**.
     1. In the search box at the top, type **Microsoft Entra ID** and click **Microsoft Entra ID**.
     1. In Microsoft Entra ID, on the page **Overview**, take a note of **Tenant ID**.
 
@@ -536,7 +470,8 @@ Perform this task on CL1.
 
 Perform this task on CL2.
 
-1. Open **Microsoft Edge** and navigate to <https://admincenter>.
+1. Open **Microsoft Edge** and navigate to <https://admincenter.ad.adatum.com>.
+1. Sign in with the credentials of **ad\Pia**.
 
     > Pia can access Windows Admin Center and sees all connections.
 
@@ -644,7 +579,7 @@ Perform this task on CL1.
 
 Perform this task on CL1.
 
-1. Using Microsoft edge, navigate to <https://admincenter>.
+1. Using Microsoft edge, navigate to <https://admincenter.ad.adatum.com>.
 1. Click *Settings*.
 1. In Settings, click **Access**.
 1. Under Gateway Access, under **Allowed Groups**, click **Add**.
