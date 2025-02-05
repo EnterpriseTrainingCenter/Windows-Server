@@ -161,11 +161,8 @@ Perform this task on CL1.
     * **Remote Volume Management (RPC-EPMAP)** with the profile **Domain**
 
 1. In the pane **Actions**, under **Selected Item**, click **Enable Rule**.
-1. Double-click the rule **COM+ Network Access (DCOM-In)**.
-1. In COM+ Network Access (DCOM-In) Properties, on tab **General**, activate the checkbox **Enabled**.
-1. Click the tab **Advanced**.
-1. On tab Advanced, deactive the checkboxes **Private** and **Public**. Click **OK**.
-1. Repeat the steps above for the 3 rules in the group **Remove Event Log Management**.
+
+Repeat the steps above for the 3 rules in the group **Remote Event Log Management**.
 
 #### PowerShell
 
@@ -174,6 +171,10 @@ Perform this task on CL1.
 
     ````powershell
     Get-NetFirewallRule -DisplayGroup 'Remote Volume Management' | 
+    Where-Object { $PSItem.Profile -eq 'Domain' } | 
+    Set-NetFirewallRule -Enabled True
+
+    Get-NetFirewallRule -DisplayGroup 'Remote Event Log Management' | 
     Where-Object { $PSItem.Profile -eq 'Domain' } | 
     Set-NetFirewallRule -Enabled True
     ````
