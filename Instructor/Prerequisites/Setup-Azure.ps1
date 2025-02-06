@@ -273,7 +273,7 @@ foreach ($user in $users) {
     #endregion Assign the Global Administrator role to the invited user
 
     # Add the invitation redeem URL to the results
-    $user.InvitationRedeemUrl = $invitation.InvitationRedeemUrl
+    $user.InviteRedeemUrl = $invitation.InviteRedeemUrl
     $results += $user
 
     # Disconnect from Microsoft Graph
