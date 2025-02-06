@@ -177,14 +177,14 @@ foreach ($user in $users) {
             (
                 -join (
                     (97..122) |
-                    Get-Random -Count 2 |
+                    Get-Random -Count 3 |
                     ForEach-Object { [char] $PSItem }
                 ) 
             )+
             (
                 -join (
                     (48..57) |
-                    Get-Random -Count 5 |
+                    Get-Random -Count 4 |
                     ForEach-Object { [char] $PSItem }
                 )
         )
