@@ -1,13 +1,13 @@
-UserName;DisplayName;NewPassword;Domain;InvitationRedeemUrl
-courseuser1;Course User 1;;coursetenant1.onmicrosoft.com;
-courseuser2;Course User 2;;coursetenant2.onmicrosoft.com;
-courseuser3;Course User 3;;coursetenant3.onmicrosoft.com;
-courseuser4;Course User 4;;coursetenant4.onmicrosoft.com;
-courseuser5;Course User 5;;coursetenant5.onmicrosoft.com;
-courseuser6;Course User 6;;coursetenant6.onmicrosoft.com;
-courseuser7;Course User 7;;coursetenant7.onmicrosoft.com;
-courseuser8;Course User 8;;coursetenant8.onmicrosoft.com;
-courseuser9;Course User 9;;coursetenant9.onmicrosoft.com;
-courseuser10;Course User 10;;coursetenant10.onmicrosoft.com;
-courseuser11;Course User 11;;coursetenant11.onmicrosoft.com;
-courseuser12;Course User 12;;coursetenant12.onmicrosoft.com;
+"UserName";"DisplayName";"UserPrincipalName";"NewPassword";"Domain";"InviteRedeemUrl"
+"courseuser1";"Course User 1";"";"";"coursetenant1.onmicrosoft.com";
+"courseuser2";"Course User 2";"";"";"coursetenant2.onmicrosoft.com";
+"courseuser3";"Course User 3";"";"";"coursetenant3.onmicrosoft.com";
+"courseuser4";"Course User 4";"";"";"coursetenant4.onmicrosoft.com";
+"courseuser5";"Course User 5";"";"";"coursetenant5.onmicrosoft.com";
+"courseuser6";"Course User 6";"";"";"coursetenant6.onmicrosoft.com";
+"courseuser7";"Course User 7";"";"";"coursetenant7.onmicrosoft.com";
+"courseuser8";"Course User 8";"";"";"coursetenant8.onmicrosoft.com";
+"courseuser9";"Course User 9";"";"";"coursetenant9.onmicrosoft.com";
+"courseuser10";"Course User 10";"";"";"coursetenant10.onmicrosoft.com";
+"courseuser11";"Course User 11";"";"";"coursetenant11.onmicrosoft.com";
+"courseuser12";"Course User 12";"";"";"coursetenant12.onmicrosoft.com";
