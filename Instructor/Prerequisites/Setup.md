@@ -14,6 +14,8 @@ After each course, the [Entra ID tenants must be deleted](#delete-entra-id-tenan
 
 For each student, an invidiual Entra ID tenant must be created. The tenants cannot be reused for several courses.
 
+*Important*: Testing has shown, that only 12 tenants can be created in certain time period. If you need to create more tenants, plan for delays.
+
 1. Using a web browser, navigate to <https://portal.azure.com>.
 1. Search for and click **Microsoft Entra ID**.
 1. In Overview, click the button **Manage tentants**.
