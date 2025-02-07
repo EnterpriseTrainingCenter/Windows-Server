@@ -345,6 +345,14 @@ Perform this task on CL1.
 
     > There should 9 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com, VN1-SRV5.ad.adatum.com, and vn2-srv1.ad.adatum.com.
 
+If any records, are missing, open **Terminal** and execute the following command:
+
+````powershell
+Invoke-Command -ComputerName VN1-SRV5, VN2-SRV1 { Restart-Service Netlogon }
+````
+
+Wait a minute and then check again. If the problem persists, ask the instructor.
+
 ### Task 2: Verify shares for Active Directory
 
 Perform this task on CL1.
