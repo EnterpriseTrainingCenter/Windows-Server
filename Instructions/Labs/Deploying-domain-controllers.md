@@ -21,10 +21,6 @@ You must have completed the practice [Explore Server Manager](../Practices/Explo
 
 You must have completed the practice [Install Windows Admin Center using a script](../Practices/Install-Windows-Admin-Center-using-a-script.md). If you skipped the practice, on **VN1-SRV4**, sign in as **ad\Administrator**, and run ````C:\LabResources\Solutions\Install-AdminCenter.ps1````.
 
-## Known issues
-
-<https://github.com/EnterpriseTrainingCenter/WindowsServer/issues/291>
-
 ## Introduction
 
 The domain controller still running Windows Server 2019 must be replaced by a Windows Server 2022 domain controller. Moreover, Adatum is expanding to a new location. An additional domain controller must be installed at the new location. Furthermore, Adatum launches a new subsidiary with the name Contoso. Because it is expected, that the subsidiary will be sold soon, a new forest needs to be created for the subsidiary.
@@ -383,7 +379,6 @@ If time permits, you can try to fix the warning and errors and run the the BPA s
 1. [Transfer the domain-wide flexible single master operation roles](#task-1-transfer-the-domain-wide-flexible-single-master-operation-roles)
 1. [Transfer the forest-wide flexible single master operation roles](#task-2-transfer-the-forest-wide-flexible-single-master-operation-roles)
 
-
 ### Task 1: Transfer the domain-wide flexible single master operation roles
 
 #### Desktop experience
@@ -531,6 +526,9 @@ Perform this task on VN1-SRV1.
 1. Beside Enter static IP address, enter **10.1.1.9**.
 1. Beside Enter subnet mask, enter **255.255.255.0**.
 1. Beside Enter default gateway, enter **10.1.1.1**.
+
+    If you receive an error message, skip to step 13 and change the IP address using one of the other methods provided.
+
 1. In Network Adapter Settings, enter **2**.
 1. Beside Enter new preferred DNS server, enter **10.1.1.40**.
 1. In the message box Preferred DNS server set, click **OK**.
@@ -575,7 +573,6 @@ Perform this task on CL1.
         Get-NetIPAddress -CimSession $cimSession |
         Where-Object { $PSItem.IPAddress -eq $oldIPAddress }
     ).InterfaceAlias
-
     ````
 
 1. Add the IP address **10.1.1.9**. with the prefix length of **24** to VN1-SRV1.
@@ -607,7 +604,7 @@ Perform this task on CL1.
 
     ````powershell
     Remove-DnsServerResourceRecord `
-        -ComputerName $computerName `
+        -ComputerName VN1-SRV5 `
         -ZoneName ad.adatum.com `
         -RRType A `
         -Name $computerName `
@@ -619,6 +616,12 @@ Perform this task on CL1.
 
     ````powershell
     Clear-DnsClientCache
+    ````
+
+1. Create a CIM session to **VN1-SRV1**.
+
+    ````powershell
+    $cimSession = New-CimSession -ComputerName $computerName
     ````
 
 1. Remove the IP address **10.1.1.8** from VN1-SRV1.
@@ -689,7 +692,122 @@ Perform this task on CL1.
 
 ### Task 4: Demote the old domain controller
 
-*Note:*: If you receive any error message while demoting the domain controller, skip this task and the rest of the lab for now. You may revisit this lab after some time. In most cases, the error will be resolved.
+*Note:*: If you receive any error message while demoting the domain controller, perform the following troubleshooting steps on CL1.
+
+1. Open **Terminal**.
+1. Shut down **VN1-SRV1**.
+
+    ````powershell
+    Stop-Computer -ComputerName VN1-SRV1 -WsmanAuthentication Default
+    ````
+
+    From this point on, you should not start the computer again. Consider, deleting it from Hyper-V.
+
+1. Start ntdsutil.exe.
+
+    ````powershell
+    ntdsutil.exe
+    ````
+
+1. Remove VN1-SRV1.ad.adatum.com as domain controller by executing the following commands.
+
+    ````shell
+    Metadata cleanup
+    ````
+
+1. In metadata cleanup, change to connections.
+
+    ````shell
+    Connections
+    ````
+
+1. In connections, connect to server VN1-SRV5.ad.adatum.com.
+
+    ````shell
+    Connect to server VN1-SRV5.ad.adatum.com
+    ````
+
+1. Quit connections.
+
+    ````shell
+    Quit
+    ````
+
+1. In metadata cleanup, enter operation target selection.
+
+    ````shell
+    Select operation target
+    ````
+
+1. In select operation target, list the domains.
+
+    ````shell
+    List domains
+    ````
+
+    Take a note of the number to the left of DC=ad, DC=adatum, DC=com.
+
+1. Select the domain. Ensure, you use the number, you noted in the previous step.
+
+    ````shell
+    Select domain 0
+    ````
+
+1. List the sites.
+
+    ````shell
+    List sites
+    ````
+
+    Take a note of the number to the left of CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=ad,DC=adatum,DC=com.
+
+1. Select the site. Ensure, you use the number, you noted in the previous step.
+
+    ````shell
+    Select site 0
+    ````
+
+1. List the servers for the domain in the site.
+
+    ````shell
+    List servers for domain in site
+    ````
+
+    Take a note of the number to the left of CN=VN1-SRV1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=ad,DC=adatum,DC=com.
+
+1. Select the server. Ensure, you use the number, you noted in the previous step.
+
+    ````shell
+    Select server 0
+    ````
+
+1. Quit the operation target selection.
+
+    `````shell
+    Quit
+    ````
+
+1. In metadata cleanup, remove the selected server.
+
+    ````shell
+    Remove selected server
+    ````
+
+1. In the message box Server Remove Confirmation Dialog, ensure, that you remove **CN=VN1-SRV1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=ad,DC=adatum,DC=com**. Click **Yes**.
+
+1. Quit metadata cleanup.
+
+    ````shell
+    Quit
+    ````
+
+1. Quit ntdsutil.exe.
+
+    ````shell
+    Quit
+    ````
+
+Leave out task 5 and skip to the next exercise.
 
 #### Desktop experience
 
