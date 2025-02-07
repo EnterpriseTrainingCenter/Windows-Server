@@ -1,4 +1,4 @@
-# Practice: Getting started with System Insights
+# Practice: Create a security baseline using OSConfig
 
 ## Required VMs
 
@@ -12,7 +12,7 @@ On CL1, sign in as **ad\Administrator**.
 
 ## Task
 
-Install System Insights von VN1-SRV5, check the status of all capabilities, invoke all capabilities and check the default schedules.
+On VN1-SRV5, apply a the security baseline for member servers using OSConfig. Check the compliance, verify the status of drift control, disable drift control and remove the security baseline.
 
 ## Instructions
 
