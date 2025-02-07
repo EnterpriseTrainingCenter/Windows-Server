@@ -962,6 +962,46 @@ Perform this task on CL1.
 
     > The highest possible domain functional level is Windows Server 2016. The domain is already at that level.
 
+## Exercise 5: Raise the domain and forest functional level
+
+1. Raise the domain functional level
+
+1. Raise the forest functional level
+
+### Task 1: Raise the domain functional level
+
+#### Desktop experience
+
+Perform this task on CL1.
+
+1. Open **Active Directory Administrative Center**.
+1. In Active Directory Administrative Center, in the context-menu of **ad (local)**, click **Raise the domain functional level...**
+
+1. In Raise domain function level, click **OK**.
+
+1. In the message box This change affects the entire domain. After you raise the domain functional level, it is possible that you may not be able to reverse it., click **OK**.
+
+1. In the message box Raise Domain Functional Level, click **OK**.
+
+#### PowerShell
+
+Perform this task on CL1.
+
+1. In the context menu of **Start**, click **Terminal**.
+1. Set the domain mode to Windows Server 2016.
+
+    ````powershell
+    Set-ADDomainMode -Identity ad.adatum.com -DomainMode Windows2025Domain
+    ````
+
+    If you receive an error message **Set-ADDomainMode : A referral was returned from the server**, restart VN1-SRV5 and try again.
+
+    ````powershell
+    Restart-Computer -ComputerName vn1-srv5 -WsmanAuthentication Default
+    ````
+
+1. At the prompt **Performing the operation "Set" on target "DC=ad,DC=adatum,DC=com".**, enter **y**.
+
 ### Task 2: Raise the forest functional level
 
 #### Destkop experience
@@ -970,10 +1010,9 @@ Perform this task on CL1.
 
 1. Open **Active Directory Administrative Center**.
 1. In Active Directory Administrative Center, in the context-menu of **ad (local)**, click **Raise the forest functional level...**
-
-    > The highest possible forest functional level is Windows Server 2016. The forest is already at that level.
-
-1. In Raise domain function level, click **Cancel**.
+1. In Raise forest function level, click **OK**.
+1. In the message box This change affects the entire forest. After you raise the forest functional level, it is possible that you may not be able to reverse it., click **OK**
+1. In Raise Forest Functional Level, click **OK**.
 
 #### PowerShell
 
@@ -983,12 +1022,10 @@ Perform this task on CL1.
 1. Set the forest mode to Windows Server 2016.
 
     ````powershell
-    Set-ADForestMode -Identity ad.adatum.com -ForestMode Windows2016Forest
+    Set-ADForestMode -Identity ad.adatum.com -ForestMode Windows2025Forest
     ````
 
 1. At the prompt **Performing the operation "Set" on target "CN=Partitions,CN=Configuration,DC=ad,DC=adatum,DC=com".**, enter **y**.
-
-    > You will receive the error message **Set-ADForestMode : The functional level of the domain (or forest) cannot be lowered to the requested value**. The highest possible forest functional level is Windows Server 2016. The domain is already at that level.
 
 1. Check the forest mode.
 
@@ -996,7 +1033,7 @@ Perform this task on CL1.
     Get-ADForest
     ````
 
-    > The value for ForestMode should be Windows2016Forest.
+    > The value for ForestMode should be Windows2025Forest.
 
 ## Exercise 6: Deploy a new forest
 
