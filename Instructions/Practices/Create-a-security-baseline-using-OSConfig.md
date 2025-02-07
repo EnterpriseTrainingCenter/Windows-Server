@@ -76,3 +76,8 @@ Perform these steps on CL1.
     ````
 
 1. At the prompt Confirm, enter **y**.
+1. Exit the remote PowerShell session.
+
+    ````powershell
+    Exit-PSSession
+    ````
