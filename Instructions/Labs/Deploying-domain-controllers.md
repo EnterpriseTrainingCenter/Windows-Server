@@ -32,7 +32,8 @@ The domain controller still running Windows Server 2019 must be replaced by a Wi
 1. [Transfer flexible single master operation roles](#exercise-3-transfer-flexible-single-master-operation-roles)
 1. [Decommission a domain controller](#exercise-4-decommission-a-domain-controller)
 1. [Raise domain and forest functional level](#exercise-5-raise-the-domain-and-forest-functional-level)
-1. [Deploy a new forest](#exercise-6-deploy-a-new-forest)
+1. [Enable database 32K pages](#exercise-6-enable-database-32k-pages)
+1. [Deploy a new forest](#exercise-7-deploy-a-new-forest)
 
 Note: Exercise 6 is not dependent on the other exercises. To safe time, you may run the tasks of exercise 6 while you are waiting for execution of tasks in the other exercises.
 
@@ -922,50 +923,6 @@ Perform this task on CL1.
 
 1. Raise the domain functional level
 
-    > What is the highest possible domain functional level?
-
-1. Raise the forest functional level
-
-    > What is the highest possible forest functional level?
-
-### Task 1: Raise the domain functional level
-
-#### Desktop experience
-
-Perform this task on CL1.
-
-1. Open **Active Directory Administrative Center**.
-1. In Active Directory Administrative Center, in the context-menu of **ad (local)**, click **Raise the domain functional level...**
-
-    > The highest possible domain functional level is Windows Server 2016. The domain is already at that level.
-
-1. In Raise domain function level, click **Cancel**.
-
-#### PowerShell
-
-Perform this task on CL1.
-
-1. In the context menu of **Start**, click **Terminal**.
-1. Set the domain mode to Windows Server 2016.
-
-    ````powershell
-    Set-ADDomainMode -Identity ad.adatum.com -DomainMode Windows2016Domain
-    ````
-
-    If you receive an error message **Set-ADDomainMode : A referral was returned from the server**, restart both domain controllers and try again.
-
-    ````powershell
-    Restart-Computer -ComputerName vn1-srv5, vn2-srv1 -WsmanAuthentication Default
-    ````
-
-1. At the prompt **Performing the operation "Set" on target "DC=ad,DC=adatum,DC=com".**, enter **y**.
-
-    > The highest possible domain functional level is Windows Server 2016. The domain is already at that level.
-
-## Exercise 5: Raise the domain and forest functional level
-
-1. Raise the domain functional level
-
 1. Raise the forest functional level
 
 ### Task 1: Raise the domain functional level
@@ -1035,7 +992,46 @@ Perform this task on CL1.
 
     > The value for ForestMode should be Windows2025Forest.
 
-## Exercise 6: Deploy a new forest
+## Exercise 6: Enable database 32K pages
+
+1. [Verify the that your have 32k page capable database](#task-1-verify-the-that-your-have-32k-page-capable-database)
+1. [Enable the Database 32k pages optional feature](#task-2-enable-the-database-32k-pages-optional-feature)
+
+### Task 1: Verify the that your have 32k page capable database
+
+Perform this task on CL1.
+
+1. Open **Terminal**.
+1. In Terminal, verify the msDs-JetDBpageSize property.
+
+    ````powershell
+    Get-ADObject `
+        -LDAPFilter '(ObjectClass=nTDSDSA)' `
+        -SearchBase 'CN=Configuration,DC=ad,DC=adatum,DC=com' `
+        -Properties msDS-JetDBPageSize |
+    Format-List distinguishedName, msDs-JetDBPageSize
+    ````
+
+    msDs-JetDBPageSize should be 32768.
+
+### Task 2: Enable the Database 32k pages optional feature
+
+Perform this task on CL1.
+
+1. Open **Terminal**.
+1. In Terminal, enable the Database 32k pages optional feature.
+
+    ````powershell
+    Enable-ADOptionalFeature `
+        -Identity 'Database 32k pages feature' `
+        -Scope 'ForestOrConfigurationSet' `
+        -Server VN1-SRV5.ad.adatum.com `
+        -Target ad.adatum.com
+    ````
+
+1. At the prompt Confirm, enter **ye**.
+
+## Exercise 7: Deploy a new forest
 
 1. [Install Active Directory Domain Services on VN2-SRV2](#task-1-install-active-directory-domain-services-on-vn2-srv2)
 1. [Configure Active Directory Domain Services as new forest](#task-2-configure-active-directory-domain-services-as-new-forest) with the name ad.contoso.com on VN2-SRV2.
