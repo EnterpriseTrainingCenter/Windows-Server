@@ -3,17 +3,12 @@
 ## Required VMs
 
 * VN1-SRV1
-* VN1-SRV4
 * VN1-SRV5
 * CL1
 
 ## Setup
 
 On CL1, sign in as **ad\Administrator**.
-
-If you skipped the practice [Install Remote Server Administration Tools](/Instructions/Practices/Install-Remote-Server-Administration-Tools.md), on CL1, run the script **C:\LabResources\Solutions\Install-RemoteServerAdministrationTools.ps1**.
-
-If you skipped the lab [Explore Windows Admin Center](/Instructions/Labs/Explore-Windows-Admin-Center.md), on VN1-SRV4, run the script **C:\LabResources\Solutions\Install-AdminCenter.ps1** and add **VN1-SRV5** to Windows Admin Center.
 
 ## Task
 
@@ -24,59 +19,60 @@ Install System Insights von VN1-SRV5, check the status of all capabilities, invo
 Perform these steps on CL1.
 
 1. Open **Terminal**.
-1. In Terminal, install the Windows feature **System-Insights** on VN1-SRV5.
-
-    ````powershell
-    Add-WindowsFeature `
-        -Computername VN1-SRV5 `
-        -Name System-Insights `
-        -IncludeManagementTools
-
 1. Enter into a remote PowerShell session to VN1-SRV5.
 
     ````powershell
     Enter-PSSession VN1-SRV5
     ````
 
-1. Get capabilities and their status.
+1. Install the OSConfig PowerShell module.
 
     ````powershell
-    Get-InsightsCapability
+    Install-Module `
+        -Name Microsoft.OSConfig `
+        -Scope AllUsers `
+        -Repository PSGallery `
+        -Force
     ````
 
-    State should be enabled for all capabilities, but the status is None, because they have not run yet.
-
-1. Invoke all capabilities.
+1. At the prompt NuGet provider is required to continue, enter **y**.
+1. Configure the security baseline for member servers.
 
     ````powershell
-    Get-InsightsCapability | Invoke-InsightsCapability
+    $scenario = 'SecurityBaseline/WS2025/MemberServer'
+    Set-OSConfigDesiredConfiguration -Scenario $scenario -Default
     ````
 
-1. On the prompt Invoking a capability, enter **y**. Repeat this step for all capabilities.
-1. Get the last run of all capabilities.
+1. Check the compliance with the baseline.
 
     ````powershell
-    Get-InsightsCapability | Format-Table Name, Description, Status, LastRun
+    Get-OSConfigDesiredConfiguration -Scenario $scenario |
+    Format-Table `
+        Name, `
+        @{ Name = "Status"; Expression = { $PSItem.Compliance.Status } }, `
+        @{ Name = "Reason"; Expression = { $_.Compliance.Reason } } `
+        -AutoSize `
+        -Wrap
     ````
 
-    LastRun should be the current date now.
-
-1. Get the results of all capabilities.
+1. Get the status of drift control.
 
     ````powershell
-    Get-InsightsCapability | Get-InsightsCapabilityResult
+    Get-OSConfigDriftControl
     ````
 
-    You will not see any results, because System Insights has to run for 5 days at least, before it can make any forecasts.
+    Drift control is enabled by default.
 
-1. Check the default schedule of all capabilities.
+1. Disable drift control.
 
     ````powershell
-    Get-InsightsCapability | Get-InsightsCapabilitySchedule
+    Disable-OSConfigDriftControl
     ````
 
-1. Exit the remote PowerShell session
+1. Remove the security baseline.
 
     ````powershell
-    Exit-PSSession
+    Remove-OSConfigDesiredConfiguration -Scenario $scenario
     ````
+
+1. At the prompt Confirm, enter **y**.
