@@ -13,8 +13,6 @@ On CL1, sign in as **ad\Administrator**.
 
 If you skipped the practice [Install Remote Server Administration Tools](/Instructions/Practices/Install-Remote-Server-Administration-Tools.md), on CL1, run the script **C:\LabResources\Solutions\Install-RemoteServerAdministrationTools.ps1**.
 
-If you skipped the lab [Explore Windows Admin Center](/Instructions/Labs/Explore-Windows-Admin-Center.md), on VN1-SRV4, run the script **C:\LabResources\Solutions\Install-AdminCenter.ps1** and add **VN1-SRV5** to Windows Admin Center.
-
 ## Task
 
 Install System Insights von VN1-SRV5, check the status of all capabilities, invoke all capabilities and check the default schedules.
