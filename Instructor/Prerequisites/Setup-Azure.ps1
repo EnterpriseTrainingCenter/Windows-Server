@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param (
     [string]
-    $CsvPath,
+    $CsvPath = (Join-Path -Path $PSScriptRoot -ChildPath 'users.csv'),
     [char]
     $Delimiter = ';',
     [ValidateSet(
@@ -20,11 +20,6 @@ param (
     [string]
     $Encoding = 'default'
 )
-
-if ([string]::IsNullOrEmpty($CsvPath)) {
-    $CsvPath = (Join-Path -Path $PSScriptRoot -ChildPath 'users.csv')
-}
-    
 
 #region Install required modules
 # Install the Microsoft.Graph module if not already installed
