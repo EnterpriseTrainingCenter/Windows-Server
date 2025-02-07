@@ -370,8 +370,9 @@ If time permits, you can try to fix the warning and errors and run the the BPA s
 
 ## Exercise 3: Transfer flexible single master operation roles
 
-1. Transfer the domain-wide flexible single master operation roles
-1. Transfer the forest-wide flexible single master operation roles
+1. [Transfer the domain-wide flexible single master operation roles](#task-1-transfer-the-domain-wide-flexible-single-master-operation-roles)
+1. [Transfer the forest-wide flexible single master operation roles](#task-2-transfer-the-forest-wide-flexible-single-master-operation-roles)
+
 
 ### Task 1: Transfer the domain-wide flexible single master operation roles
 
