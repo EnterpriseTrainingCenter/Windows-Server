@@ -12,7 +12,7 @@ On CL1, sign in as **ad\Administrator**.
 
 ## Task
 
-On VN1-SRV5, apply a the security baseline for member servers using OSConfig. Check the compliance, verify the status of drift control, disable drift control and remove the security baseline.
+On VN1-SRV5, apply the security baseline for member servers using OSConfig. Check the compliance, verify the status of drift control, disable drift control and remove the security baseline.
 
 ## Instructions
 
