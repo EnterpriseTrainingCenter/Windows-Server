@@ -8,8 +8,6 @@
 
 ## Setup
 
-On CL1, sign in as **ad\Administrator**.
-
 If you skipped the practice [Install Remote Server Administration Tools](/Instructions/Practices/Install-Remote-Server-Administration-Tools.md), on CL1, run the script **C:\LabResources\Solutions\Install-RemoteServerAdministrationTools.ps1**.
 
 ## Task
@@ -20,6 +18,7 @@ Install System Insights von VN1-SRV5, check the status of all capabilities, invo
 
 Perform these steps on CL1.
 
+1. On CL1, sign in as **ad\Administrator**.
 1. Open **Terminal**.
 1. In Terminal, install the Windows feature **System-Insights** on VN1-SRV5.
 
