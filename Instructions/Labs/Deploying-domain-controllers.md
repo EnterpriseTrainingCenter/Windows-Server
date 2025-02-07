@@ -226,6 +226,8 @@ Perform this task on CL1.
 
     The value of the property **Status** should be **Success** for both servers.
 
+Wait for the restart of VN1-SRV5 and VN2-SRV1 to complete.
+
 ### Task 4: Configure forwarders
 
 #### Desktop experience
