@@ -30,8 +30,8 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 1. [Transfer flexible single master operation roles](#exercise-3-transfer-flexible-single-master-operation-roles)
 1. [Decommission a domain controller](#exercise-4-decommission-a-domain-controller)
 1. [Raise domain and forest functional level](#exercise-5-raise-the-domain-and-forest-functional-level)
-1. [Enable database 32K pages]
-1. [Validate delegated managed service accounts]
+1. [Enable database 32K pages](#exercise-6-enable-database-32k-pages)
+1. [Validate delegated managed service accounts](#exercise-7-validate-delegated-managed-service-accounts)
 
 ## Exercise 1: Deploy an additional domain controller
 
@@ -956,17 +956,17 @@ Perform this task on CL1.
 
 ## Exercise 7: Validate delegated managed service accounts
 
-1. Inspect the service PSService on VN1-SRV9 and the file c:\LabResources\service.ps1
+1. [Inspect the service](#task-1-inspect-the-service) PSService on VN1-SRV9 and the file c:\LabResources\service.ps1
 
     > Which account uses the service to log on?
     > What does the service do?
 
-1. Generate the KDS root key
-1. Create a delegated managed service account with the name dMSA_PSService in the organizational unit Service accounts for VN1-SRV9
-1. Add the registry value DelegatedMSAEnabled to the key HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters on VN1-SRV9
-1. Migrate the service account to the dMSA
+1. [Generate the KDS root key](#task-2-generate-the-kds-root-key)
+1. [Create a delegated managed service account](#task-3-create-a-delegated-managed-service-account) with the name dMSA_PSService in the organizational unit Service accounts for VN1-SRV9
+1. [Add the registry value DelegatedMSAEnabled](#task-4-add-the-registry-value-delegatedmsaenabled) to the key HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters on VN1-SRV9
+1. [Migrate the service account to the dMSA](#task-5-migrate-the-service-account-to-the-dmsa)
 
-### Task 1: Inspect the service PSService on VN1-SRV9
+### Task 1: Inspect the service
 
 Perform this task on VN1-SRV9.
 
