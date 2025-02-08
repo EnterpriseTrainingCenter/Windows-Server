@@ -3,26 +3,23 @@
 ## Required VMs
 
 * VN1-SRV1
-* VN1-SRV5
+* VN1-SRV6
 * CL1
-
-## Setup
-
-On CL1, sign in as **ad\Administrator**.
 
 ## Task
 
-On VN1-SRV5, apply the security baseline for member servers using OSConfig. Check the compliance, verify the status of drift control, disable drift control and remove the security baseline.
+On VN1-SRV6, apply the security baseline for member servers using OSConfig. Check the compliance, verify the status of drift control, disable drift control and remove the security baseline.
 
 ## Instructions
 
 Perform these steps on CL1.
 
+1. On CL1, sign in as **ad\Administrator**.
 1. Open **Terminal**.
-1. Enter into a remote PowerShell session to VN1-SRV5.
+1. Enter into a remote PowerShell session to VN1-SRV6.
 
     ````powershell
-    Enter-PSSession VN1-SRV5
+    Enter-PSSession VN1-SRV6
     ````
 
 1. Install the OSConfig PowerShell module.
@@ -76,3 +73,8 @@ Perform these steps on CL1.
     ````
 
 1. At the prompt Confirm, enter **y**.
+1. Exit the remote PowerShell session.
+
+    ````powershell
+    Exit-PSSession
+    ````

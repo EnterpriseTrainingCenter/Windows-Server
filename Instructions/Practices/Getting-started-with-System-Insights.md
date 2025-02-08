@@ -3,36 +3,36 @@
 ## Required VMs
 
 * VN1-SRV1
-* VN1-SRV5
+* VN1-SRV6
 * CL1
 
 ## Setup
-
-On CL1, sign in as **ad\Administrator**.
 
 If you skipped the practice [Install Remote Server Administration Tools](/Instructions/Practices/Install-Remote-Server-Administration-Tools.md), on CL1, run the script **C:\LabResources\Solutions\Install-RemoteServerAdministrationTools.ps1**.
 
 ## Task
 
-Install System Insights von VN1-SRV5, check the status of all capabilities, invoke all capabilities and check the default schedules.
+Install System Insights von VN1-SRV6, check the status of all capabilities, invoke all capabilities and check the default schedules.
 
 ## Instructions
 
 Perform these steps on CL1.
 
+1. On CL1, sign in as **ad\Administrator**.
 1. Open **Terminal**.
-1. In Terminal, install the Windows feature **System-Insights** on VN1-SRV5.
+1. In Terminal, install the Windows feature **System-Insights** on VN1-SRV6.
 
     ````powershell
     Add-WindowsFeature `
-        -Computername VN1-SRV5 `
+        -Computername VN1-SRV6 `
         -Name System-Insights `
         -IncludeManagementTools
+    ````
 
-1. Enter into a remote PowerShell session to VN1-SRV5.
+1. Enter into a remote PowerShell session to VN1-SRV6.
 
     ````powershell
-    Enter-PSSession VN1-SRV5
+    Enter-PSSession VN1-SRV6
     ````
 
 1. Get capabilities and their status.
