@@ -11,6 +11,10 @@
 1. On **CL1**, sign in as **ad\Administrator**.
 1. On **CL2**, sign in as **Administrator**.
 
+## Introduction
+
+Your helpdesk users all use a well-known password for the local Administrator. Because people in your helpdesk come, and you want to audit the use of the Administrator accounts, you want to implement the local Administrator password solution and validate it.
+
 ## Exercises
 
 1. [Implement Local Administrator Password Solution](#exercise-1-implement-local-administrator-password-solution)
@@ -18,8 +22,9 @@
 
 ## Exercise 1: Implement Local Administrator Password Solution
 
-1. [Prepare Active Directory for LAPS](#task-1-prepare-active-directory-for-laps)
-1. [Configure the policy for LAPS](#task-2-configure-the-policy-for-laps) and apply it to the domain. The Policy should configure the following settings:
+1. [Create organization units and move all servers and clients](#task-1-create-organizational-unit-and-move-all-servers-and-client): At domain level, create an OU named Devices, then within the OU Devices, create OUs Clients and Servers. Move all computers starting with CL to the OU clients. Move all servers starting with VN or PM, except for VN1-SRV1 into the OU Servers.
+1. [Prepare Active Directory for LAPS](#task-2-prepare-active-directory-for-laps)
+1. [Configure the policy for LAPS](#task-3-configure-the-policy-for-laps) and apply it to the domain. The Policy should configure the following settings:
 
     * Backup passwords to Active Directory
     * Enable the default administrator account and randomize its name
@@ -31,7 +36,29 @@
     * Enable password encryption
     * Configure the post-authentication actions to reset the password, logoff the managed account, and terminate any remaining processes after 8 hours
 
-### Task 1: Prepare Active Directory for LAPS
+### Task 1: Create organizational unit and move all servers and client
+
+Perform this task on CL1.
+
+1. Open **Active Directory Administrative Center**.
+1. In Active Directory Administrative Center, click **ad (local)**.
+1. In Active Directory Administrative Center, in the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
+1. In Create Organizational Unit, beside **Name**, type **Devices** and click **OK**.
+1. Under **ad (local)**, in the context-menu of **Devices**, click **New**, **Organizational Unit**.
+1. In Create Organizational Unit, beside **Name**, type **Servers** and click **OK**.
+1. Under **ad (local)**, in the context-menu of **Devices**, click **New**, **Organizational Unit**.
+1. In Create Organizational Unit, beside **Name**, type **Clients** and click **OK**.
+1. In **Active Directory Administrative Center**, click **ad (local)**.
+1. Under **ad (local)**, double-click **Computers**.
+1. Under **Computers**, ensure the list is sorted by **Name**. If not, click on the column header **Name**.
+1. Click the first computer starting with **CL**, hold down SHIFT, and click the last computer starting with **CL**.
+1. In the context-menu of one computer starting with **CL**, click **Move...**
+1. In Move, in the middle pane, click **Devices**, and, in the right pane, click **Clients**. Click **OK**.
+1. In **Active Directory Administrative Center**, under **Computers**, click the first computer starting with **PM**, hold down SHIFT, and click the last computer starting with **VN**.
+1. In the context-menu of one selected computer, click **Move...**
+1. In Move, in the middle pane, click **Devices**, and, in the right pane, click **Servers**. Click **OK**.
+
+### Task 2: Prepare Active Directory for LAPS
 
 Perform this task on CL1.
 
@@ -46,18 +73,18 @@ Perform this task on CL1.
 1. Grant the managed device password update permission.
 
     ````powershell
-    Set-LapsADComputerSelfPermission -Identity Devices
+    Set-LapsADComputerSelfPermission -Identity 'ou=Devices, dc=ad, dc=adatum, dc=com'
     ````
 
 1. Query Extend Rights permission.
 
     ````powershell
-    Find-LapsADExtendedRights -Identity Devices
+    Find-LapsADExtendedRights -Identity 'ou=Devices, dc=ad, dc=adatum, dc=com'
     ````
 
     The property ExtendRightHolders should contain NT AUTHORITY\SYSTEM and AD\Domain Admins only.
 
-### Task 2: Configure the policy for LAPS
+### Task 3: Configure the policy for LAPS
 
 Perform this task on CL1.
 
