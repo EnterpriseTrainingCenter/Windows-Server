@@ -3,7 +3,7 @@
 ## Required VMs
 
 * VN1-SRV1
-* PM-SRV1
+* VN1-SRV13
 * CL1
 
 ## Introduction
@@ -26,10 +26,10 @@
 Perform this task on the host.
 
 1. Open **Windows PowerShell (Admin)**.
-1. In Windows PowerShell (Admin), for **WIN-PM-SRV1**, shut down the virtual machine, expose the virtualtion extensions to the virtual machine, enable MAC address spoofing, disable dynamic memory and set the startup memory to **4 GB**, and start the virtual machine again.
+1. In Windows PowerShell (Admin), for **WIN-VN1-SRV13**, shut down the virtual machine, expose the virtualtion extensions to the virtual machine, enable MAC address spoofing, disable dynamic memory and set the startup memory to **4 GB**, and start the virtual machine again.
 
     ````powershell
-    $vMName = 'WIN-PM-SRV1'
+    $vMName = 'WIN-VN1-SRV13'
     Stop-VM -VMName $vMName
     Set-VMProcessor -VMName $vMName -ExposeVirtualizationExtensions $true
     Get-VMNetworkAdapter -VMName $vMName |
@@ -40,7 +40,7 @@ Perform this task on the host.
 
 ### Task 2: Download and install Docker CE
 
-Perform this task on PM-SRV1.
+Perform this task on VN1-SRV13.
 
 1. Sign in as **Administrator**.
 1. In SConfig, enter **15**.
@@ -68,10 +68,10 @@ Perform this task on PM-SRV1.
 Perform this task on CL1.
 
 1. Open **Terminal**.
-1. In Terminal, enter a remote PowerShell session to PM-SRV1.
+1. In Terminal, enter a remote PowerShell session to VN1-SRV13.
 
     ````powershell
-    Enter-PSSession PM-SRV1
+    Enter-PSSession VN1-SRV13
     `````
 
 1. Download and install the base image for Nano server.
@@ -96,7 +96,7 @@ Perform this task on CL1.
 
 ### Task 4: Run the Nano server image in a container
 
-Perform this task on PM-SRV1.
+Perform this task on VN1-SRV13.
 
 1. In SConfig, enter **15**.
 1. Start a container with an interactive session from the nanoserver image.
@@ -118,7 +118,7 @@ Perform this task on PM-SRV1.
 
 ### Task 5: Create a new container image
 
-Perform this task on PM-SRV1.
+Perform this task on VN1-SRV13.
 
 1. In SConfig, enter **15**.
 1. Get the container ID for the container you just existed.
@@ -232,13 +232,13 @@ Peform this task on CL1.
 
 1. On the menu click **File**, **Save**.
 1. On the menu, click **View**, **Terminal**.
-1. In the TERMINAL pane, create a new remote PowerShell session to PM-SRV1 and store it in a variable.
+1. In the TERMINAL pane, create a new remote PowerShell session to VN1-SRV13 and store it in a variable.
 
     ````powershell
-    $pSSession = New-PSSession PM-SRV1
+    $pSSession = New-PSSession VN1-SRV13
     ````
 
-1. Copy the source files of the sample application to PM-SRV1.
+1. Copy the source files of the sample application to VN1-SRV13.
 
     ````powershell
     Copy-Item `
@@ -250,7 +250,7 @@ Peform this task on CL1.
         -Recurse
     ````
 
-1. Enter the session to PM-SRV1.
+1. Enter the session to VN1-SRV13.
 
     ````powershell
     Enter-PSSession $psSession
@@ -285,7 +285,7 @@ Peform this task on CL1.
     *Note:* The container must be run in Hyper-V isolation mode, because it is based on an older version of Windows Server.
 
 1. Open **Microsoft Edge**.
-1. In Microsoft Edge, navigate to <http://pm-srv1:5000>.
+1. In Microsoft Edge, navigate to <http://VN1-SRV13:5000>.
 
     You should see a sample web site.
 
