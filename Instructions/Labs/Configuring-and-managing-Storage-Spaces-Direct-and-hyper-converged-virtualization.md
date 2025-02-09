@@ -459,7 +459,7 @@ Perform this task on CL1.
 Perform this task on the host.
 
 1. Open **Windows PowerShell (Admin)**.
-1. In Windows PowerShell (Admin), for **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV8**, and **WIN-VN1-SRV9**, shut down the virtual machine, expose the virtualtion extensions to the virtual machine, enable MAC address spoofing, disable dynamic memory and set the startup memory to **3 GB**, and start the virtual machine again. Make sure all cluster services running keep on running.
+1. In Windows PowerShell (Admin), for **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV8**, and **WIN-VN1-SRV9**, shut down the virtual machine, expose the virtualization extensions to the virtual machine, enable MAC address spoofing, disable dynamic memory and set the startup memory to **3 GB**, and start the virtual machine again. Make sure all cluster services running keep on running.
 
     ````powershell
     $vMName = @('WIN-VN1-SRV6', 'WIN-VN1-SRV7', 'WIN-VN1-SRV8', 'WIN-VN1-SRV9')
