@@ -8,36 +8,6 @@
 
 ## Setup
 
-## Setup
-
-1. On the host, run **Windows PowerShell** as Administrator.
-1. In Windows PowerShell, ensure WIN-CL3 is running.
-
-    ````powershell
-    $vMName = 'WIN-CL3'
-    Start-VM -VMName $vMName
-    ````
-
-1. Connect WIN-CL3 to VNet3.
-
-    ````powershell
-    C:\Labs\Resources\Move-VMtoVNet.ps1 `
-        -VMName $vMName `
-        -SwitchName VNet2 `
-        -NewSwitchName VNet3 `
-        -SubnetValue 3 `
-        -Verbose
-    ````
-
-1. At the prompt Enter the password of the local Administrator account of WIN-CL3, enter the local Administrator password of CL3.
-1. Join CL3 to the domain.
-
-    ````powershell
-    C:\Labs\Resources\Add-VMToDomain.ps1 -VMName $vMName
-    ````
-
-1. At the prompt Enter the password of the local Administrator account of WIN-C3*, enter the local Administrator password of CL3.
-1. At the prompt Enter credentials of an account with permissions to join the computer to domain ad.adatum.com, enter the credentials of **Administrator@ad.adatum.com**.
 1. On **CL1**, sign in as **ad\Administrator**.
 1. On **CL2**, sign in as **Administrator**.
 
@@ -48,97 +18,86 @@
 
 ## Exercise 1: Implement Local Administrator Password Solution
 
-1. [Create organization units and move all servers and clients](#task-1-create-organizational-unit-and-move-all-servers-and-client): At domain level, create an OU named Devices, then within the OU Devices, create OUs Clients and Servers. Move all computers starting with CL to the OU clients. Move all servers starting with VN or PM, except for VN1-SRV1 into the OU Servers.
-1. [Download LAPS and install the management tools](#task-2-download-laps-and-install-the-management-tools) on CL1
-1. [Configure LAPS for all servers and clients](#task-3-configure-laps-for-all-servers-and-clients) except for VN1-SRV1
+1. [Prepare Active Directory for LAPS](#task-1-prepare-active-directory-for-laps)
+1. [Configure the policy for LAPS](#task-2-configure-the-policy-for-laps) and apply it to the domain. The Policy should configure the following settings:
 
-### Task 1: Create organizational unit and move all servers and client
+    * Backup passwords to Active Directory
+    * Enable the default administrator account and randomize its name
+    * Configure password complexity to use large Letters, small letters, number, and specials with improved readability
+    * Configure the password lenth with 14 characters
+    * Configure the password age for 30 days
+    * Do not allow password expiration time longer than required by policy
+    * Enable password encyption
+    * Enable password encryption
+    * Configure the post-authentication actions to reset the password, logoff the managed account, and terminate any remaining processes after 8 hours
 
-Perform this task on CL1.
-
-1. Open **Active Directory Administrative Center**.
-1. In Active Directory Administrative Center, click **ad (local)**.
-1. In Active Directory Administrative Center, in the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, beside **Name**, type **Devices** and click **OK**.
-1. Under **ad (local)**, in the context-menu of **Devices**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, beside **Name**, type **Servers** and click **OK**.
-1. Under **ad (local)**, in the context-menu of **Devices**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, beside **Name**, type **Clients** and click **OK**.
-1. In **Active Directory Administrative Center**, click **ad (local)**.
-1. Under **ad (local)**, double-click **Computers**.
-1. Under **Computers**, ensure the list is sorted by **Name**. If not, click on the column header **Name**.
-1. Click the first computer starting with **CL**, hold down SHIFT, and click the last computer starting with **CL**.
-1. In the context-menu of one computer starting with **CL**, click **Move...**
-1. In Move, in the middle pane, click **Devices**, and, in the right pane, click **Clients**. Click **OK**.
-1. In **Active Directory Administrative Center**, under **Computers**, click the first computer starting with **PM**, hold down SHIFT, and click the last computer starting with **VN**.
-1. In the context-menu of one selected computer, click **Move...**
-1. In Move, in the middle pane, click **Devices**, and, in the right pane, click **Servers**. Click **OK**.
-
-### Task 2: Download LAPS and install the management tools
+### Task 1: Prepare Active Directory for LAPS
 
 Perform this task on CL1.
-
-1. Open **Microsoft Edge**.
-1. In Microsoft Edge, navigate to <https://www.microsoft.com/en-us/download/details.aspx?id=46899>.
-1. On page Download Local Administrator Password Solution (LAPS) from Official Microsoft Download Center, click **Download**.
-1. Under Choose the download you want, activate the checkbox next to **LAPS_x64.msi**.
-1. Open the downloaded file.
-1. In Local Administrator Password Solution Setup, on page Welcome to the Local Administrator Password Solution Setup Wizard, click **Next**.
-1. On page End-User License Agreement, activate **I accept the terms in the License Agreement** and click **Next**.
-1. On page Custom Setup, click the icon left to **AdmPwd GPO Extension** and click **Entire feature will be unavailable**. Click the icon left to **Management Tools** and click **Entire feature will be installed on local hard drive**. Click **Next**.
-1. On page Ready to install Local Administrator Password Solution, click **Install**.
-1. On page Completed the Local Administrator Password Solution Setup Wizard, click **Finish**.
-
-### Task 3: Configure LAPS for all servers and clients
-
-Perform this task on CL1.
-
-1. In File Explorer, copy **LAPS_x64.msi** from **Downloads** to **\\\\ad.adatum.com\\NETLOGON**.
-
-    *Note:* In real world, you can copy the file to any share. However, the computer accounts must have read permissions. Copying the file to the NETLOGON share, replicates it to all domain controllers and ensures, the file is highly available.
 
 1. Open **Terminal**.
 1. In Terminal, extend the Active Directory schema.
 
     ````powershell
-    Update-AdmPwdADSchema
+    Update-LapsADSchema
     ````
 
-1. Grant devices write permission on ms-MCS-AdmPwdExpirationTime and ms-MCS-AdmPwd.
+1. At the prompt The 'ms-LAPS-Password' schema attribute needs to be added to the AD schema, enter **a**.
+1. Grant the managed device password update permission.
 
     ````powershell
-    Set-AdmPwdComputerSelfPermission -OrgUnit Devices
+    Set-LapsADComputerSelfPermission -Identity Devices
     ````
+
+1. Query Extend Rights permission.
+
+    ````powershell
+    Find-LapsADExtendedRights -Identity Devices
+    ````
+
+    The property ExtendRightHolders should contain NT AUTHORITY\SYSTEM and AD\Domain Admins only.
+
+### Task 2: Configure the policy for LAPS
+
+Perform this task on CL1.
 
 1. Open **Group Policy Management**.
 1. In Group Policy Management, expand **Forest: ad.adatum.com**, **Domains**, **ad.adatum.com**, and click **Group Policy Objects**.
 1. In the context-menu of **Group Policy Objects**, click **New**.
 1. In New GPO, under **Name**, type **Custom Computer LAPS**.
 1. In the context-menu of **Custom Computer LAPS**, click **Edit**.
-1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Software Settings**, and click **Software installation**.
-1. In the context-menu of Software installation, click **New**, **Package...**
-1. In Open, open **\\\\ad.adatum.com\\NETLOGON\\LAPS_x64.msi**.
-1. In Deploy Software, ensure **Assigned** is selected and click **OK**.
-1. In **Group Policy Management Editor**, expand **Administrative Templates** and click **LAPS**.
-1. Under LAPS, double-click **Enable local admin password management**.
-1. In Enable local admin password management, cick **Enabled** and click **OK**.
+1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Administrative Templates**, **System** and click **LAPS**.
+1. Under LAPS, double-click **Configure password backup directory**.
+1. In Configure password backup directory, click **Enabled**. Beside **Backup directory**, click **Active Directory**. Click **OK**.
+1. In **Group Policy Management Editor**, under **LAPS**, double-click **Configure automatic account management**.
+1. In Configure automatic account management, click **Enabled**. Under **Specify the target account to manage**, click **Manage the build-in admin account**. Click to enable **Enable the managed account** and **Randomize the name of the managed account**. Click **OK**.
 1. In **Group Policy Management Editor**, under **LAPS**, double-click **Password Settings**.
-1. In Password Settings, click **Enabled**. Under **Password Complexity**, ensure **Large Letters + small letters + number + specials** is selected. Beside **Password Length**, ensure **14** is filled in. Beside **Password Age (Days)**, ensure **30** is filled in. Click **OK**.
-1. In **Group Policy Management Eidtor**, under **LAPS**, double-click **Do not allow password expiration time longer than required by policy**.
+1. In Password Settings, click **Enabled**. Under **Password Complexity**, click **Large Letters + small letters + number + specials (improved readability)**. Beside **Password Length**, ensure **14** is filled in. Beside **Password Age (Days)**, ensure **30** is filled in. Click **OK**.
+1. In **Group Policy Management Editor**, under **LAPS**, double-click **Do not allow password expiration time longer than required by policy**.
 1. In Do not allow password expiration time longer than required by policy, click **Enabled** and click **OK**.
+1. In **Group Policy Management Editor**, under **LAPS**, double-click **Enable password encryption**.
+1. In Enable password encryption, click **Enabled** and click **OK**.
+
+    By default, only Domain Admins can decrypt passwords. If you want to allow another group or user to decrypt passwords, you should configure the **Configure authorized password decryptors** setting. For this lab, leave it to the default.
+
+1. In **Group Policy Management Editor**, under **LAPS**, double-click **Enable password backup for DSRM accounts**.
+1. In Enable password backup for DSRM accounts, click **Enabled** and click **OK**.
+1. In **Group Policy Management Editor**, under **LAPS**, double-click **Post-authentication actions**.
+1. In Post-authentication actions, click **Enabled**. Beside **Grace period (hours)**, type **8**. Under **Actions**, click **Reset the password, logoff the managed account, and terminate any remaining processes**. Click **OK**.
 1. Close **Group Policy Management Editor**.
-1. In **Group Policy Management**, in the context-menu of **Devices**, click **Link an Existing GPO...**
+1. In **Group Policy Management**, in the context-menu of **ad.adatum.com**, click **Link an Existing GPO...**
 1. In Select GPO, click **Custom Computer LAPS** and click **OK**.
 
 ## Exercise 2: Use Local Administrator Password Solution
 
-1. [Ensure installation and configuration of LAPS](#task-1-ensure-installation-and-configuration-of-laps) on CL2
+1. [Ensure configuration of LAPS](#task-1-ensure-configuration-of-laps) on CL2
 1. [Retrieve local administrator password](#task-2-retrieve-local-administrator-password) for CL2
 1. [Sign in using the local administrator](#task-3-sign-in-using-the-local-administrator) on CL2
-1. [Reset the local administrator password](#task-4-reset-the-local-administrator-password) for CL2
-1. [Verify password reset](#task-5-verify-password-reset) on CL2
+1. [Rotate the local administrator password](#task-4-rotate-the-local-administrator-password) for CL2
+1. [Verify password rotation](#task-5-verify-password-rotation) on CL2
+1. [Reset the password locally](#task-6-reset-the-password-locally) on CL2
 
-### Task 1: Ensure installation and configuration of LAPS
+### Task 1: Ensure configuration of LAPS
 
 Perform this task on CL2.
 
@@ -149,56 +108,145 @@ Perform this task on CL2.
     gpupdate.exe /force
     ````
 
-1. At the prompt OK to restart, enter **y**.
-1. In You're about to be signed out, click **Close**.
+1. Open **Event Viewer**.
+1. In Event Viewer, expand **Applications and Services Logs**, **Microsoft**, **Windows**, **LAPS** and click **Operational**. Look for the latest event with the **Event Id** **10021**. The event text should read as follows:
 
-    Wait for CL2 to restart.
+    ````text
+    The current LAPS policy is configured as follows:
+ 
+    Policy source: GPO
+    Backup directory: Active Directory
+    Local administrator account name: 
+    Password age in days: 30
+    Password complexity: 5
+    Password length: 14
+    Password expiration protection enabled: 1
+    Password encryption enabled: 1
+    Password encryption target principal: 
+    Password encrypted history size: 0
+    Backup DSRM password on domain controllers: 1
+    Post authentication grace period (hours): 8
+    Post authentication actions: 0xB
+    Automatic account management enabled: 1
+    Automatic account management: Target: BuiltInAdminAccount
+    Automatic account management: Name or name prefix: 
+    Automatic account management: Account enabled: 1
+    Automatic account management: Randomize name: 1
+    ````
 
-1. Sign in as **Administrator**.
-1. Open **Terminal** or **Windows PowerShell**.
-1. In Terminal, update group policies.
+    If the settings differ, switch to **Terminal** and invoke the LAPS policy processing.
 
     ````powershell
-    gpupdate.exe
+    Invoke-LapsPolicyProcessing
     ````
+
+    If the sttings still differ, go back to [Task 2: Configure the policy for LAPS](#task-2-configure-the-policy-for-laps).
+
+    Look for the latest event with the **Event Id** **10009**. The event text should read as follows:
+
+    ````text
+    LAPS is configured to backup passwords to Active Directory.
+    ````
+
+    Look for the latest event with the **Event Id** **10018**. The event text should read as follows:
+
+    ````text
+    LAPS successfully updated Active Directory with the new password.
+    ````
+
+    Look for the latest event with the **Event Id** **10020**. The event text should read as follows (the account name and RID will be different):
+
+    ````text
+    LAPS successfully updated the local admin account with the new password.
+ 
+    Account name: WLapsAdmin214842
+    Account RID: 0x1F4
+    ````
+
+1. Sign out from CL2.
 
 ### Task 2: Retrieve local administrator password
 
 Perform this task on CL1.
 
-1. Open **LAPS UI**.
-1. In LAPS UI, under **Computer name**, type **CL2** and click **Search**.
+1. Open **Terminal**.
+1. In Terminal, retrieve the password for CL2 from Windows Server Active Directory.
 
-    Under **Password**, take a note of the password or copy it to the clipboard. You will need it in the next task.
+    ````powershell
+    Get-LapsADPassword -Identity CL2 -AsPlainText
+    ````
+
+    Take a note of the **Account** and **Password** properties. You will need them in the next task.
 
 ### Task 3: Sign in using the local administrator
 
 Perform this task on CL2.
 
-1. Sign in as **Administrator** using the password, you noted in the previous task.
+1. Sign in with the account and password, you noted in the previous task.
 
-### Task 4: Reset the local administrator password
+### Task 4: Rotate the local administrator password
 
 Perform this task on CL1.
 
-1. Open **LAPS UI**.
-1. In LAPS UI, under **Computer name**, type **CL2** and click **Search**.
-1. Click **Set**.
+1. Open **Terminal**.
+1. In Terminal, set the password expiration time for CL2.
 
-### Task 5: Verify password reset
+    ````powershell
+    Set-LapsADPasswordExpirationTime -Identity CL2
+    ````
+
+    In real world, the password will change within the next 60 minutes. You will speed up the process in the next task.
+
+### Task 5: Verify password rotation
 
 Perform this task on CL2.
 
 1. Open **Terminal** or **Windows PowerShell**.
-1. In Terminal, update group policies.
+1. In Terminal, invoke LAPS policy processing.
 
     ````powershell
-    gpupdate.exe
+    Invoke-LapsPolicyProcessing
     ````
 
-1. Sign out.
-1. Sign in as **Administrator** using the password, you noted in the previous task.
+1. Open **Event Viewer**.
+1. In Event Viewer, expand **Applications and Services Logs**, **Microsoft**, **Windows**, **LAPS** and click **Operational**. Look for the latest event with the **Event Id** **10018**. The event text should read as follows:
 
-    This will fail, because the password was reset and is not valid anymore.
+    ````text
+    LAPS successfully updated Active Directory with the new password.
+    ````
 
-If time allows, repeat this exercise on one of the servers, e.g. VN1-SRV8.
+    Look for the latest event with the **Event Id** **10020**. The event text should read as follows (the account name and RID will be different):
+
+    ````text
+    LAPS successfully updated the local admin account with the new password.
+ 
+    Account name: WLapsAdmin285281
+    Account RID: 0x1F4
+    ````
+
+### Task 6: Reset the password locally
+
+Perform this task on CL2.
+
+1. Open **Terminal** or **Windows PowerShell**.
+1. In Terminal, invoke LAPS policy processing.
+
+    ````powershell
+    Reset-LapsPassword
+    ````
+
+1. Open **Event Viewer**.
+1. In Event Viewer, expand **Applications and Services Logs**, **Microsoft**, **Windows**, **LAPS** and click **Operational**. Look for the latest event with the **Event Id** **10018**. The event text should read as follows:
+
+    ````text
+    LAPS successfully updated Active Directory with the new password.
+    ````
+
+    Look for the latest event with the **Event Id** **10020**. The event text should read as follows (the account name and RID will be different):
+
+    ````text
+    LAPS successfully updated the local admin account with the new password.
+ 
+    Account name: WLapsAdmin399075
+    Account RID: 0x1F4
+    ````
