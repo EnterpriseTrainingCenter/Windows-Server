@@ -167,6 +167,35 @@ Perform this task on CL2.
 
 ### Task 2: Retrieve local administrator password
 
+#### Active Directory Users and Computers
+
+Perform this task on CL1.
+
+1. Open **Active Directory Users and Computers**.
+1. In Active Directory Users and Computers, in the context-menu of **ad.adatum.com**, click **Find...**
+1. In Find Users, Contacts, and Groups, beside **Find**, click **Computers**. Beside **Computer name**, type **CL2**. Click **Find Now**.
+1. Double-click **CL2**.
+1. In CL2 properties, click the tab **LAPS**.
+1. On the tab LAPS, click **Show password**.
+
+    Take a note of the **LAPS local admin account name** and **LAPS local admin account password** properties. You will need them in the next task.
+
+#### Active Directory Administrative Center
+
+Perform this task on CL1.
+
+1. Open **Active Directory Administrative Center**.
+1. In Active Directory Administrative Center, click **Global Search**.
+1. In Global Search, in **Search**, type CL2 and click **Search**.
+1. Double-click **CL2**.
+1. In CL2, click the page **Extensions**.
+1. Under Extensions, click the tab **LAPS**.
+1. On the tab LAPS, click **Show password**.
+
+    Take a note of the **LAPS local admin account name** and **LAPS local admin account password** properties. You will need them in the next task.
+
+#### PowerShell
+
 Perform this task on CL1.
 
 1. Open **Terminal**.
@@ -185,6 +214,31 @@ Perform this task on CL2.
 1. Sign in with the account and password, you noted in the previous task.
 
 ### Task 4: Rotate the local administrator password
+
+#### Active Directory Users and Computers
+
+Perform this task on CL1.
+
+1. Open **Active Directory Users and Computers**.
+1. In Active Directory Users and Computers, in the context-menu of **ad.adatum.com**, click **Find...**
+1. In Find Users, Contacts, and Groups, beside **Find**, click **Computers**. Beside **Computer name**, type **CL2**. Click **Find Now**.
+1. Double-click **CL2**.
+1. In CL2 properties, click the tab **LAPS**.
+1. On the tab LAPS, click **Expire now**.
+
+#### Active Directory Administrative Center
+
+Perform this task on CL1.
+
+1. Open **Active Directory Administrative Center**.
+1. In Active Directory Administrative Center, click **Global Search**.
+1. In Global Search, in **Search**, type CL2 and click **Search**.
+1. Double-click **CL2**.
+1. In CL2, click the page **Extensions**.
+1. Under Extensions, click the tab **LAPS**.
+1. On the tab LAPS, click **Expire now**.
+
+#### PowerShell
 
 Perform this task on CL1.
 
