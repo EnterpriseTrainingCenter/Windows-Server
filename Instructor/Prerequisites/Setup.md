@@ -5,10 +5,11 @@ For some practices and labs, access to an Azure Subscription and Entra ID tenant
 1. [Create Entra ID tenants](#create-entra-id-tenants)
 1. [Prepare Entra ID users](#prepare-entra-id-users)
 1. [Accept the invitations (optional)](#accept-the-invitations-optional)
+1. [Prepare resource groups](#prepare-resource-groups)
 
 The [Appendix](#appendix) contains a sample table to track all relevant data for the users.
 
-After each course, the [Entra ID tenants must be deleted](#delete-entra-id-tenants), if possible. In rare cases, students might have removed your permissions to delete the tenant. In this case, the tenant can remain.
+After each course, the [Resource groups](#delete-resource-groups) [Entra ID tenants](#delete-entra-id-tenants) must be deleted , if possible. In rare cases, students might have removed your permissions to delete the tenant. In this case, the tenant can remain.
 
 ## Create Entra ID tenants
 
@@ -42,7 +43,7 @@ For your convenience, the script **Setup-Azure.ps1** is provided together with a
 
 ### Prepare users using the script
 
-1. Edit the file **users.csv** and put it in the same directory as the script. As a minimum requirement, the columns **UserName**, **DisplayName**, and **Domain** must be filled in. Domain is the domain name of the Entra ID tenant for the user.
+1. Edit the file **users.csv** and put it in the same directory as the script. As a minimum requirement, the columns **UserName**, **DisplayName**, **Domain**, and **ResourceGroup** must be filled in. Domain is the domain name of the Entra ID tenant for the user.
 1. Run the script **Setup-Azure.ps1** from a PowerShell session.
 1. Sign in with a user account you used to create the Entra ID tenants and with the permission to manage users and grant permissions to the script.
 1. Select the domain to create the users in.
@@ -135,6 +136,75 @@ The following steps are optional, if you do not want to distribute the invite UR
 
 Repeat these steps for each student account.
 
+## Prepare resource groups
+
+Each student must have an individual resource group in an Azure subscription associated with the Entra ID account of the student. You can re-use the resource groups for several courses. In this case, you must delete all resources in the resource gorup before the course. However, it is easier to delete the resoruce groups after the course.
+
+For your convenience, the script **Setup-Azure.ps1** create the resource groups. Furthermore, steps for manual setup are provided. Unfortunately, the script cannot assign the budgets.
+
+* [Create resource group](#create-a-resource-group)
+* [Assign permissions to the resource group](#assign-permissions-to-the-resource-group)
+* [Assign a budget to the resource group](#assign-a-budget-to-the-resource-group)
+
+### Create a resource group
+
+1. Using a web browser, navigate to <https://portal.azure.com>.
+1. Click **Create a resource**.
+1. In Create a resource, in **Search services and marketplace**, type and click **Resource Group**.
+1. Click **Resource Group**.
+1. In Resource group, click **Create**.
+1. In Create a resource group, ensure the correct subscription is selected. Beside **Resource group name**, type a name and take a note. Beside **Region** click a region close to you. Click **Review and Create**.
+1. On the tab Review + Create, click **Create**.
+
+### Assign permissions to the resource group
+
+1. Using a web browser, navigate to <https://portal.azure.com>.
+1. In Search resources, services, and Docs (G+/), search for and click **Resource Groups**.
+1. In Resource Groups, click one of the created resource groups.
+1. In the resource group, click **Access control (IAM)**.
+1. In Access contol (IAM), click **Add**, **Add role assignment**.
+1. In Add role assignment, on tab Role, on tab Job function roles, in **Search by role name, description, permission, or ID**, type **Resource Policy Contributor**. Click **Resource Policy Contributor** and click **Next**.
+1. On tab Members, ensure that, beside **Assign access to**, **User, group, or service principal** is selected. Beside **Members**, click **Select Members**.
+1. On the pane Select members, search for and select one of the student accounts and click **Select**.
+1. In Add role Assignment, on tab Members, click **Next**.
+1. On tab Assignment type, beside **Assignment type**, click **Active**. Optionally, beside **Assignment duration**, click **Time bound** and select the date and time, when the course starts and ends. Click **Next**.
+1. On tab Review + assign, click **Review + assign**.
+1. In Access contol (IAM), click **Add**, **Add role assignment**.
+1. In Add role assignment, on tab Role, click the tab **Privileged administrator roles**.
+1. On tab Privileged administrator roles, click **Contributor** and click **Next**.
+1. On tab Members, ensure that, beside **Assign access to**, **User, group, or service principal** is selected. Beside **Members**, click **Select Members**.
+1. On the pane Select members, search for and select one of the student accounts and click **Select**.
+1. In Add role Assignment, on tab Members, click **Next**.
+1. On tab Assignment type, beside **Assignment type**, click **Active**. Optionally, beside **Assignment duration**, click **Time bound** and select the date and time, when the course starts and ends. Click **Next**.
+1. On tab Review + assign, click **Review + assign**.
+1. Close the pane with the resource group.
+
+Repeat from step 3 for other resource groups.
+
+### Assign a budget to the resource group
+
+1. Using a web browser, navigate to <https://portal.azure.com>.
+1. In Search resources, services, and Docs (G+/), search for and click **Resource Groups**.
+1. In Resource Groups, click one of the created resource groups.
+1. In the resource group, expand **Cost Management** and click **Budgets**.
+1. In Budgets, click **Add**.
+1. In Create budget, on tab Create a budget, beside **Name**, type a unique name, e.g., the name of the resource group. Beside **Amount** enter the budget for the course, e.g., **5**. Review the other settings and click **Next >**.
+1. On tab Set alerts, under **Alert conditions**, in column **Type**, click **Actual**. In column **% of budget**, type **100**. Under **Alert recipients (email)** type an e-mail address to get notified if the budget is exceeded. Click **Create**.
+1. Close the pane with the resource group.
+
+Repeat from step 3 for other resource groups.
+
+## Delete resource groups
+
+1. Using a web browser, navigate to <https://portal.azure.com>.
+1. In Search resources, services, and Docs (G+/), search for and click **Resource Groups**.
+1. In Resource Groups, click one of the created resource groups.
+1. In the resource group, click **Delete resource gorup**.
+1. On the pane Delete a resource group, under **Enter resource group name to confirm deletion**, type the name of the resource group and click **Delete**.
+1. In delete confirmation, click **Delete**.
+
+Repeat from step 3 for other resource ggroups.
+
 ## Delete Entra ID tenants
 
 1. Run the script **Clear-EntraTenants.ps1** from a PowerShell session.
@@ -162,22 +232,22 @@ Repeat from step 9 for each student tenant.
 
 ### Template for tracking users and Entra ID tenants
 
-| User principal name                 | Password | Entra ID tenant               | Invite redirect URL                                                                 |
-| ----------------------------------- | -------- | ----------------------------- | ----------------------------------------------------------------------------------- |
-| courseuser@students.onmicrosoft.com | Abcd1234 | coursetenant1.onmicrosoft.com | https://myapplications.microsoft.com/?tenantid=f625b819-b068-49d6-a3b8-410d7848cd8d |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
-|                                     |          |                               |                                                                                     |
+| User principal name                 | Password | Entra ID tenant               | Resource group name |Invite redirect URL                                                                  |
+| ----------------------------------- | -------- | ----------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
+| courseuser@students.onmicrosoft.com | Abcd1234 | coursetenant1.onmicrosoft.com |                     | https://myapplications.microsoft.com/?tenantid=f625b819-b068-49d6-a3b8-410d7848cd8d |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
+|                                     |          |                               |                     |                                                                                     |
