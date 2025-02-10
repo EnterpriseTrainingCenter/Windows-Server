@@ -7,9 +7,9 @@
 * VN1-SRV5
 * VN1-SRV6
 * VN1-SRV7
-* VN1-SRV8
-* VN1-SRV9
 * VN1-SRV10
+* VN1-SRV11
+* VN1-SRV12
 * CL1
 
 ## Setup
@@ -31,10 +31,10 @@ Adatum wants to evaluate Storage Spaces Direct. First, Storage Spaces Direct sho
 
 ## Exercise 1: Configuration of Storage Spaces Direct
 
-1. [Install the failover clustering feature](#task-1-install-the-failover-clustering-feature) on VN1-SRV6, VN1-SRV7, VN1-SRV8, and VN1-SRV9
-1. [Create a group](#task-2-create-a-group) in Active Directory with VN1-SRV6, VN1-SRV7, VN1-SRV8, and VN1-SRV9
+1. [Install the failover clustering feature](#task-1-install-the-failover-clustering-feature) on VN1-SRV6, VN1-SRV7, VN1-SRV11, and VN1-SRV12
+1. [Create a group](#task-2-create-a-group) in Active Directory with VN1-SRV6, VN1-SRV7, VN1-SRV11, and VN1-SRV12
 1. [Create a witness share](#task-3-create-a-witness-share) on VN1-CLST1-FS and grant the group modify permissions
-1. [Create a cluster with the NoStorage option](#task-4-create-a-cluster-with-the-nostorage-option) with the nodes VN1-SRV6, VN1-SRV7, VN1-SRV8, and VN1-SRV9 using the share as witness
+1. [Create a cluster with the NoStorage option](#task-4-create-a-cluster-with-the-nostorage-option) with the nodes VN1-SRV6, VN1-SRV7, VN1-SRV11, and VN1-SRV12 using the share as witness
 1. [Enable Storage Spaces Direct](#task-5-enable-storage-spaces-direct) on the cluster
 1. [Create virtual disks and volumes](#task-6-create-virtual-disks-and-volumes) on the storage pool according to the table below
 
@@ -65,7 +65,7 @@ Perform this task on CL1.
 1. On page Confirmation, verify your selection and click **Install**.
 1. On  page **Results**, do not wait for the installation to succeed. Click **Close**.
 
-Repeat the steps of this task to install the role on **VN1-SRV7**, **VN1-SRV8**, and **VN1-SRV9**.
+Repeat the steps of this task to install the role on **VN1-SRV7**, **VN1-SRV11**, and **VN1-SRV12**.
 
 Do not wait for the installation to succeed. Continue with the next task.
 
@@ -74,11 +74,11 @@ Do not wait for the installation to succeed. Continue with the next task.
 Perform this task on CL1.
 
 1. Open **Terminal**.
-1. Install **Failover Clustering** on **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV8**, and **VN1-SRV9**
+1. Install **Failover Clustering** on **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV11**, and **VN1-SRV12**
 
     ````powershell
     Invoke-Command `
-      -ComputerName VN1-SRV6, VN1-SRV7, VN1-SRV8, VN1-SRV9 `
+      -ComputerName VN1-SRV6, VN1-SRV7, VN1-SRV11, VN1-SRV12 `
       -ScriptBlock {
         Install-WindowsFeature `
             -Name Failover-Clustering `
@@ -102,7 +102,7 @@ Perform this task on CL1.
 1. In Create Group, in **Group name**, enter **Witness Modify**. Under **Group type**, ensure **Security** is selected. Under **Group scope**, click **Domain local**. On the left, click **Members**. Under Members, click **Add...**
 1. In Select Groups, Contacts, Computers, Service Accounts, or Groups, click **Object Types...**
 1. In Object Types, activate **Computers** and click **OK**.
-1. In **Select Groups, Contacts, Computers, Service Accounts, or Groups**, in **Enter the object names to select**, type **VN1-SRV6; VN1-SRV7; VN1-SRV8; VN1-SRV9** and click **OK**.
+1. In **Select Groups, Contacts, Computers, Service Accounts, or Groups**, in **Enter the object names to select**, type **VN1-SRV6; VN1-SRV7; VN1-SRV11; VN1-SRV12** and click **OK**.
 1. In **Create Group: Witness Modify**, click OK.
 
 ### Task 3: Create a witness share
@@ -153,12 +153,12 @@ Perform this task on VN1-SRV6.
 
 Note: The failover cluster installation must have finished before.
 
-1. Create a new cluster the **NoStorage** option and the static IP address 10.1.1.49, named **VN1-CLST2**, and **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV8**, and **VN1-SRV9** as nodes.
+1. Create a new cluster the **NoStorage** option and the static IP address 10.1.1.49, named **VN1-CLST2**, and **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV11**, and **VN1-SRV12** as nodes.
 
    ````powershell
    $cluster = New-Cluster `
       -Name VN1-CLST2 `
-      -Node 'VN1-SRV6', 'VN1-SRV7', 'VN1-SRV8', 'VN1-SRV9' `
+      -Node 'VN1-SRV6', 'VN1-SRV7', 'VN1-SRV11', 'VN1-SRV12' `
       -StaticAddress 10.1.1.49 `
       -NoStorage
    ````
@@ -178,7 +178,7 @@ Peform these steps on CL1.
 1. In Terminal, enable installation of Storage Spaces Direct on non-certified hardware.
 
    ````powershell
-   $computername = 'VN1-SRV6', 'VN1-SRV7', 'VN1-SRV8', 'VN1-SRV9'
+   $computername = 'VN1-SRV6', 'VN1-SRV7', 'VN1-SRV11', 'VN1-SRV12'
 
    Invoke-Command -Computername $computername -ScriptBlock {
        New-ItemProperty `
@@ -284,9 +284,9 @@ Perform this task on CL1.
 
 ## Exercise 2: Using a Scale-Out File Server with Hyper-V
 
-1. [Install the File Server role](#task-1-install-the-file-server-role) on VN1-SRV6, VN1-SRV7, VN1-SRV8, and VN1-SRV9
+1. [Install the File Server role](#task-1-install-the-file-server-role) on VN1-SRV6, VN1-SRV7, VN1-SRV11, and VN1-SRV12
 1. [Configure the Scale-Out File Server role](#task-2-configure-the-scale-out-file-server-role) on VN1-CLST2 with the client access point VN1-CLST2-SOFS
-1. [Create a group](#task-3-create-a-group) in Active Directory with VN1-SRV4, VN1-SRV5, VN1-SRV6, VN1-SRV7, VN1-SRV8, and VN1-SRV9 as members
+1. [Create a group](#task-3-create-a-group) in Active Directory with VN1-SRV4, VN1-SRV5, VN1-SRV6, VN1-SRV7, VN1-SRV11, and VN1-SRV12 as members
 1. [Create a share](#task-4-create-a-share) on VN1-CLST2-SOFS for Hyper-V Data granting the group from the previous task full control
 1. [Determine the owner node of the virtual machine](#task-5-determine-the-owner-node-of-the-virtual-machine) VN1-SRV23
 1. [Move virtual machine data to the SOFS share](#task-6-move-virtual-machine-data-to-the-sofs-share)
@@ -312,18 +312,18 @@ Perform this task on CL1.
 1. On page **Confirmation**, click **Install**.
 1. On page **Results** and click **Close**.
 
-Repeat from step 2 for VN1-SRV7, VN1-SRV8, and VN1-SRV9
+Repeat from step 2 for VN1-SRV7, VN1-SRV11, and VN1-SRV12
 
 #### PowerShell
 
 Peform this task on CL1.
 
 1. In the context menu of **Start**, click **Terminal**.
-1. Install the windows feature **File Server** on **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV8**, and **VN1-SRV9**.
+1. Install the windows feature **File Server** on **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV11**, and **VN1-SRV12**.
 
     ````powershell
    Invoke-Command `
-         -ComputerName VN1-SRV6, VN1-SRV7, VN1-SRV8, VN1-SRV9 `
+         -ComputerName VN1-SRV6, VN1-SRV7, VN1-SRV11, VN1-SRV12 `
          -ScriptBlock {
          Install-WindowsFeature `
                -Name FS-FileServer `
@@ -358,7 +358,7 @@ Perform this task on CL1.
 1. Under Members, click **Add...**
 1. In Select Groups, Contacts, Computers, Service Accounts, or Groups, click **Object Types...**
 1. In Object Types, activate **Computers** and click **OK**.
-1. In **Select Groups, Contacts, Computers, Service Accounts, or Groups**, in **Enter the object names to select**, type **VN1-SRV4; VN1-SRV5; VN1-SRV6; VN1-SRV7; VN1-SRV8; VN1-SRV9** and click **OK**.
+1. In **Select Groups, Contacts, Computers, Service Accounts, or Groups**, in **Enter the object names to select**, type **VN1-SRV4; VN1-SRV5; VN1-SRV6; VN1-SRV7; VN1-SRV11; VN1-SRV12** and click **OK**.
 1. In **Create Group: Hyper-V Data Full Control**, click OK.
 
 ### Task 4: Create a share
@@ -448,9 +448,9 @@ Perform this task on CL1.
 
 ## Exercise 3: Creating a hyper-converged virtualization cluster
 
-1. [Configure nested virtualization](#task-1-configure-nested-virtualization) for WIN-VN1-SRV6, WIN-VN1-SRV7, WIN-VN1-SRV8, and WIN-VN1-SRV9
-1. [Install Hyper-V](#task-2-install-hyper-v) on WIN-VN1-SRV6, WIN-VN1-SRV7, WIN-VN1-SRV8, and WIN-VN1-SRV9
-1. [Configure a virtual switch](#task-3-configure-a-virtual-switch) connected to the external network adapter on WIN-VN1-SRV6, WIN-VN1-SRV7, WIN-VN1-SRV8, and WIN-VN1-SRV9
+1. [Configure nested virtualization](#task-1-configure-nested-virtualization) for WIN-VN1-SRV6, WIN-VN1-SRV7, WIN-VN1-SRV11, and WIN-VN1-SRV12
+1. [Install Hyper-V](#task-2-install-hyper-v) on WIN-VN1-SRV6, WIN-VN1-SRV7, WIN-VN1-SRV11, and WIN-VN1-SRV12
+1. [Configure a virtual switch](#task-3-configure-a-virtual-switch) connected to the external network adapter on WIN-VN1-SRV6, WIN-VN1-SRV7, WIN-VN1-SRV11, and WIN-VN1-SRV12
 1. [Create a virtual machine](#task-4-create-a-virtual-machine) on the cluster with 1 GB RAM using a copy of the VHDX file for Windows Server 2022 Core
 1. [Configure the virtual machine's operating system](#task-5-configure-the-virtual-machines-operating-system) with the IP address 10.1.1.192
 
@@ -459,10 +459,10 @@ Perform this task on CL1.
 Perform this task on the host.
 
 1. Open **Windows PowerShell (Admin)**.
-1. In Windows PowerShell (Admin), for **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV8**, and **WIN-VN1-SRV9**, shut down the virtual machine, expose the virtualization extensions to the virtual machine, enable MAC address spoofing, disable dynamic memory and set the startup memory to **3 GB**, and start the virtual machine again. Make sure all cluster services running keep on running.
+1. In Windows PowerShell (Admin), for **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV11**, and **WIN-VN1-SRV12**, shut down the virtual machine, expose the virtualization extensions to the virtual machine, enable MAC address spoofing, disable dynamic memory and set the startup memory to **3 GB**, and start the virtual machine again. Make sure all cluster services running keep on running.
 
     ````powershell
-    $vMName = @('WIN-VN1-SRV6', 'WIN-VN1-SRV7', 'WIN-VN1-SRV8', 'WIN-VN1-SRV9')
+    $vMName = @('WIN-VN1-SRV6', 'WIN-VN1-SRV7', 'WIN-VN1-SRV11', 'WIN-VN1-SRV12')
     $vMName | ForEach-Object { 
       Stop-VM -VMName $PSItem
       Set-VMProcessor -VMName $PSItem -ExposeVirtualizationExtensions $true
@@ -497,23 +497,23 @@ Perform this task on CL1.
 1. On page Confirmation, activate **Restart the destination server automatically if required** and click **Install**.
 1. On  page **Results**, wait for the installation to succeed, then click **Close**.
 
-Repeat the steps of this task to install the role on **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV8**, and **VN1-SRV9**
+Repeat the steps of this task to install the role on **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV11**, and **VN1-SRV12**
 
 #### PowerShell
 
 Perform this task on CL1.
 
 1. Open **Terminal**.
-1. Install **Hyper-V** on **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV8**, and **VN1-SRV9** without restarting them.
+1. Install **Hyper-V** on **VN1-SRV6**, **VN1-SRV7**, **VN1-SRV11**, and **VN1-SRV12** without restarting them.
 
    ````powershell
-   $computerName = @('VN1-SRV6', 'VN1-SRV7', 'VN1-SRV8', 'VN1-SRV9')
+   $computerName = @('VN1-SRV6', 'VN1-SRV7', 'VN1-SRV11', 'VN1-SRV12')
    Invoke-Command -ComputerName $computerName -ScriptBlock {
       Install-WindowsFeature -Name Hyper-V -IncludeManagementTools
    }
    ````
 
-1. Restart **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV8**, and **WIN-VN1-SRV9** to keep the cluster running.
+1. Restart **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV11**, and **WIN-VN1-SRV12** to keep the cluster running.
 
    ````powershell
    $computername | ForEach-Object {
@@ -521,7 +521,7 @@ Perform this task on CL1.
    }
    ````
 
-1. On **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV8**, and **WIN-VN1-SRV9**, set the default stores to the CSV **Hyper-converged disks**.
+1. On **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV11**, and **WIN-VN1-SRV12**, set the default stores to the CSV **Hyper-converged disks**.
 
     ````powershell
     Set-VMHost `
@@ -536,10 +536,10 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. Open **Terminal**.
-1. On **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV8**, and **WIN-VN1-SRV9**, create an external switch connected to the **VNet1** network adapter. Allow the management OS to use the adapter.
+1. On **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV11**, and **WIN-VN1-SRV12**, create an external switch connected to the **VNet1** network adapter. Allow the management OS to use the adapter.
 
    ````powershell
-   $computerName = @('VN1-SRV6', 'VN1-SRV7', 'VN1-SRV8', 'VN1-SRV9')
+   $computerName = @('VN1-SRV6', 'VN1-SRV7', 'VN1-SRV11', 'VN1-SRV12')
    New-VMSwitch `
       -ComputerName $computerName `
       -Name External `
@@ -650,7 +650,7 @@ Perform this task on CL1.
 
 Perform this task on the host.
 
-In **Hyper-V-Manager**, in the context menu of the virtual machines **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV8**, and **WIN-VN1-SRV9**, which are turned off, click **Start**.
+In **Hyper-V-Manager**, in the context menu of the virtual machines **WIN-VN1-SRV6**, **WIN-VN1-SRV7**, **WIN-VN1-SRV11**, and **WIN-VN1-SRV12**, which are turned off, click **Start**.
 
 ### Task 5: Verify the recovery
 

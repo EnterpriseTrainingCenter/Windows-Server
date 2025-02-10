@@ -18,7 +18,9 @@ param (
         'utf32'
     )]
     [string]
-    $Encoding = 'default'
+    $Encoding = 'default', 
+    [string]
+    $Location = 'northeurope'
 )
 
 #region Install required modules
@@ -50,6 +52,7 @@ $domainMenu = for ($i = 0; $i -lt $domains.Count; $i++) {
     $domains[$i] | Select-Object @{ Name = "#"; Expression = { $i } }, Id
 }
 $domainMenu | Format-Table
+
 #endregion List the domains in the Entra ID tenant
 
 # Ask the user which domain to use
@@ -208,19 +211,60 @@ Disconnect-MgGraph
 
 #endregion Create or reset users in the Entra ID tenant
 
-#region Add the users to the global administrator role in their tenants
-
 $users = $results
 $results = @()
 
-
-#region Get a list of tenants
-
 Connect-AzAccount
+
+#region Prepare resource groups for the users
+
+# Create a notification group for the users
+$notificationGroupName = "UserNotificationGroup"
+$notificationGroup = Get-AzADGroup -DisplayName $notificationGroupName -ErrorAction SilentlyContinue
+
+if ($null -eq $notificationGroup) {
+    $notificationGroup = New-AzADGroup -DisplayName $notificationGroupName -MailNickname $notificationGroupName
+}
+
+foreach ($user in $users) {
+    Add-AzADGroupMember -TargetGroupId $notificationGroup.Id -MemberId $user.UserPrincipalName
+}
+
+foreach ($user in $users) {
+    $azResourceGroup = Get-AzResourceGroup `
+        -Name $user.ResourceGroupName -ErrorAction SilentlyContinue
+
+    if ($null -eq $azResourceGroup) {
+        $azResourceGroup =  New-AzResourceGroup `
+            -Name $user.ResourceGroupName -Location $Location
+    }
+
+    <#
+        Assign the Contributor and Reosurce Policy Contributor role to the user
+        for the resource group
+    #>
+
+    $roleDefinitionNames = 'Contributor', 'Resource Policy Contributor'
+
+    foreach ($roleDefinitionName in $roleDefinitionNames) {
+        $roleAssignment = $azResourceGroup | Get-AzRoleAssignment `
+            -SignInName $user.UserPrincipalName `
+            -RoleDefinitionName $roleDefinitionName
+
+        if ($null -eq $roleAssignment) {
+            $azResourceGroup | New-AzRoleAssignment `
+                -RoleDefinitionName $roleDefinitionName `
+                -SignInName $user.UserPrincipalName
+        }
+    }
+}
+
+#endregion Prepare resource groups for the users
+
 $azTenants = Get-AzTenant
 Disconnect-AzAccount
 
-#endregion Get a list of tenants
+#region Add the users to the global administrator role in their tenants
 
 # Invite the users to their tenants and add them the Global Administrator role
 foreach ($user in $users) {
