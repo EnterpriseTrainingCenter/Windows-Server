@@ -27,7 +27,7 @@ Perform this task on the host computer.
 1. In Log Analytics Workspace, click **Create**.
 1. On the tab Basics, beside **Subscription**, click the subscription you used for this lab. Beside Resource group, click a resource group or create a new one.
 1. Under **Name**, type **WinS** and click **OK**.
-1. Beside **Name**, type **Adatum-Log-Analytics-Workspace**. Beside **Region**, click a region close to your location, e.g., West Europe. Click **Review + Create**.
+1. Beside **Name**, type your name or initials followed by **-Adatum-Log-Analytics-Workspace**. Beside **Region**, click a region close to your location, e.g., West Europe. Click **Review + Create**.
 1. On the tab Review + Create, click **Create**.
 
     Wait for the deployment to complete. This takes less than a minute.
