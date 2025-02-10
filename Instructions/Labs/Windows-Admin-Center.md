@@ -303,10 +303,9 @@ Perform this task on CL1.
 
     > Why are you prompted for credentials when clicking on one of the imported connections?
 
-1. [Configure single sign-on](#task-2-configure-single-sign-on) to all computers registered with Windows Admin Center
-1. [Manage extensions](#task-3-manage-extensions): ensure automatic update is enabled and install the Active Directory extension
-1. [Register Windows Admin Center with Azure](#task-4-register-windows-admin-center-with-azure)
-1. [Validate access by users](#task-5-validate-access-by-users)
+1. [Manage extensions](#task-2-manage-extensions): ensure automatic update is enabled and install the Active Directory extension
+1. [Register Windows Admin Center with Azure](#task-3-register-windows-admin-center-with-azure)
+1. [Validate access by users](#task-4-validate-access-by-users)
 
     > Can Pia access Windows Admin Center and see all shared connections?
 
@@ -381,7 +380,7 @@ Perform this task on CL1.
 
 1. In Windows PowerShell Credential Request, enter the credentials of **ad\Administrator**.
 1. Open **Microsoft Edge**.
-1. In Microsoft Edge, navigate to **https://admincenter.ad.adatum.com**.
+1. In Microsoft Edge, navigate to <https://admincenter.ad.adatum.com>.
 1. On page Sign in to Windows Admin Center, sign in as **ad\Administrator**.
 1. Click *Settings*.
 1. In Settings, under **Gateway**, click **Access**.
@@ -430,7 +429,7 @@ Perform this task on CL1.
 
 You may repeat the last step for other extensions at your choice.
 
-### Task 4: Register Windows Admin Center with Azure
+### Task 3: Register Windows Admin Center with Azure
 
 Perform this task on CL1.
 
@@ -466,7 +465,7 @@ Perform this task on CL1.
 1. Click **Sign in**.
 1. In the dialog Permissions requested, click **Accept**.
 
-### Task 5: Validate access by users
+### Task 4: Validate access by users
 
 Perform this task on CL2.
 
