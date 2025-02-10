@@ -6,86 +6,39 @@
 * VN1-SRV5
 * CL1
 
+## Setup
+
+Your instructor will tell you which tenant, subscription, and resource group to use.
+
+If you skipped the lab [Windows Admin Center](/Instructions/Labs/Windows-Admin-Center.md):
+
+1. On VN1-SRV4, execute ````c:\LabResources\Solutions\Install-AdminCenter.ps1````.
+1. Create connections in Windows Admin Center.
+1. Register Windows Admin Center with Azure.
+
+Detailed instructions can be found in the lab.
+
 ## Task
 
-Onboard VN1-SRV5 to Azure Arc.
+Onboard VN1-SRV8 to Azure Arc.
 
 ## Instructions
 
-Perform this task on CL1.
+Perform this task on VN1-SRV8.
 
-1. Open **Microsoft Edge** and navigate to <https://portal.azure.com>
-1. Sign in to Azure.
-1. In **Search resources, services and docs (G+/)**, type **Azure Arc** and click it.
-1. In Azure Arc, in Overview, on tab Get started, under **Add your infrastructure for free**, click **Add**.
-1. On tab Infrastructure, under **Servers**, click **Add**.
-1. Under **Add a single server**, click **Generate script**.
-1. On page Basics, beside **Subscription** click the subscription of your choice. Beside **Resource group**, click **WinFAD**.
-1. Beside **Region**, select a region close to you, e.g., (Europe) West Europe. Beside **Operating System**, ensure **Windows** is selected. Beside **Connectivity method**, ensure **Public endpoint** is selected. Click **Next**.
-1. On page Tags, beside **Datacenter**, type **VN1**. Beside the other tags enter values of your choice. You may leave tags empty. Click **Next**.
-1. On page Download and run script, click **Download** and make sure, the download succeeds. Click **Close**.
+1. Sign in as **ad\Administrator**.
+1. In **Server Manager**, click **Local Server**.
+1. Under Local Server, under PROPERTIES, beside **Azure Arc Management**, click **Disabled**.
+1. In Azure Arc Setup, on page Get started, click **Next >**.
 
-    You may have to continue on security warnings for the file to download.
+    Wait for the Azure Connected Machine agent to install. This takes a minute or two.
 
-1. Open **Terminal**.
-1. Open a remote PowerShell session to **VN1-SRV5**.
+1. On page Install Azure Arc, click **Configure**.
+1. In Azure Arc Configuration, on page Configure Azure Arc, click **Next >**.
+1. On page Sign in to Azure, under **Select an Azure cloud**, ensure **Azure Global** is selected. Click **Sign in to Azure**.
+1. In Microsoft Edge, sign in zu Azure.
+1. Close **Microsoft Edge**.
+1. In **Azure Arc Configuration**, on page Sign in to Azure, click **Next >**.
+1. On page Resource details, select **Azure Active Directory Tenant**, **Subscription**, **Resource Group**, and **Azure Region**. Under **Network Connectivity**, ensure **Public endpoint** is selected and click **Next >**.
+1. On page Connecting your server, wait for the connection to be successful and click **Finish**.
 
-    ````powershell
-    $pSSession = New-PSSession -ComputerName VN1-SRV5
-    ````
-
-1. Copy the onboarding script to VN1-SRV5.
-
-    ````powershell
-    Copy-Item `
-        -Path ~\Downloads\OnboardingScript.ps1 `
-        -ToSession $pSSession `
-        -Destination c:\Labresources
-    ````
-
-1. Enter the remote PowerShell session.
-
-    ````powershell
-    Enter-PSSession -Session $pSSession
-    ````
-
-1. Unblock the onboarding script file.
-
-    ````powershell
-    Unblock-File C:\LabResources\OnboardingScript.ps1
-    ````
-
-1. Execute the onboarding script.
-
-    ````powershell
-    C:\LabResources\OnboardingScript.ps1
-    ````
-
-    Wait for the message **To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the the code...**.
-
-1. Copy the code in the message to the clipboard.
-1. Hold down CTRL while clicking on <https://microsoft.com/devicelogin> in the message.
-1. Switch to **Microsoft Edge**, if necessary.
-1. On the page Sign in to your account, unter **Enter code**, paste the copied code and click **Next**.
-1. Sign in to your Azure subscription.
-1. At the prompt Are you trying to sign in to Azure Connected Machine Agent, click **Continue**.
-
-1. Switch to the **Terminal**.
-
-    Wait for the script to complete successfully.
-
-1. Exit from the remote PowerShell session.
-
-    ````powershell
-    Exit-PSSession
-    ````
-
-1. Remove the remote PowerShell session.
-
-    ````powershell
-    Remove-PSSession -Session $pSSession
-    ````
-
-1. Switch to Microsoft Edge with the Azure Portal open.
-1. In **Search resources, services and docs (G+/)**, type **VN1-SRV5** and click it.
-1. In VN1-SRV5, in Overview, click the tab **Recommendations**.
