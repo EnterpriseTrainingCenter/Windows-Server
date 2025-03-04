@@ -1055,20 +1055,20 @@ Perform this task on CL1.
 1. In Terminal, start the migration from the account **PowerShell Service** to **dMSA_PSService**.
 
     ````powershell
-    $dMSAIdentity = `
+    $identity = `
         'cn=dMSA_PSService, ou=Service accounts, dc=ad, dc=adatum, dc=com'
-    $supersededAccountIdentity = `
+    $supersededAccount = `
         'cn=Powershell Service, ou=Service accounts, dc=ad, dc=adatum, dc=com'
 
     Start-ADServiceAccountMigration `
-        -Identity $dMSAIdentity -SupersededAccount $supersededAccountIdentity
+        -Identity $identity -SupersededAccount $supersededAccount
     ````
 
 1. Verify the properties **msDS-DelegatedMSAState** and **msDS-ManagedAccountPrecededByLink** of the dMSA.
 
     ````powershell
     Get-ADServiceAccount `
-        -Identity $dMSAIdentity `
+        -Identity $identity `
         -Properties msDS-DelegatedMSAState, msDS-ManagedAccountPrecededByLink
     ````
 
@@ -1078,7 +1078,7 @@ Perform this task on CL1.
 
     ````powershell
     Get-ADUser `
-        -Identity $supersededAccountIdentity `
+        -Identity $supersededAccount `
         -Properties `
             msDS-SupersededServiceAccountState, `
             msDS-SupersededManagedAccountLink
@@ -1098,13 +1098,13 @@ Perform this task on CL1.
 
     ````powershell
     Complete-ADServiceAccountMigration `
-        -Identity $dMSAIdentity -SupersededAccount $supersededAccountIdentity
+        -Identity $identity -SupersededAccount $supersededAccount
     ````
 
 1. Verify the property **msDS-DelegatedMSAState** of the dMSA.
 
     ````powershell
-    Get-ADServiceAccount -Identity $dMSAIdentity -Properties msDS-DelegatedMSAState
+    Get-ADServiceAccount -Identity $identity -Properties msDS-DelegatedMSAState
     ````
 
     msDS-DelegatedMSAState should be 2.
@@ -1113,14 +1113,14 @@ Perform this task on CL1.
 
     ````powershell
     Get-ADUser `
-        -Identity $supersededAccountIdentity `
+        -Identity $supersededAccount `
         -Properties msDS-SupersededServiceAccountState
     ````
 
 1. Disable the old service account.
 
     ````powershell
-    Disable-ADAccount -Identity $supersededAccountIdentity
+    Disable-ADAccount -Identity $supersededAccount
     ````
 
 1. Restart the service **PSService** on **VN1-SRV9** again.
@@ -1136,7 +1136,7 @@ Perform this task on CL1.
 1. Reset the password of the old service account.
 
     ````powershell
-    Set-ADAccountPassword -Identity $supersededAccountIdentity -Reset
+    Set-ADAccountPassword -Identity $supersededAccount -Reset
     ````
 
 1. At the prompts **Password** and **Repeat Password**, enter a new secure password that is different from any default passwords.
