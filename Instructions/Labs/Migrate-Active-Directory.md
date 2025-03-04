@@ -1117,14 +1117,6 @@ Perform this task on CL1.
         -Properties msDS-SupersededServiceAccountState
     ````
 
-1. Reset the password of the old service account.
-
-    ````powershell
-    Set-ADAccountPassword -Identity $supersededAccountIdentity -Reset
-    ````
-
-1. At the prompts **Password** and **Repeat Password**, enter a new secure password that is different from any default passwords.
-
 1. Disable the old service account.
 
     ````powershell
@@ -1140,5 +1132,13 @@ Perform this task on CL1.
     ````
 
     This is not necessary, but want to check, if the service still starts.
+
+1. Reset the password of the old service account.
+
+    ````powershell
+    Set-ADAccountPassword -Identity $supersededAccountIdentity -Reset
+    ````
+
+1. At the prompts **Password** and **Repeat Password**, enter a new secure password that is different from any default passwords.
 
 If time allows, check that the service is still configured to log on with the superseded service account.
