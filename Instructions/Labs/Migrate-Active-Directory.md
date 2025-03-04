@@ -616,7 +616,71 @@ Perform this task on CL1.
 
 ### Task 4: Demote the old domain controller
 
-*Note:*: If you receive any error message while demoting the domain controller, perform the following troubleshooting steps on CL1.
+#### Desktop experience
+
+Perform this task on CL1.
+
+1. Open **Server Manager**.
+1. In Server Manager, on the menu, click **Manage**, **Remove Roles and Features**.
+1. In Remove Roles and Features Wizard, on page Befor You Begin, click **Next >**.
+1. On page Server Selection, click **VN1-SRV1.ad.adatum.com** and click **Next >**.
+1. On page Remove server roles, deactivate **Active Directory Domain Services**.
+1. In dialog Remove features that require Active Directory Domain Services, click **Remove Features**.
+1. In dialog Validation Results, click **Demote this domain controller**.
+1. In Active Directory Domain Services Configuration Wizard, on page Credentials, click **Change...**.
+1. In the dialog Credentials for deployment operation, enter the credentials for **Administrator@ad.adatum.com** and click **OK**.
+1. On page **Credentials**, click **Next >**.
+1. On page Warnings, activate **Proceed with removal** and click **Next >**.
+1. On page Removal Options, deactivate **Remove DNS delegation** and click **Next >**.
+1. On page New Administrator Password, in **Password** and **Confirm password**, type a secure password, and take a note.
+1. On page Review Options, click **Demote**.
+1. On page Results, click **Close**.
+
+#### PowerShell
+
+Perform this task on CL1.
+
+1. In the context menu of **Start**, click **Terminal**.
+1. Store the new local administrator password in a variable.
+
+    ````powershell
+    $localAdministratorPassword = Read-Host `
+        -Prompt 'LocalAdministratorPassword' `
+        -AsSecureString
+    ````
+
+1. At the prompt **LocalAdministratorPassword** enter a secure password and take a note.
+
+1. Demote the domain controller VN1-SRV1.
+
+    ````powershell
+    $job = Invoke-Command -ComputerName VN1-SRV1 -AsJob -ScriptBlock {
+        $localAdministratorPassword = ConvertTo-SecureString `
+            -String $using:localAdministratorPassword -AsPlainText -Force
+        Uninstall-ADDSDomainController `
+            -LocalAdministratorPassword $localAdministratorPassword -Force
+    }
+    ````
+
+1. Wait for the job to complete.
+
+    ````powershell
+    $job | Wait-Job
+    ````
+
+    This will take a few minutes.
+
+1. Read the output of the job.
+
+    ````powershell
+    $job | Receive-Job
+    ````
+
+    The value of the property **Status** should be **Success**.
+
+#### Troubleshooting
+
+If you receive any error message while demoting the domain controller, perform the following troubleshooting steps on CL1.
 
 1. Open **Terminal**.
 1. Shut down **VN1-SRV1**.
@@ -733,68 +797,6 @@ Perform this task on CL1.
 
 Leave out task 5 and skip to the next exercise.
 
-#### Desktop experience
-
-Perform this task on CL1.
-
-1. Open **Server Manager**.
-1. In Server Manager, on the menu, click **Manage**, **Remove Roles and Features**.
-1. In Remove Roles and Features Wizard, on page Befor You Begin, click **Next >**.
-1. On page Server Selection, click **VN1-SRV1.ad.adatum.com** and click **Next >**.
-1. On page Remove server roles, deactivate **Active Directory Domain Services**.
-1. In dialog Remove features that require Active Directory Domain Services, click **Remove Features**.
-1. In dialog Validation Results, click **Demote this domain controller**.
-1. In Active Directory Domain Services Configuration Wizard, on page Credentials, click **Change...**.
-1. In the dialog Credentials for deployment operation, enter the credentials for **Administrator@ad.adatum.com** and click **OK**.
-1. On page **Credentials**, click **Next >**.
-1. On page Warnings, activate **Proceed with removal** and click **Next >**.
-1. On page Removal Options, deactivate **Remove DNS delegation** and click **Next >**.
-1. On page New Administrator Password, in **Password** and **Confirm password**, type a secure password, and take a note.
-1. On page Review Options, click **Demote**.
-1. On page Results, click **Close**.
-
-#### PowerShell
-
-Perform this task on CL1.
-
-1. In the context menu of **Start**, click **Terminal**.
-1. Store the new local administrator password in a variable.
-
-    ````powershell
-    $localAdministratorPassword = Read-Host `
-        -Prompt 'LocalAdministratorPassword' `
-        -AsSecureString
-    ````
-
-1. At the prompt **LocalAdministratorPassword** enter a secure password and take a note.
-
-1. Demote the domain controller VN1-SRV1.
-
-    ````powershell
-    $job = Invoke-Command -ComputerName VN1-SRV1 -AsJob -ScriptBlock {
-        $localAdministratorPassword = ConvertTo-SecureString `
-            -String $using:localAdministratorPassword -AsPlainText -Force
-        Uninstall-ADDSDomainController `
-            -LocalAdministratorPassword $localAdministratorPassword -Force
-    }
-    ````
-
-1. Wait for the job to complete.
-
-    ````powershell
-    $job | Wait-Job
-    ````
-
-    This will take a few minutes.
-
-1. Read the output of the job.
-
-    ````powershell
-    $job | Receive-Job
-    ````
-
-    The value of the property **Status** should be **Success**.
-
 ### Task 5: Remove roles from the decommissioned domain controller
 
 #### Desktop experience
@@ -868,7 +870,7 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. In the context menu of **Start**, click **Terminal**.
-1. Set the domain mode to Windows Server 2016.
+1. Set the domain mode to Windows Server 2025.
 
     ````powershell
     Set-ADDomainMode -Identity ad.adatum.com -DomainMode Windows2025Domain
@@ -899,7 +901,7 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. In the context menu of **Start**, click **Terminal**.
-1. Set the forest mode to Windows Server 2016.
+1. Set the forest mode to Windows Server 2025.
 
     ````powershell
     Set-ADForestMode -Identity ad.adatum.com -ForestMode Windows2025Forest
