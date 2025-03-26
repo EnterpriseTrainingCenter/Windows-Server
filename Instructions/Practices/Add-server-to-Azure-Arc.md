@@ -3,7 +3,7 @@
 ## Required VMs
 
 * VN1-SRV1
-* VN1-SRV5
+* VN1-SRV8
 * CL1
 
 ## Setup
