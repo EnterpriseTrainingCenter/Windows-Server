@@ -815,7 +815,7 @@ Perform this task on CL1.
 
 1. Open **Server Manager**.
 1. In Server Manager, on the menu, click **Manage**, **Remove Roles and Features**.
-1. In Remove Roles and Features Wizard, on page Befor You Begin, click **Next >**.
+1. In Remove Roles and Features Wizard, on page Before You Begin, click **Next >**.
 1. On page Server Selection, click **VN1-SRV1.ad.adatum.com** and click **Next >**.
 1. On page Remove server roles, deactivate **Active Directory Domain Services**.
 1. In dialog Remove features that require Active Directory Domain Services, click **Remove Features**.
