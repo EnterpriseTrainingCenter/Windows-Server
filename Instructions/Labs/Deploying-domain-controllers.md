@@ -54,7 +54,6 @@ Note: It is recommended to use another domain controller as DNS server. However,
 Perform these steps on CL1.
 
 1. Open **Settings**.
-1. In Settings, click **Apps**.
 1. In Settings, click **System**.
 1. In System, click **Optional features**.
 1. In Add an optional feature, in the text field **Find an available optional feature**, type **RSAT**.
