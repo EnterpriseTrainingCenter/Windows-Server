@@ -87,7 +87,7 @@ Perform this task on CL1.
 1. Open **Server Manager**.
 1. In Server Manager, in the menu, click **Manage**, **Add Roles and Features**.
 1. In Add Roles and Features Wizard, on page Before You Begin, click **Next >**.
-1. On page Installation Type, ensure **Role-based or feature-basedd installation** is selected and click **Next >**.
+1. On page Installation Type, ensure **Role-based or feature-based installation** is selected and click **Next >**.
 1. On page Server Selection, click **VN1-SRV5** and click **Next >**.
 1. On page Server Roles, activate **Active Directory Domain Services**.
 1. In the dialog **Add features that are required for Active Directory Domain Services?**, click **Add Features**
@@ -152,7 +152,7 @@ Perform this task on CL1.
 1. On page Prerequisites Check, click **Install**.
 1. On page Results, click **Close**.
 
-Repeat these steps to promote VN2-SRV1 to a domain controller.
+Repeat from step 2 to promote VN2-SRV1 to a domain controller.
 
 #### PowerShell
 
