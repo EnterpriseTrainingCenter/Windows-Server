@@ -339,7 +339,7 @@ Perform this task on CL1.
 
 1. Expand **ad.adatum.com**, and click **_tcp**.
 
-    > There should 9 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com, VN1-SRV5.ad.adatum.com, and vn2-srv1.ad.adatum.com.
+    > There should 12 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com, VN1-SRV5.ad.adatum.com, and vn2-srv1.ad.adatum.com.
 
 If any records, are missing, open **Terminal** and execute the following command:
 
