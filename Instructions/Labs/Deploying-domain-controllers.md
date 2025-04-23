@@ -241,7 +241,7 @@ Perform this task on CL1.
 1. In **DNS Manager**, in the context-menu of **DNS**, click **Connect to DNS Server...**
 1. In **Connect to DNS Server**, click **The following computer**, type **VN2-SRV1.ad.adatum.com**, and click **OK**.
 
-Repeat from step 4 for **vn2.srv1.ad.adatum.com**.
+Repeat from step 4 for **vn2-srv1.ad.adatum.com**.
 
 #### PowerShell
 
