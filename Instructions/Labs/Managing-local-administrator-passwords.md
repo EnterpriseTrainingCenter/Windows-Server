@@ -73,13 +73,14 @@ Perform this task on CL1.
 1. Grant the managed device password update permission.
 
     ````powershell
-    Set-LapsADComputerSelfPermission -Identity 'ou=Devices, dc=ad, dc=adatum, dc=com'
+    $identity = 'ou=Devices, dc=ad, dc=adatum, dc=com'
+    Set-LapsADComputerSelfPermission -Identity $identity
     ````
 
 1. Query Extend Rights permission.
 
     ````powershell
-    Find-LapsADExtendedRights -Identity 'ou=Devices, dc=ad, dc=adatum, dc=com'
+    Find-LapsADExtendedRights -Identity $identity
     ````
 
     The property ExtendRightHolders should contain NT AUTHORITY\SYSTEM and AD\Domain Admins only.
