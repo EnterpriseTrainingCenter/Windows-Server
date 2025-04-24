@@ -215,13 +215,12 @@ Perform this task on the host computer.
 1. Open **Microsoft Edge**.
 1. Navigate to <https://portal.azure.com> and sign in to Azure, if necessary.
 1. In Microsoft Azure, in **Search resource, service, and docs (G+/)**, type **Azure Update Manager** and click it.
-1. In Azure Update Manager, under **Manage**, click **Machines**.
+1. In Azure Update Manager, under **Resources**, click **Machines**.
 1. Under Azure Update Manager | Machines, activate the checkbox **Select all**, click **One-time update** and click **Install Now**.
 1. In Install one-time updates, on tab Machines, ensure **VN1-SRV8** was added, and click **Next**.
 1. On tab Updates, review the Windows updates to install and click **Next**.
 1. On tab Properties, beside **Reboot option**, click **Reboot of required**. Beside **Maintenance windows (in minutes)**, type **60**. Click **Next**.
 1. On tab Review + install, click **Install**.
-
 
 ### Task 6: Review the update status of server
 
