@@ -22,7 +22,7 @@ Your helpdesk users all use a well-known password for the local Administrator. B
 
 ## Exercise 1: Implement Local Administrator Password Solution
 
-1. [Create organization units and move all servers and clients](#task-1-create-organizational-unit-and-move-all-servers-and-client): At domain level, create an OU named Devices, then within the OU Devices, create OUs Clients and Servers. Move all computers starting with CL to the OU clients. Move all servers starting with VN or PM, except for VN1-SRV1 into the OU Servers.
+1. [Create organization units and move all servers and clients](#task-1-create-organizational-unit-and-move-all-servers-and-clients): At domain level, create an OU named Devices, then within the OU Devices, create OUs Clients and Servers. Move all computers starting with CL to the OU clients. Move all servers starting with VN or PM, except for VN1-SRV1 into the OU Servers.
 1. [Prepare Active Directory for LAPS](#task-2-prepare-active-directory-for-laps)
 1. [Configure the policy for LAPS](#task-3-configure-the-policy-for-laps) and apply it to the domain. The Policy should configure the following settings:
 
@@ -36,7 +36,7 @@ Your helpdesk users all use a well-known password for the local Administrator. B
     * Enable password encryption
     * Configure the post-authentication actions to reset the password, logoff the managed account, and terminate any remaining processes after 8 hours
 
-### Task 1: Create organizational unit and move all servers and client
+### Task 1: Create organizational unit and move all servers and clients
 
 Perform this task on CL1.
 
@@ -167,7 +167,7 @@ Perform this task on CL2.
     Invoke-LapsPolicyProcessing
     ````
 
-    If the sttings still differ, go back to [Task 2: Configure the policy for LAPS](#task-2-configure-the-policy-for-laps).
+    If the settings still differ, go back to [Task 2: Configure the policy for LAPS](#task-3-configure-the-policy-for-laps).
 
     Look for the latest event with the **Event Id** **10009**. The event text should read as follows:
 
