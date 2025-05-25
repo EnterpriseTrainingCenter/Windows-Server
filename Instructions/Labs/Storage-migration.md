@@ -15,6 +15,8 @@
 1. On **CL1**, sign in as **ad\Administrator**.
 1. On **CL2**, sign in as **ad\Administrator**.
 
+If you skipped the practice [Install prerequisites for file server](./Install-prerequisites-for-file-serving.md), on CL1, run ````C:\LabResources\Solutions\New-Shares.ps1````.
+
 ## Introduction
 
 Adatum wants to migrate shares to a different server to reduce the number of servers.
