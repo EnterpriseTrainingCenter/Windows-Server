@@ -616,7 +616,71 @@ Perform this task on CL1.
 
 ### Task 4: Demote the old domain controller
 
-*Note:*: If you receive any error message while demoting the domain controller, perform the following troubleshooting steps on CL1.
+#### Desktop experience
+
+Perform this task on CL1.
+
+1. Open **Server Manager**.
+1. In Server Manager, on the menu, click **Manage**, **Remove Roles and Features**.
+1. In Remove Roles and Features Wizard, on page Befor You Begin, click **Next >**.
+1. On page Server Selection, click **VN1-SRV1.ad.adatum.com** and click **Next >**.
+1. On page Remove server roles, deactivate **Active Directory Domain Services**.
+1. In dialog Remove features that require Active Directory Domain Services, click **Remove Features**.
+1. In dialog Validation Results, click **Demote this domain controller**.
+1. In Active Directory Domain Services Configuration Wizard, on page Credentials, click **Change...**.
+1. In the dialog Credentials for deployment operation, enter the credentials for **Administrator@ad.adatum.com** and click **OK**.
+1. On page **Credentials**, click **Next >**.
+1. On page Warnings, activate **Proceed with removal** and click **Next >**.
+1. On page Removal Options, deactivate **Remove DNS delegation** and click **Next >**.
+1. On page New Administrator Password, in **Password** and **Confirm password**, type a secure password, and take a note.
+1. On page Review Options, click **Demote**.
+1. On page Results, click **Close**.
+
+#### PowerShell
+
+Perform this task on CL1.
+
+1. In the context menu of **Start**, click **Terminal**.
+1. Store the new local administrator password in a variable.
+
+    ````powershell
+    $localAdministratorPassword = Read-Host `
+        -Prompt 'LocalAdministratorPassword' `
+        -AsSecureString
+    ````
+
+1. At the prompt **LocalAdministratorPassword** enter a secure password and take a note.
+
+1. Demote the domain controller VN1-SRV1.
+
+    ````powershell
+    $job = Invoke-Command -ComputerName VN1-SRV1 -AsJob -ScriptBlock {
+        $localAdministratorPassword = ConvertTo-SecureString `
+            -String $using:localAdministratorPassword -AsPlainText -Force
+        Uninstall-ADDSDomainController `
+            -LocalAdministratorPassword $localAdministratorPassword -Force
+    }
+    ````
+
+1. Wait for the job to complete.
+
+    ````powershell
+    $job | Wait-Job
+    ````
+
+    This will take a few minutes.
+
+1. Read the output of the job.
+
+    ````powershell
+    $job | Receive-Job
+    ````
+
+    The value of the property **Status** should be **Success**.
+
+#### Troubleshooting
+
+If you receive any error message while demoting the domain controller, perform the following troubleshooting steps on CL1.
 
 1. Open **Terminal**.
 1. Shut down **VN1-SRV1**.
@@ -733,68 +797,6 @@ Perform this task on CL1.
 
 Leave out task 5 and skip to the next exercise.
 
-#### Desktop experience
-
-Perform this task on CL1.
-
-1. Open **Server Manager**.
-1. In Server Manager, on the menu, click **Manage**, **Remove Roles and Features**.
-1. In Remove Roles and Features Wizard, on page Befor You Begin, click **Next >**.
-1. On page Server Selection, click **VN1-SRV1.ad.adatum.com** and click **Next >**.
-1. On page Remove server roles, deactivate **Active Directory Domain Services**.
-1. In dialog Remove features that require Active Directory Domain Services, click **Remove Features**.
-1. In dialog Validation Results, click **Demote this domain controller**.
-1. In Active Directory Domain Services Configuration Wizard, on page Credentials, click **Change...**.
-1. In the dialog Credentials for deployment operation, enter the credentials for **Administrator@ad.adatum.com** and click **OK**.
-1. On page **Credentials**, click **Next >**.
-1. On page Warnings, activate **Proceed with removal** and click **Next >**.
-1. On page Removal Options, deactivate **Remove DNS delegation** and click **Next >**.
-1. On page New Administrator Password, in **Password** and **Confirm password**, type a secure password, and take a note.
-1. On page Review Options, click **Demote**.
-1. On page Results, click **Close**.
-
-#### PowerShell
-
-Perform this task on CL1.
-
-1. In the context menu of **Start**, click **Terminal**.
-1. Store the new local administrator password in a variable.
-
-    ````powershell
-    $localAdministratorPassword = Read-Host `
-        -Prompt 'LocalAdministratorPassword' `
-        -AsSecureString
-    ````
-
-1. At the prompt **LocalAdministratorPassword** enter a secure password and take a note.
-
-1. Demote the domain controller VN1-SRV1.
-
-    ````powershell
-    $job = Invoke-Command -ComputerName VN1-SRV1 -AsJob -ScriptBlock {
-        $localAdministratorPassword = ConvertTo-SecureString `
-            -String $using:localAdministratorPassword -AsPlainText -Force
-        Uninstall-ADDSDomainController `
-            -LocalAdministratorPassword $localAdministratorPassword -Force
-    }
-    ````
-
-1. Wait for the job to complete.
-
-    ````powershell
-    $job | Wait-Job
-    ````
-
-    This will take a few minutes.
-
-1. Read the output of the job.
-
-    ````powershell
-    $job | Receive-Job
-    ````
-
-    The value of the property **Status** should be **Success**.
-
 ### Task 5: Remove roles from the decommissioned domain controller
 
 #### Desktop experience
@@ -868,7 +870,7 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. In the context menu of **Start**, click **Terminal**.
-1. Set the domain mode to Windows Server 2016.
+1. Set the domain mode to Windows Server 2025.
 
     ````powershell
     Set-ADDomainMode -Identity ad.adatum.com -DomainMode Windows2025Domain
@@ -899,7 +901,7 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. In the context menu of **Start**, click **Terminal**.
-1. Set the forest mode to Windows Server 2016.
+1. Set the forest mode to Windows Server 2025.
 
     ````powershell
     Set-ADForestMode -Identity ad.adatum.com -ForestMode Windows2025Forest
@@ -1053,20 +1055,20 @@ Perform this task on CL1.
 1. In Terminal, start the migration from the account **PowerShell Service** to **dMSA_PSService**.
 
     ````powershell
-    $dMSAIdentity = `
+    $identity = `
         'cn=dMSA_PSService, ou=Service accounts, dc=ad, dc=adatum, dc=com'
-    $supersededAccountIdentity = `
+    $supersededAccount = `
         'cn=Powershell Service, ou=Service accounts, dc=ad, dc=adatum, dc=com'
 
     Start-ADServiceAccountMigration `
-        -Identity $dMSAIdentity -SupersededAccount $supersededAccountIdentity
+        -Identity $identity -SupersededAccount $supersededAccount
     ````
 
 1. Verify the properties **msDS-DelegatedMSAState** and **msDS-ManagedAccountPrecededByLink** of the dMSA.
 
     ````powershell
     Get-ADServiceAccount `
-        -Identity $dMSAIdentity `
+        -Identity $identity `
         -Properties msDS-DelegatedMSAState, msDS-ManagedAccountPrecededByLink
     ````
 
@@ -1076,7 +1078,7 @@ Perform this task on CL1.
 
     ````powershell
     Get-ADUser `
-        -Identity $supersededAccountIdentity `
+        -Identity $supersededAccount `
         -Properties `
             msDS-SupersededServiceAccountState, `
             msDS-SupersededManagedAccountLink
@@ -1096,13 +1098,13 @@ Perform this task on CL1.
 
     ````powershell
     Complete-ADServiceAccountMigration `
-        -Identity $dMSAIdentity -SupersededAccount $supersededAccountIdentity
+        -Identity $identity -SupersededAccount $supersededAccount
     ````
 
 1. Verify the property **msDS-DelegatedMSAState** of the dMSA.
 
     ````powershell
-    Get-ADServiceAccount -Identity $dMSAIdentity -Properties msDS-DelegatedMSAState
+    Get-ADServiceAccount -Identity $identity -Properties msDS-DelegatedMSAState
     ````
 
     msDS-DelegatedMSAState should be 2.
@@ -1111,22 +1113,14 @@ Perform this task on CL1.
 
     ````powershell
     Get-ADUser `
-        -Identity $supersededAccountIdentity `
+        -Identity $supersededAccount `
         -Properties msDS-SupersededServiceAccountState
     ````
-
-1. Reset the password of the old service account.
-
-    ````powershell
-    Set-ADAccountPassword -Identity $supersededAccountIdentity -Reset
-    ````
-
-1. At the prompts **Password** and **Repeat Password**, enter a new secure password that is different from any default passwords.
 
 1. Disable the old service account.
 
     ````powershell
-    Disable-ADAccount -Identity $supersededAccountIdentity
+    Disable-ADAccount -Identity $supersededAccount
     ````
 
 1. Restart the service **PSService** on **VN1-SRV9** again.
@@ -1138,5 +1132,13 @@ Perform this task on CL1.
     ````
 
     This is not necessary, but want to check, if the service still starts.
+
+1. Reset the password of the old service account.
+
+    ````powershell
+    Set-ADAccountPassword -Identity $supersededAccount -Reset
+    ````
+
+1. At the prompts **Password** and **Repeat Password**, enter a new secure password that is different from any default passwords.
 
 If time allows, check that the service is still configured to log on with the superseded service account.

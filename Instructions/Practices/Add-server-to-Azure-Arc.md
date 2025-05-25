@@ -3,7 +3,7 @@
 ## Required VMs
 
 * VN1-SRV1
-* VN1-SRV5
+* VN1-SRV8
 * CL1
 
 ## Setup
@@ -41,4 +41,3 @@ Perform this task on VN1-SRV8.
 1. In **Azure Arc Configuration**, on page Sign in to Azure, click **Next >**.
 1. On page Resource details, select **Azure Active Directory Tenant**, **Subscription**, **Resource Group**, and **Azure Region**. Under **Network Connectivity**, ensure **Public endpoint** is selected and click **Next >**.
 1. On page Connecting your server, wait for the connection to be successful and click **Finish**.
-

@@ -54,7 +54,6 @@ Note: It is recommended to use another domain controller as DNS server. However,
 Perform these steps on CL1.
 
 1. Open **Settings**.
-1. In Settings, click **Apps**.
 1. In Settings, click **System**.
 1. In System, click **Optional features**.
 1. In Add an optional feature, in the text field **Find an available optional feature**, type **RSAT**.
@@ -88,7 +87,7 @@ Perform this task on CL1.
 1. Open **Server Manager**.
 1. In Server Manager, in the menu, click **Manage**, **Add Roles and Features**.
 1. In Add Roles and Features Wizard, on page Before You Begin, click **Next >**.
-1. On page Installation Type, ensure **Role-based or feature-basedd installation** is selected and click **Next >**.
+1. On page Installation Type, ensure **Role-based or feature-based installation** is selected and click **Next >**.
 1. On page Server Selection, click **VN1-SRV5** and click **Next >**.
 1. On page Server Roles, activate **Active Directory Domain Services**.
 1. In the dialog **Add features that are required for Active Directory Domain Services?**, click **Add Features**
@@ -153,7 +152,7 @@ Perform this task on CL1.
 1. On page Prerequisites Check, click **Install**.
 1. On page Results, click **Close**.
 
-Repeat these steps to promote VN2-SRV1 to a domain controller.
+Repeat from step 2 to promote VN2-SRV1 to a domain controller.
 
 #### PowerShell
 
@@ -242,7 +241,7 @@ Perform this task on CL1.
 1. In **DNS Manager**, in the context-menu of **DNS**, click **Connect to DNS Server...**
 1. In **Connect to DNS Server**, click **The following computer**, type **VN2-SRV1.ad.adatum.com**, and click **OK**.
 
-Repeat from step 4 for **vn2.srv1.ad.adatum.com**.
+Repeat from step 3 for **vn2-srv1.ad.adatum.com**.
 
 #### PowerShell
 
@@ -340,7 +339,7 @@ Perform this task on CL1.
 
 1. Expand **ad.adatum.com**, and click **_tcp**.
 
-    > There should 9 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com, VN1-SRV5.ad.adatum.com, and vn2-srv1.ad.adatum.com.
+    > There should 12 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com, VN1-SRV5.ad.adatum.com, and vn2-srv1.ad.adatum.com.
 
 If any records, are missing, open **Terminal** and execute the following command:
 
@@ -816,7 +815,7 @@ Perform this task on CL1.
 
 1. Open **Server Manager**.
 1. In Server Manager, on the menu, click **Manage**, **Remove Roles and Features**.
-1. In Remove Roles and Features Wizard, on page Befor You Begin, click **Next >**.
+1. In Remove Roles and Features Wizard, on page Before You Begin, click **Next >**.
 1. On page Server Selection, click **VN1-SRV1.ad.adatum.com** and click **Next >**.
 1. On page Remove server roles, deactivate **Active Directory Domain Services**.
 1. In dialog Remove features that require Active Directory Domain Services, click **Remove Features**.

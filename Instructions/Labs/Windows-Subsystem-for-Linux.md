@@ -112,7 +112,8 @@ If time allows, you can install additional distributions. This will take less ti
 1. [Find out the IP addresses](#task-1-find-out-the-ip-addresses) of the Linux distribution from Windows and of the Windows Host from Linux
 1. [Access files in Linux](#task-2-access-files-in-linux) home directory from Windows
 1. [Update the Linux distribution](#task-3-update-the-linux-distribution)
-1. [Shutdown the Linux distribution](#task-4-shut-down-the-linux-distribution)
+1. [Install a graphical Linux application](#task-4-install-a-graphical-linux-application), e.g. quadrapassel
+1. [Shutdown the Linux distribution](#task-5-shut-down-the-linux-distribution)
 
 ### Task 1: Find out the IP addresses
 
@@ -188,7 +189,23 @@ Perform this task on VN1-SRV9.
 
 This may take a few minutes.
 
-### Task 4: Shut down the Linux distribution
+### Task 4: Install a graphical Linux application
+
+Perform this task on VN1-SRV9.
+
+1. Open **Terminal**.
+1. In Terminal, click the down chevron and click **Ubuntu**.
+1. Install quadrapassel, which is a clone of the Tetris game.
+
+    ````bash
+    sudo apt-get install quadrapassel
+    ````
+
+1. If a prompt \[sudo\] password appears, enter your password for the Linux distribution.
+1. At the prompt Do you want to continue?, enter **y**.
+1. In the Windows start menu, find the app **Quadrapassel (Ubuntu)**, open it and have some fun!
+
+### Task 5: Shut down the Linux distribution
 
 Perform this task on VN1-SRV9.
 

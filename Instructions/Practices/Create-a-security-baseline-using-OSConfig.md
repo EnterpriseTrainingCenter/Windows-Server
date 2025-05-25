@@ -46,8 +46,8 @@ Perform these steps on CL1.
     Get-OSConfigDesiredConfiguration -Scenario $scenario |
     Format-Table `
         Name, `
-        @{ Name = "Status"; Expression = { $PSItem.Compliance.Status } }, `
-        @{ Name = "Reason"; Expression = { $_.Compliance.Reason } } `
+        @{ Name = 'Status'; Expression = { $PSItem.Compliance.Status } }, `
+        @{ Name = 'Reason'; Expression = { $PSItem.Compliance.Reason } } `
         -AutoSize `
         -Wrap
     ````

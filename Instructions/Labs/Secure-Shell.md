@@ -45,6 +45,12 @@ Perform this task on VN1-SRV5.
     Start-Service -Name $name
     ````
 
+1. Configure the firewall rule.
+
+   ````powershell
+   Set-NetFirewallRule -Name OpenSSH-Server-In-TCP -Enabled True -Profile Domain
+   ````
+   
 1. Configure the **sshd** service to start automatically.
 
     ````powershell
@@ -176,7 +182,7 @@ Perform this task on CL1.
 1. Connect to **vn1-srv1.ad.adatum.com** using the private key file **~\.ssh\Administrator@ad.adatum.com**.
 
     ````powershell
-    ssh.exe vn1-srv5.ad.adatum.com -i "~\.ssh\Administrator@ad.adatum.com"
+    ssh.exe vn1-srv5.ad.adatum.com -i ".ssh\Administrator@ad.adatum.com"
     ````
 
 1. At the prompt Enter passphrase for ~\\.ssh\\Administrator@ad.adatum.com, type the passphrase you created an took note of in a previous task.
