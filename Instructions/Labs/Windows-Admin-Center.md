@@ -355,7 +355,7 @@ Perform this task on CL1.
     $pSSession = New-PSSession -ComputerName VN1-SRV4
     ````
 
-1. Copy the PowerShell modules for Windows Admin Center to VN1-CL1.
+1. Copy the PowerShell modules for Windows Admin Center to CL1.
 
     ````powershell
     Copy-Item `
@@ -399,7 +399,7 @@ Perform this task on CL1.
     Import-WACConnection `
         -FileName $path `
         -Endpoint 'https://admincenter.ad.adatum.com' `
-        -Credential $credential `
+        -Credentials $credential `
         -AccessKey $accessKey
     ````
 
