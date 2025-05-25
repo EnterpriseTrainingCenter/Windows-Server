@@ -393,6 +393,12 @@ Perform this task on CL1.
     $accessKey = Get-Clipboard -Format Text -TextFormatType Text
     ````
 
+1. Check the content of the variable $accesskey.
+
+    ````powershell
+    $accesskey
+    ````
+
 1. Import connections from the CSV file.
 
     ````powershell
