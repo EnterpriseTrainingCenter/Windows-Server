@@ -390,7 +390,7 @@ Perform this task on CL1.
 
     ````powershell
     # Replace the string with the text from your clipboard
-    $accessKey = 'QR[D;t@2GXr9GrCJScF[$|Ne!b9esOos'
+    $accessKey = Get-Clipboard -Format Text -TextFormatType Text
     ````
 
 1. Import connections from the CSV file.
