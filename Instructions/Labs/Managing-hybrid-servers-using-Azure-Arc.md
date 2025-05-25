@@ -9,10 +9,9 @@
 
 Your instructor will tell you which tenant, subscription, and resource group to use.
 
-You need to complete the practices befor starting with the lab.
+You need to complete the practices before starting with the lab.
 
 1. [Create a Log Analytics Workspace](/Instructions/Practices/Create-a-Log-Analytics-Workspace.md)
-1. [Create an Automation account](/Instructions/Practices/Create-an-Automation-account.md)
 1. [Add server to Azure Arc](/Instructions/Practices/Add-server-to-Azure-Arc.md)
 
 ## Introduction
@@ -103,7 +102,7 @@ Perform this task on the host computer.
 1. In VN1-SRV8 | Insights, click **Enable**.
 1. On the pane Azure Monitor, click **Enable**.
 1. On the pane Monitoring configuration, beside **Subscription**, click the subscription you used for this lab. Beside **Data collection rule**, click **Create New**.
-1. Under Create new rule, beside **Data collection rule name**, type your name or initials followed by **-Adatum-Log-Analytics-Workspace**. Activate the checkbox **Enable processes and dependencies (Map)**. Beside **Subscription**, ensure the subsription used for this lab is selected. Beside **Log Analytics workspaces**, click **Adatum-Log-Analytics-Workspace**. Click **Create**.
+1. Under Create new rule, beside **Data collection rule name**, type your name or initials followed by **-Adatum-Log-Analytics-Workspace**. Activate the checkbox **Enable processes and dependencies (Map)**. Beside **Subscription**, ensure the subscription used for this lab is selected. Beside **Log Analytics workspaces**, click **Adatum-Log-Analytics-Workspace**. Click **Create**.
 1. On the pane **Monitoring configuration**, click **Configure**.
 
     Wait for the deployment to complete. This process takes 5 - 10 minutes.
@@ -142,9 +141,12 @@ Perform this task on the host computer.
 1. Sign in to Azure.
 1. In **Search resources, services and docs (G+/)**, type **VN1-SRV8** and click it.
 1. In VN1-SRV8, expand **Operations** and click **Change tracking**.
-1. In VN1-SRV8 | Change Tracking and Inventory, under **Log analytics workspace**, ensure that your workspace is selected. Click **Enable**.
+1. In VN1-SRV8 | Change Tracking, click **Open Change and Inventory Center**.
+1. In Change Tracking and Inventory Center | Machines, activate the checkbox beside **VN1-SRV8** and click **Enable Change Tracking & Inventory**.
+1. In the dialog Enable Change Tracking now for 1 selected machines, click **Yes**.
+1. In Enable Change Tracking, click **Enable**.
 
-    Wait for the deployment to complete. This takes less than 5 minutes.
+    The deployment may take a long time. You cannot continue with task 2 until the deployment has finished. Consider proceeding with the next Exercise and revisiting the next task later.
 
 ### Task 2: Validate change tracking
 
@@ -152,12 +154,12 @@ Perform this task on the host computer.
 
 1. Open **Microsoft Edge** and navigate to <https://portal.azure.com>
 1. Sign in to Azure.
-1. In **Search resources, services and docs (G+/)**, type **VN1-SRV8** and click it.
-1. In VN1-SRV8, under **Operations**, click **Change tracking**.
+1. In **Search resources, services and docs (G+/)**, type **Change tracking and Inventory Center** and click it.
+1. In Change tracking and Inventory Center, under **Manage**, click **Change tracking**.
 
     You will not see any changes to the machines, because we just enabled change tracking.
 
-1. Click **Edit Settings**.
+1. Click **Settings**.
 1. In Workspace Configuration, click the tab **Windows Services**.
 1. On the tab Windows Services, under **Collection frequency**, drag the slider to the left to **10 sec**.
 1. In the breadcrumb navigation at the top, click **VN1-SRV8 | Change tracking**.
@@ -170,10 +172,9 @@ You might want to revisit this task at the end of the lab to see changes.
 ## Exercise 4: Azure update management
 
 1. [Using Update management center, check for updates](#task-1-using-update-management-center-check-for-updates) on VN1-SRV8
-1. [Enable periodic assessement](#task-2-enable-periodic-assessement) on VN1-SRV8
+1. [Enable periodic assessment](#task-2-enable-periodic-assessment) on VN1-SRV8
 1. [Install updates](#task-3-install-updates) on VN1-SRV8
-1. [Create a maintenance plan](#task-4-create-a-maintenance-plan) for VN1-SRV8 to automatically install all updates of all classifications daily at 7:00 PM
-1. [Assign a policy](#task-5-assign-a-policy) to assign the maintenance plan to all machines added the the resource group WinFAD in the future
+1. [Review the update status of server](#task-4-review-the-update-status-of-server) VN1-SRV8
 
 ### Task 1: Using Update management center, check for updates
 
@@ -188,9 +189,9 @@ Perform this task on the host computer.
 
     If you do not see VN1-SRV8, ensure that the filter **Subscription** shows the correct subscription.
 
-    Wait for the assessment to complete. You will be notified in the *Notications* icon. This will take some minutes.
+    Wait for the assessment to complete. You will be notified in the *Notifications* icon. This will take some minutes.
 
-### Task 2: Enable periodic assessement
+### Task 2: Enable periodic assessment
 
 Perform this task on the host computer.
 
@@ -206,7 +207,7 @@ Perform this task on the host computer.
 1. In Select resources, activate the checkbox left to **VN1-SRV8** and click **Add**.
 1. In **Change update settings**, under **Windows (1)**, in the top row, in column **Periodic assessment**, click **Enable**. Click **Save**.
 
-    You might want to review the options in columns **Hotpatch** and **Patch orchetration**. However, these options are available for native Azure VMs only.
+    You might want to review the options in columns **Hotpatch** and **Patch orchestration**. However, these options are available for native Azure VMs only.
 
 ### Task 3: Install updates
 
@@ -222,7 +223,7 @@ Perform this task on the host computer.
 1. On tab Properties, beside **Reboot option**, click **Reboot of required**. Beside **Maintenance windows (in minutes)**, type **60**. Click **Next**.
 1. On tab Review + install, click **Install**.
 
-### Task 6: Review the update status of server
+### Task 4: Review the update status of server
 
 Perform this task on the host computer.
 
@@ -231,6 +232,6 @@ Perform this task on the host computer.
 1. In Microsoft Azure, in **Search resource, service, and docs (G+/)**, type **VN1-SRV8** and click it.
 1. In VN1-SRV8, under **Operations**, click **Updates**.
 
-    Review the data on the tab **Recommende updates**.
+    Review the data on the tab **Recommendeds updates**.
 
 1. Click the tab **History** and review the data.
