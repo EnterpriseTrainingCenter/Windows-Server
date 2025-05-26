@@ -388,6 +388,8 @@ Perform this task on CL1.
 1. Switch back to **Terminal**.
 1. Save the access key to a variable.
 
+    *Important*: If you copy the following command to the clipboard, the copied access key will be lost. Therefore, either type the command manually, or, before executing the command, copy the access key again.
+
     ````powershell
     # Replace the string with the text from your clipboard
     $accessKey = Get-Clipboard -Format Text -TextFormatType Text
