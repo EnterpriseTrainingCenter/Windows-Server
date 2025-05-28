@@ -2,7 +2,7 @@
 
 ## Required VMs
 
-* VN1-SRV1
+* A domain controller (VN1-SRV5 or VN1-SRV1)
 * VN1-SRV4
 * VN1-SRV7
 * VN1-SRV8
