@@ -32,7 +32,7 @@
 
 1. At the prompt Enter the password of the local Administrator account of WIN-CL*, enter the local Administrator password of CL*.
 1. At the prompt Enter credentials of an account with permissions to join the computer to domain ad.adatum.com, enter the credentials of **Administrator@ad.adatum.com**.
-1. Limit the bandwidth of VN1-SRV10's network adapter to 1 MB/s.
+1. Limit the bandwidth of VN1-SRV10's network adapter to 10 MB/s.
 
     ````powershell
     Get-VMNetworkAdapter -VMName WIN-VN1-SRV10 | 
@@ -41,7 +41,6 @@
     ````
 
 1. On CL1, sign in as **ad\Administrator**.
-1. On CL3, sign in as **ad\Administrator**.
 1. On CL3, sign in as **ad\Administrator**.
 1. On CL4, sign in as **ad\Administrator**.
 
@@ -164,7 +163,7 @@ Repeat from step 4 for the share **Marketing**.
 1. [Configure BranchCache for clients](#task-3-configure-branchcache-for-clients) on VNet2
 1. [Prehash and export a BranchCache package](#task-4-prehash-and-export-a-branchcache-package) of share IT on VN1-SRV10
 1. [Remove the bandwidth limit on virtual machine](#task-5-remove-the-bandwidth-limit-on-virtual-machine) WIN-VN1-SRV10
-1. [Import the BrancCache package](#task-6-import-the-branchcache-package) on VN3-SRV1
+1. [Import the BranchCache package](#task-6-import-the-branchcache-package) on VN3-SRV1
 1. [Set the bandwidth limit on virtual machine](#task-7-set-the-bandwidth-limit-on-virtual-machine) WIN-VN1-SRV10 to 10MB
 1. [Validate BranchCache](#task-8-validate-branchcache) on CL3
 
@@ -366,7 +365,7 @@ Perform this task on CL1.
 Perform this task on the host.
 
 1. Run **Windows PowerShell** as Administrator.
-1. In Windows PowerShell, on the virtual machine **WIN-VN1-SRV10**, disable the maximum bandwidth on the network adapter connected to **VNet1**.
+1. In Windows PowerShell, on the virtual machine **WIN-VN1-SRV10**, set the maximum bandwidth on the network adapter connected to **VNet1** to 10 MB/s.
 
     ````powershell
     Get-VMNetworkAdapter -VMName WIN-VN1-SRV10 | 
