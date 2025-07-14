@@ -355,7 +355,7 @@ Perform this task on CL1.
     $pSSession = New-PSSession -ComputerName VN1-SRV4
     ````
 
-1. Copy the PowerShell modules for Windows Admin Center to VN1-CL1.
+1. Copy the PowerShell modules for Windows Admin Center to CL1.
 
     ````powershell
     Copy-Item `
@@ -388,9 +388,17 @@ Perform this task on CL1.
 1. Switch back to **Terminal**.
 1. Save the access key to a variable.
 
+    *Important*: If you copy the following command to the clipboard, the copied access key will be lost. Therefore, either type the command manually, or, before executing the command, copy the access key again.
+
     ````powershell
     # Replace the string with the text from your clipboard
-    $accessKey = 'QR[D;t@2GXr9GrCJScF[$|Ne!b9esOos'
+    $accessKey = Get-Clipboard -Format Text -TextFormatType Text
+    ````
+
+1. Check the content of the variable $accesskey.
+
+    ````powershell
+    $accesskey
     ````
 
 1. Import connections from the CSV file.
@@ -399,7 +407,7 @@ Perform this task on CL1.
     Import-WACConnection `
         -FileName $path `
         -Endpoint 'https://admincenter.ad.adatum.com' `
-        -Credential $credential `
+        -Credentials $credential `
         -AccessKey $accessKey
     ````
 

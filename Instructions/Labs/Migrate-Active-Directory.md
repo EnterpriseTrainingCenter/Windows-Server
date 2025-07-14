@@ -229,7 +229,6 @@ Perform this task on CL1.
 1. In Edit Forwarders, click **10.1.1.8** and click **Delete**.
 1. In **\<Click here to add an IP Address or DNS Name\>**, enter **8.8.8.8**. Repeat this step with **8.8.4.4** and click **OK**.
 1. In **VN1-SRV5.ad.adatum.com Properties**, click **OK**.
-1. In **DNS Manager**, in the context-menu of **DNS**, click **Connect to DNS Server...**
 
 #### PowerShell
 
@@ -436,7 +435,7 @@ Perform this task on CL1.
 
     ````powershell
     Set-DnsClientServerAddress `
-        -InterfaceAlias Ethernet -ServerAddresses 10.1.1.40, 10.1.2.8
+        -InterfaceAlias Ethernet -ServerAddresses 10.1.1.40
     ````
 
 ### Task 2: Change the IP address of the domain controller to decommission
@@ -464,9 +463,7 @@ Perform this task on VN1-SRV1.
 1. In Network Adapter Settings, enter **2**.
 1. Beside Enter new preferred DNS server, enter **10.1.1.40**.
 1. In the message box Preferred DNS server set, click **OK**.
-1. Beside Enter alternate DNS server, enter **10.1.2.8**.
-1. In the message box Alternate DNS server set, click **OK**.
-1. In Network Adapter Settings, enter **4**.
+1. Beside Enter alternate DNS server, press enter.
 1. In Server Configuration, enter **12**.
 1. In the message box **Are you sure to log off?**, click **Yes**.
 
@@ -771,7 +768,7 @@ If you receive any error message while demoting the domain controller, perform t
 
 1. Quit the operation target selection.
 
-    `````shell
+    ````shell
     Quit
     ````
 

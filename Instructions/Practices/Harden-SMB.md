@@ -2,7 +2,7 @@
 
 ## Required VMs
 
-* VN1-SRV1
+* VN1-SRV1, if it your domain controller
 * VN1-SRV5
 * VN1-SRV10
 * CL1
