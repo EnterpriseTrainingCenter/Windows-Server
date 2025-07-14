@@ -5,9 +5,9 @@
 * VN1-SRV1
 * VN1-SRV4
 * VN1-SRV10
-* VN2-SRV1
+* VN3-SRV1
 * CL1
-* CL2
+* CL3
 * CL3
 
 ## Setup
@@ -41,7 +41,7 @@
     ````
 
 1. On CL1, sign in as **ad\Administrator**.
-1. On CL2, sign in as **ad\Administrator**.
+1. On CL3, sign in as **ad\Administrator**.
 1. On CL3, sign in as **ad\Administrator**.
 1. On CL4, sign in as **ad\Administrator**.
 
@@ -68,7 +68,7 @@ Adatum wants to improve the performance accessing the file server from VNet2 and
 
 ### Task 1: Validate a slow network connection to VN1-SRV10
 
-Perform this task on CL2.
+Perform this task on CL3.
 
 1. Open **Terminal**.
 1. Copy the content of the IT share to the Documents folder while measuring the duration of the command.
@@ -159,14 +159,14 @@ Repeat from step 4 for the share **Marketing**.
 
 ## Exercise 2: Configuring and validating BranchCache in hosted cache mode
 
-1. [Install the BranchCache feature](#task-1-install-the-branchcache-feature) on VN2-SRV1
-1. [Configure the hosted cache](#task-2-configure-the-hosted-cache) on VN2-SRV1
+1. [Install the BranchCache feature](#task-1-install-the-branchcache-feature) on VN3-SRV1
+1. [Configure the hosted cache](#task-2-configure-the-hosted-cache) on VN3-SRV1
 1. [Configure BranchCache for clients](#task-3-configure-branchcache-for-clients) on VNet2
 1. [Prehash and export a BranchCache package](#task-4-prehash-and-export-a-branchcache-package) of share IT on VN1-SRV10
 1. [Remove the bandwidth limit on virtual machine](#task-5-remove-the-bandwidth-limit-on-virtual-machine) WIN-VN1-SRV10
-1. [Import the BrancCache package](#task-6-import-the-branchcache-package) on VN2-SRV1
+1. [Import the BrancCache package](#task-6-import-the-branchcache-package) on VN3-SRV1
 1. [Set the bandwidth limit on virtual machine](#task-7-set-the-bandwidth-limit-on-virtual-machine) WIN-VN1-SRV10 to 10MB
-1. [Validate BranchCache](#task-8-validate-branchcache) on CL2
+1. [Validate BranchCache](#task-8-validate-branchcache) on CL3
 
 ### Task 1: Install the BranchCache feature
 
@@ -178,7 +178,7 @@ Perform this task on CL1.
 1. In Server Manager, in the menu, click **Manage**, **Add Roles and Reatures**.
 1. In the Add Rules and Features Wizard, on the page **Before You Begin**, click **Next >**.
 1. On the page Installation Type, ensure **Role-based or feature-based installation** is selected and click **Next >**.
-1. On the page Server Selection, click **VN2-SRV1.ad.adatum.com** and click **Next >**.
+1. On the page Server Selection, click **VN3-SRV1.ad.adatum.com** and click **Next >**.
 1. On the page Server Roles, click **Next >**.
 1. On the page Features, activate **BranchCache** and click **Next >**.
 1. On the page Confirmation, verify your selection and click **Install**.
@@ -189,8 +189,8 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. Using Microsoft Edge, navigate to <https://admincenter>.
-1. In Windows Admin Center, on the connections page, click **vn2-srv1.ad.adatum.com**.
-1. Connected to vn2-srv1.ad.adatum.com, under **Tools**, click **Roles & features**.
+1. In Windows Admin Center, on the connections page, click **VN3-SRV1.ad.adatum.com**.
+1. Connected to VN3-SRV1.ad.adatum.com, under **Tools**, click **Roles & features**.
 1. In Roles and features, under **Features**, click **BranchCache**, and click **Install**.
 1. In the pane Install Role and Features, activate the checkbox **Reboot the server automatically, if required** and click **Yes**.
 
@@ -201,11 +201,11 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. Open **Terminal**.
-1. Install the BranchCache feature on VN2-SRV1.
+1. Install the BranchCache feature on VN3-SRV1.
 
     ````powershell
     Install-WindowsFeature `
-        -ComputerName VN2-SRV1 `
+        -ComputerName VN3-SRV1 `
         -Name BranchCache `
         -IncludeManagementTools `
         -Restart
@@ -216,13 +216,13 @@ Perform this task on CL1.
 Perform this task on CL1.
 
 1. Open **Terminal**.
-1. Create a CIM session to **VN2-SRV1**.
+1. Create a CIM session to **VN3-SRV1**.
 
     ````powershell
-    $cimSession = New-CimSession -ComputerName VN2-SRV1
+    $cimSession = New-CimSession -ComputerName VN3-SRV1
     ````
 
-1. Configure VN2-SRV1 as a hosted cache server and register a service connection point in Active Directory for automatic hosted cache server discovery by client computers.
+1. Configure VN3-SRV1 as a hosted cache server and register a service connection point in Active Directory for automatic hosted cache server discovery by client computers.
 
     ````powershell
     Enable-BCHostedServer -CimSession $cimSession -RegisterSCP
@@ -265,10 +265,10 @@ Perform this task on CL1.
 1. In step Action, click **Allow the connection** and click **Finish**.
 1. Close **Group Policy Management Editor**.
 1. Open **Terminal**.
-1. Update the group policies on **CL2**.
+1. Update the group policies on **CL3**.
 
     ````powershell
-    Invoke-Command -ComputerName CL2 -ScriptBlock { gpupdate.exe }
+    Invoke-Command -ComputerName CL3 -ScriptBlock { gpupdate.exe }
     ````
 
 ### Task 4: Prehash and export a BranchCache package
@@ -319,13 +319,13 @@ Perform this task on the host.
 Perform this task on CL1.
 
 1. Open **Terminal**.
-1. Create a remote PowerShell session to VN2-SRV1.
+1. Create a remote PowerShell session to VN3-SRV1.
 
     ````powershell
-    $pSSession = New-PSSession -ComputerName VN2-SRV1
+    $pSSession = New-PSSession -ComputerName VN3-SRV1
     ````
 
-1. Copy the BranchCache package from VN1-SRV10 to VN2-SRV1.
+1. Copy the BranchCache package from VN1-SRV10 to VN3-SRV1.
 
     ````powershell
     Copy-Item `
@@ -371,12 +371,12 @@ Perform this task on the host.
     ````powershell
     Get-VMNetworkAdapter -VMName WIN-VN1-SRV10 | 
     Where-Object { $PSItem.SwitchName -eq 'VNet1' } |
-    Set-VMNetworkAdapter -MaximumBandwidth 10MB
+    Set-VMNetworkAdapter -MaximumBandwidth 1MB
     ````
 
 ### Task 8: Validate BranchCache
 
-Perform this task on CL2.
+Perform this task on CL3.
 
 1. Open **Terminal**.
 1. Copy the content of the IT share to the Documents folder while measuring the duration of the command.
