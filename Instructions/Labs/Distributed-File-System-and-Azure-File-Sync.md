@@ -13,7 +13,9 @@
 ## Setup
 
 1. On **CL1**, sign in as **ad\Administrator**.
-1. You need sign-in credentials for an active Azure Subscription in which you have the permissions to create resources. Moreover, you need to have the Global Administrator role in Azure Active Directory. Ask your instructor for help, if you are unsure.
+1. On **CL2**, sign in as **ad\Administrator**.
+
+You need sign-in credentials for an active Azure Subscription in which you have the permissions to create resources. Moreover, you need to have the Global Administrator role in Azure Active Directory. Ask your instructor for help, if you are unsure.
 
 ## Introduction
 
