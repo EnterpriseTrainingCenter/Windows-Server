@@ -16,18 +16,18 @@
 1. In Windows PowerShell, connect WIN-CL3, and WIN-CL4 to VNet3.
 
     ````powershell
-    C:\Labs\Resources\Move-VMtoVNet.ps1 `
-        -VMName WIN-CL3 -SwitchName VNet2 -NewSwitchName VNet3 -SubnetValue 2
-    C:\Labs\Resources\Move-VMtoVNet.ps1 `
-        -VMName WIN-CL4 -SwitchName VNet1 -NewSwitchName VNet3 -SubnetValue 2
+    C:\Labs\WS2025\LabResources\Move-VMtoVNet.ps1 `
+        -VMName WIN-CL3 -SwitchName VNet2 -NewSwitchName VNet3 -SubnetValue 3
+    C:\Labs\WS2025\LabResources\Move-VMtoVNet.ps1 `
+        -VMName WIN-CL4 -SwitchName VNet1 -NewSwitchName VNet3 -SubnetValue 3
     ````
 
 1. At the prompt Enter the password of the local Administrator account of WIN-CL*, enter the local Administrator password of CL*.
 1. Join CL3 and CL4 to the domain.
 
     ````powershell
-    C:\Labs\Resources\Add-VMToDomain.ps1 -VMName WIN-CL3
-    C:\Labs\Resources\Add-VMToDomain.ps1 -VMName WIN-CL4
+    C:\Labs\WS2025\LabResources\Add-VMToDomain.ps1 -VMName WIN-CL3
+    C:\Labs\WS2025\LabResources\Add-VMToDomain.ps1 -VMName WIN-CL4
     ````
 
 1. At the prompt Enter the password of the local Administrator account of WIN-CL*, enter the local Administrator password of CL*.
@@ -37,7 +37,7 @@
     ````powershell
     Get-VMNetworkAdapter -VMName WIN-VN1-SRV10 | 
     Where-Object { $PSItem.SwitchName -eq 'VNet1' } |
-    Set-VMNetworkAdapter -MaximumBandwidth 10MB
+    Set-VMNetworkAdapter -MaximumBandwidth 1MB
     ````
 
 1. On CL1, sign in as **ad\Administrator**.
