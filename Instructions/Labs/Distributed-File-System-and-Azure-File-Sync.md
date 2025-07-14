@@ -462,9 +462,9 @@ Perform this task on CL1.
 ## Exercise 3: Replicating files with Azure File Sync
 
 1. [Remove existing content in shares](#task-1-remove-existing-content-in-shares) on VN2-SRV1
-1. [Download Azure File Sync agent](#task-2-download-azure-file-sync-agent)
-1. [Create a Storage Sync Service and register server](#task-3-create-a-storage-sync-service-and-register-server) VN1-SRV10
-1. [Register additional server](#task-4-register-additional-server) VN2-SRV1
+1. [Create a Storage Sync Service and register server using Windows Admin Center](#task-2-create-a-storage-sync-service-and-register-server-using-windows-admin-center) VN1-SRV10
+1. [Download Azure File Sync agent](#task-3-download-azure-file-sync-agent)
+1. [Register an additional server](#task-4-register-an-additional-server) VN2-SRV1
 1. [Sync folder](#task-5-sync-folder) Finance on VN1-SRV10
 1. [Add server endpoint](#task-6-add-server-endpoint) VN2-SRV1
 1. [Validate DFS with Azure File Sync](#task-7-validate-dfs-with-azure-file-sync) on CL2
@@ -484,16 +484,7 @@ Perform this task on CL1.
 
 Repeat this task for **\\\\VN2-SRV1\\IT** and **\\\\VN2-SRV1\\Marketing**.
 
-### Task 2: Download Azure File Sync agent
-
-Perform this task on CL1.
-
-1. Open **Microsoft Edge**, navigate to <https://download.microsoft.com/download/9108ca79-ba24-49bc-9aa6-a66c4fe28519/StorageSyncAgent_WS2025.msi>
-1. On the download page of Azure File Sync Agent, click **Download**.
-1. In Choose the download you want, activate **StorageSyncAgent_WS2025.msi** and click **Next**.
-1. Copy the downloaded file **StorageSyncAgent_WS2025.msi** to **\\\\VN1-SRV10\\IT**.
-
-### Task 3: Create a Storage Sync Service and register server
+### Task 2: Create a Storage Sync Service and register server using Windows Admin Center
 
 Perform this task on CL1.
 
@@ -515,7 +506,16 @@ Perform this task on CL1.
 
 1. After the message You're all set! appears, click **Close**.
 
-### Task 4: Register additional server
+### Task 3: Download Azure File Sync agent
+
+Perform this task on CL1.
+
+1. Open **Microsoft Edge**, navigate to <https://download.microsoft.com/download/9108ca79-ba24-49bc-9aa6-a66c4fe28519/StorageSyncAgent_WS2025.msi>
+1. On the download page of Azure File Sync Agent, click **Download**.
+1. In Choose the download you want, activate **StorageSyncAgent_WS2025.msi** and click **Next**.
+1. Copy the downloaded file **StorageSyncAgent_WS2025.msi** to **\\\\VN1-SRV10\\IT**.
+
+### Task 4: Register an additional server
 
 Perform this task on VN2-SRV1.
 
@@ -542,7 +542,7 @@ Perform this task on VN2-SRV1.
 1. In Azure File Sync - Agent Update, click **OK**.
 1. On page Sign in and register this server, under **Azure Environment**, ensure **AzureCloud** is selected and click **Sign in**.
 1. Sign in to your Azure account.
-1. On page Choose a Storage Sync Service, click the **Azure Subscription**, **Resource Grou**, and **Storage Sync Service**, you used in this exercise and click **Register**.
+1. On page Choose a Storage Sync Service, click the **Azure Subscription**, **Resource Group**, and **Storage Sync Service**, you used in this exercise and click **Register**.
 1. On page Registration successful, click **Close**.
 
 ### Task 5: Sync folder
