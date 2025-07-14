@@ -490,8 +490,8 @@ Perform this task on CL1.
 
 1. Open **Microsoft Edge**, navigate to <https://download.microsoft.com/download/9108ca79-ba24-49bc-9aa6-a66c4fe28519/StorageSyncAgent_WS2025.msi>
 1. On the download page of Azure File Sync Agent, click **Download**.
-1. In Choose the download you want, activate **StorageSyncAgent_WS2022.msi** and click **Next**.
-1. Copy the downloaded file **StorageSyncAgent_WS2022.msi** to **\\\\VN1-SRV10\\IT**.
+1. In Choose the download you want, activate **StorageSyncAgent_WS2025.msi** and click **Next**.
+1. Copy the downloaded file **StorageSyncAgent_WS2025.msi** to **\\\\VN1-SRV10\\IT**.
 
 ### Task 3: Create a Storage Sync Service and register server
 
@@ -524,7 +524,7 @@ Perform this task on VN2-SRV1.
 1. In Server Manager, click **Local Server**.
 1. In Local Server, beside **IE Enhanced Security Configuration**, click **On**.
 1. In Internet Explorer Enhanced Security Configuration, under **Administrators**, click **Off** and click **OK**.
-1. Open **\\\\VN1-SRV10\\IT\StorageSyncAgent_WS2022.msi**.
+1. Open **\\\\VN1-SRV10\\IT\StorageSyncAgent_WS2025.msi**.
 1. In the message box Open File - Security Warning, click **Run**.
 1. In Storage Sync Agent Setup, on page Welcome to the Storage Sync Agent Setup Wizard, click **Next**.
 1. On page End-User License Agreement, ensure **I accept the terms in the License Agreement** is activated and click **Next**.
@@ -543,11 +543,11 @@ Perform this task on VN2-SRV1.
 1. On page Sign in and register this server, under **Azure Environment**, ensure **AzureCloud** is selected and click **Sign in**.
 1. Sign in to your Azure account.
 1. On page Choose a Storage Sync Service, click the **Azure Subscription**, **Resource Grou**, and **Storage Sync Service**, you used in this exercise and click **Register**.
-1. On page Registrytion successful, click **Close**.
+1. On page Registration successful, click **Close**.
 
 ### Task 5: Sync folder
 
-Peform this task on CL1.
+Perform this task on CL1.
 
 1. Open **Microsoft Edge** and navigate to <https://admincenter>.
 1. In Windows Admin Center, on the connections page, click **vn1-srv10.ad.adatum.com**.
@@ -560,7 +560,7 @@ Peform this task on CL1.
 1. Under **Resource group**, click **WinFSM**.
 1. Under Storage account, ensure **Create new** is selected and, below, type a globally unique name, e.g. the first letters of your first and last name, followed by **dfs**. You must not upper case or special characters.
 1. Under **Storage performance**, ensure **Standard** is selected.
-1. Under **Data repliation**, click **Geo-redundant storage (GRS)**.
+1. Under **Data replication**, click **Geo-redundant storage (GRS)**.
 1. Click **Set up sync**.
 
     If the setup fails, perform [Alternative steps](#alternative-steps)
@@ -579,7 +579,7 @@ Perform this task on CL1.
 1. In Create a resource, click **Storage** and click **Storage account**.
 1. In Create a storage account, in **Subscription**, ensure the correct subscription is selected.
 1. Under **Resource group**, click **Create new**, type **WinFSM** and click **OK**.
-1. Beside **Storage account name**, type a unique name, e.g., the first letters of your first and last name and **dfs**. You must not use upper case or any special caharacters. If you see an error message below the field, fix that error.
+1. Beside **Storage account name**, type a unique name, e.g., the first letters of your first and last name and **dfs**. You must not use upper case or any special characters. If you see an error message below the field, fix that error.
 1. Beside **Region**, click a region close to you, e.g., **(Europe) West Europe**.1
 1. Beside **Performance**, ensure **Standard** is selected.
 1. Beside **Redundancy**, ensure **Geo-redundant storage (GRS)** is selected. Deactivate **Make read access to data available in the event of regional unavailability**.
