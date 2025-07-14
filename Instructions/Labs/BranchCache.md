@@ -32,12 +32,12 @@
 
 1. At the prompt Enter the password of the local Administrator account of WIN-CL*, enter the local Administrator password of CL*.
 1. At the prompt Enter credentials of an account with permissions to join the computer to domain ad.adatum.com, enter the credentials of **Administrator@ad.adatum.com**.
-1. Limit the bandwidth of VN1-SRV10's network adapter to 10 MB/s.
+1. Limit the bandwidth of VN1-SRV10's network adapter to 8 MB/s.
 
     ````powershell
     Get-VMNetworkAdapter -VMName WIN-VN1-SRV10 | 
     Where-Object { $PSItem.SwitchName -eq 'VNet1' } |
-    Set-VMNetworkAdapter -MaximumBandwidth 10MB
+    Set-VMNetworkAdapter -MaximumBandwidth 8MB
     ````
 
 1. On CL1, sign in as **ad\Administrator**.
@@ -134,7 +134,7 @@ Perform this task on CL1.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer BranchCache File Server**, click **Edit...**
 1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Administrative Templates**, **Network**, and click **Lanman Server**.
 1. In the right pane, double-click **Hash Publication for BranchCache**.
-1. In Hash Publication for BranchCache, click **Enabled**. Under **Hash publication actions**, click **Allow hast publication only for shared folder on which BranchCach is enabled**. Click **OK**.
+1. In Hash Publication for BranchCache, click **Enabled**. Under **Hash publication actions**, click **Allow hash publication only for shared folder on which BranchCache is enabled**. Click **OK**.
 1. Close **Group Policy Management Editor**.
 1. Open **Terminal**.
 1. Update group policies on **VN1-SRV10**.
@@ -164,7 +164,7 @@ Repeat from step 4 for the share **Marketing**.
 1. [Prehash and export a BranchCache package](#task-4-prehash-and-export-a-branchcache-package) of share IT on VN1-SRV10
 1. [Remove the bandwidth limit on virtual machine](#task-5-remove-the-bandwidth-limit-on-virtual-machine) WIN-VN1-SRV10
 1. [Import the BranchCache package](#task-6-import-the-branchcache-package) on VN3-SRV1
-1. [Set the bandwidth limit on virtual machine](#task-7-set-the-bandwidth-limit-on-virtual-machine) WIN-VN1-SRV10 to 10MB
+1. [Set the bandwidth limit on virtual machine](#task-7-set-the-bandwidth-limit-on-virtual-machine) WIN-VN1-SRV10 to 8MB
 1. [Validate BranchCache](#task-8-validate-branchcache) on CL3
 
 ### Task 1: Install the BranchCache feature
@@ -248,7 +248,7 @@ Perform this task on CL1.
 1. Open **Group Policy Management**.
 1. In Group Policy Management, expand **Group Policy Management**, **Forest: ad.adatum.com**, **Domains**, **ad.adatum.com** and click **ad.adatum.com**.
 1. In the context-menu of **ad.adatum.com**, click **Create a GPO in this domain and Link it here...**.
-1. In New GPO, under **Name**, type **Custom Computer BranchCache Client hosted cache mode** and click **OK**.
+1. In New GPO, under **Name**, type **Custom Computer BranchCache Client** and click **OK**.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer BranchCache Client**, click **Edit**.
 1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Administrative Templates**, **Network** and click **BranchCache**.
 1. In the right pane, double-click **Turn on BranchCache**.
@@ -365,12 +365,12 @@ Perform this task on CL1.
 Perform this task on the host.
 
 1. Run **Windows PowerShell** as Administrator.
-1. In Windows PowerShell, on the virtual machine **WIN-VN1-SRV10**, set the maximum bandwidth on the network adapter connected to **VNet1** to 10 MB/s.
+1. In Windows PowerShell, on the virtual machine **WIN-VN1-SRV10**, set the maximum bandwidth on the network adapter connected to **VNet1** to 8 MB/s.
 
     ````powershell
     Get-VMNetworkAdapter -VMName WIN-VN1-SRV10 | 
     Where-Object { $PSItem.SwitchName -eq 'VNet1' } |
-    Set-VMNetworkAdapter -MaximumBandwidth 10MB
+    Set-VMNetworkAdapter -MaximumBandwidth 8MB
     ````
 
 ### Task 8: Validate BranchCache
@@ -402,23 +402,25 @@ Perform this task on CL1.
 1. In Group Policy Management, expand **Group Policy Management**, **Forest: ad.adatum.com**, **Domains**, **ad.adatum.com** and click **ad.adatum.com**.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer BranchCache Client**, click **Edit**.
 1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Administrative Templates**, **Network** and click **BranchCache**.
+1. Double-click **Enable Automatic Hosted Cache Discovery by Service Connection Point**.
+1. In Enable Automatic Hosted Cache Discovery by Service Connection Point, click **Not Configured** and click **OK**.
 1. In **Group Policy Management Editor**, double-click **Set BranchCache Distributed Cache Mode**.
 1. In Set BranchCache Distributed Cache Mode, click **Enabled** and click **OK**.
 1. In **Group Policy Management Editor**, expand **Computer Configuration**, **Policies**, **Windows Settings**, **Security Settings**, **Windows Defender Firewall with Advanced Security**, **Windows Defender Firewall with Advanced Security**, and click **Inbound Rules**.
-1. In the context-menu of **Inbound Rules**, cick **New Rule...**
+1. In the context-menu of **Inbound Rules**, click **New Rule...**
 1. In New Inbound Rule Wizard, in step Rule Type, click **Predefined**, **BranchCache - Content Retrieval (Uses HTTP)**, and click **Next >**.
 1. In step Predefined Rules, click **Next >**.
 1. In step Action, ensure **Allow the connection** is selected and click **Finish**.
-1. In **Group Policy Management Editor**, in the context-menu of **Inbound Rules**, cick **New Rule...**
+1. In **Group Policy Management Editor**, in the context-menu of **Inbound Rules**, click **New Rule...**
 1. In New Inbound Rule Wizard, in step Rule Type, click **Predefined**, **BranchCache - Peer Discovery (Uses WSD)**, and click **Next >**.
 1. In step Predefined Rules, click **Next >**.
 1. In step Action, ensure **Allow the connection** is selected and click **Finish**.
 1. In **Group Policy Management Editor**, click **Outbound Rules**.
-1. In the context-menu of **Outbound  Rules**, cick **New Rule...**
+1. In the context-menu of **Outbound  Rules**, click **New Rule...**
 1. In New Outbound Rule Wizard, in step Rule Type, click **Predefined**, **BranchCache - Content Retrieval (Uses HTTP)**, and click **Next >**.
 1. In step Predefined Rules, click **Next >**.
 1. In step Action, click **Allow the connection** is selected and click **Finish**.
-1. In **Group Policy Management Editor**, in the context-menu of **Outbound Rules**, cick **New Rule...**
+1. In **Group Policy Management Editor**, in the context-menu of **Outbound Rules**, click **New Rule...**
 1. In New Outbound Rule Wizard, in step Rule Type, click **Predefined**, **BranchCache - Peer Discovery (Uses WSD)**, and click **Next >**.
 1. In step Predefined Rules, click **Next >**.
 1. In step Action, click **Allow the connection** and click **Finish**.
@@ -438,12 +440,8 @@ Perform this task on CL3.
 1. Copy the content of the IT share to the Documents folder while measuring the duration of the command.
 
     ````powershell
-    Measure-Command -Expression { 
-        Copy-Item \\vn1-srv10\IT\ ~\Documents\ -Recurse -Force
-    }
+    Copy-Item \\vn1-srv10\IT\ ~\Documents\ -Recurse -Force
     ````
-
-    Take a note of the duration of the command. The command will take about a minute.
 
 1. Get the status of BranchCache.
 
@@ -471,8 +469,6 @@ Perform this task on CL4.
         Copy-Item \\vn1-srv10\IT\ ~\Documents\ -Recurse -Force
     }
     ````
-
-    Compare the duration of the command with the previous copy process. It should have taken significantly shorter.
 
 1. Get the status of BranchCache.
 
