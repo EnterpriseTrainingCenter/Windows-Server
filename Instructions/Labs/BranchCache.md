@@ -37,7 +37,7 @@
     ````powershell
     Get-VMNetworkAdapter -VMName WIN-VN1-SRV10 | 
     Where-Object { $PSItem.SwitchName -eq 'VNet1' } |
-    Set-VMNetworkAdapter -MaximumBandwidth 1MB
+    Set-VMNetworkAdapter -MaximumBandwidth 10MB
     ````
 
 1. On CL1, sign in as **ad\Administrator**.
@@ -371,7 +371,7 @@ Perform this task on the host.
     ````powershell
     Get-VMNetworkAdapter -VMName WIN-VN1-SRV10 | 
     Where-Object { $PSItem.SwitchName -eq 'VNet1' } |
-    Set-VMNetworkAdapter -MaximumBandwidth 1MB
+    Set-VMNetworkAdapter -MaximumBandwidth 10MB
     ````
 
 ### Task 8: Validate BranchCache
