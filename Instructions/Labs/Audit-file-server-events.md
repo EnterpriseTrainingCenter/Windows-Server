@@ -79,8 +79,8 @@ Perform this Task on CL1.
 1. In the context-menu of **ad.adatum.com**, click **New Organizational Unit**.
 1. In New Organizational Unit, in **Name**, type **Devices** and click **OK**.
 1. In the context-menu of **Devices**, click **New Organizational Unit**.
-1. In New Organizational Unit, in **Name**, type **Devices** and click **OK**.
-1. Expand **Devices**.
+1. In New Organizational Unit, in **Name**, type **Servers** and click **OK**.
+1. Expand **Servers**.
 1. In the context-menu of **Servers**, click **New Organizational Unit**.
 1. In New Organizational Unit, in **Name**, type **File Servers** and click **OK**.
 1. Expand **Servers**.
