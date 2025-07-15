@@ -18,7 +18,7 @@ Because of regulatory requirements, Adatum needs to audit all read operations on
 ## Exercises
 
 1. [Audit access to a folder](#exercise-1-audit-access-to-a-folder)
-1. [Use a a global audit policy](#exercise-2-use-a-a-global-audit-policy)
+1. [Use a global audit policy](#exercise-2-use-a-a-global-audit-policy)
 
 ## Exercise 1: Audit access to a folder
 
