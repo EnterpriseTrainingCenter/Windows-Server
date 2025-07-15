@@ -26,7 +26,7 @@ Perform these steps on CL1.
     | Label                            | Value               |
     |----------------------------------|---------------------|
     | SMTP server name or IP address   | **mail.adatum.com** |
-    | Default administrator recipients | **fsm@adatum.com**  |
+    | Default administrator recipients | **fsrm@adatum.com**  |
     | Default "From" e-mail address    | **fsrm@adatum.com** |
 
     > In a real-world environment, you would click **Send Test E-mail** to verify the settings. In the lab environment, this would fail. Therefore, do not click the button.
