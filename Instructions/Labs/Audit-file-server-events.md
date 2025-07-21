@@ -83,7 +83,7 @@ Perform this Task on CL1.
 1. Expand **Servers**.
 1. In the context-menu of **Servers**, click **New Organizational Unit**.
 1. In New Organizational Unit, in **Name**, type **File Servers** and click **OK**.
-1. Expand **Servers**.
+1. Expand **File Servers**.
 1. In the context-menu of **File Servers**, click **Link an Existing GPO...**
 1. In Select GPO, click **Custom Computer Audit Object Access** and click **OK**.
 1. Open **Active Directory Administrative Center**.

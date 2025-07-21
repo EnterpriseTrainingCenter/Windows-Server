@@ -81,7 +81,7 @@ Perform this task on CL1.
 1. Open **Server Manager**.
 1. In Server Manager, in the menu, click **Manage**, **Add Roles and Features**.
 1. In Add Roles and Features Wizard, on page Before You Begin, click **Next >**.
-1. On page Installation Type, ensure **Role-based or feature-basedd installation** is selected and click **Next >**.
+1. On page Installation Type, ensure **Role-based or feature-based installation** is selected and click **Next >**.
 1. On page Server Selection, click **VN1-SRV5** and click **Next >**.
 1. On page Server Roles, activate **Active Directory Domain Services**.
 1. In the dialog **Add features that are required for Active Directory Domain Services?**, click **Add Features**
@@ -150,44 +150,32 @@ Wait for the restart of VN1-SRV5 to complete.
 Perform this task on CL1.
 
 1. In the context menu of **Start**, click **Terminal**.
-1. Store the password in a variable.
+1. Create a remote PowerShell session.
 
-    ````powershell
-    $username = "Administrator@ad.adatum.com"
-    $securePassword = Read-Host `
-        -Prompt `
-            "Password for $(
-                $username
-            ) (will also be the Directory Services Restore Mode (DSRM) password)" `
-        -AsSecureString
-    ````
+    ```powershell
+    $computerName = 'VN1-SRV5'
+    $session = New-PSSession -ComputerName $computerName
+    ```
 
-1. When prompted, enter the credentials for **Administrator@ad.adatum.com**.
+1. Retrieve the Domain Administrator credentials and the Domain Services Restore Mode (DSRM) password.
+
+    ```powershell
+    Invoke-Command -Session $session -ScriptBlock {
+        $credential = Get-Credential `
+            -UserName 'ad\Administrator'
+            -Message 'Domain Administrator credentials'
+        $safeModeAdministratorPassword = Read-Host `
+            -Prompt 'Directory Services Restore Mode password' `
+            -AsSecureString
+    }
+    ```
+
+1. At the prompt Domain Administrator credential, enter the credentials of a Domain Administrator.
+1. At the prompt Directory Services Restore Mode password, enter a secure password and take a note.
 1. Promote **VN1-SRV5** to a domain controller in the domain **ad.adatum.com**. Install DNS at the same time.
 
     ````powershell
-    # Convert the secure string back to a plain text string
-
-    $password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto(
-        [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR(
-            $securePassword
-        )
-    ) 
-
-    $job = Invoke-Command -ComputerName VN1-SRV5 -AsJob -ScriptBlock {
-        # Convert the password into a secure string
-
-        $securePassword = `
-            ConvertTo-SecureString -String $using:password -AsPlainText -Force
-        
-
-        $safeModeAdministratorPassword = $securePassword
-
-        # Create credentials
-        $credential = New-Object `
-            -TypeName pscredential `
-            -ArgumentList $using:username, $securePassword
-        
+    $job = Invoke-Command -Session $session -AsJob -ScriptBlock {
         Install-ADDSDomainController `
             -DomainName ad.adatum.com `
             -Credential $credential `
@@ -560,7 +548,7 @@ Perform this task on CL1.
         -InterfaceAlias $interfaceAlias `
         -IPAddress $oldIPAddress `
         -CimSession $cimSession `
-        -Confirm: $false
+        -Confirm:$false
     ````
 
 1. Remove the CIM session.
