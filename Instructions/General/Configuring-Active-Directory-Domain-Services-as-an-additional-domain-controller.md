@@ -87,7 +87,7 @@ These are the steps to configure Active Directory Domain services locally on the
 These are the steps to configure Active Directory Domain services remotely.
 
 1. Open a terminal.
-1. Create a PowerShell session.
+1. Create a remote PowerShell session.
 
     ```powershell
     <#
