@@ -99,7 +99,7 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
-1. Add the IP address **10.1.1.8** with the default gateway **10.1.1.1** to **VN1-SRV5**. You need to use PowerShell for this task to leave the old IP address operational.
+1. Add the IP address **10.1.1.8** (without a default gateway) to **VN1-SRV5**. You need to use PowerShell for this task to leave the old IP address operational.
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
