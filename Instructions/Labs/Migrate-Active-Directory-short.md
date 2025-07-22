@@ -48,6 +48,7 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
     * Domain **ad.adatum.com**
     * **DNS server**
     * **Global Catalog** at the same time
+    * Do not update the DNS delegation (this is not possibly anyways, ignore the warning)
 
     Leave all other parameters as default. If you want to use PowerShell, you may perform this task on either VN1-SRV5 locally or from CL1 remotely.
 
