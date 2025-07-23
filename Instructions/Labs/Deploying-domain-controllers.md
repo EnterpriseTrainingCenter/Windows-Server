@@ -475,11 +475,12 @@ Perform this task on CL1.
 
 ## Exercise 4: Decommission a domain controller
 
-1. [Change the DNS client server addresses](#task-1-change-the-dns-client-server-addresses) on CL1 to 10.1.1.40 and 10.1.2.8.
+1. [Change the DNS client server addresses](#task-1-change-the-dns-client-server-addresses) on CL1 to 10.1.1.40.
 1. [Change the IP address of the domain controller to decommission](#task-2-change-the-ip-address-of-the-domain-controller-to-decommission) VN1-SRV1 to 10.1.1.9 and the DNS client server addresses to 10.1.1.40 and 10.1.2.8
-1. [Add the IP address of the decommissioned domain controller to the new domain controller](#task-3-add-the-ip-address-of-the-decommissioned-domain-controller-to-the-new-domain-controller): Add 10.1.1.8 to VN1-SRV5
-1. [Demote the old domain controller](#task-4-demote-the-old-domain-controller) VN1-SRV1
-1. [Remove roles from the decommissioned domain controller](#task-5-remove-roles-from-the-decommissioned-domain-controller) VN1-SRV1
+1. [Update the Host (A) record of the domain controller to decommission] VN1-SRV1 to 10.1.1.9
+1. [Add the IP address of the decommissioned domain controller to the new domain controller](#task-4-add-the-ip-address-of-the-decommissioned-domain-controller-to-the-new-domain-controller): Add 10.1.1.8 to VN1-SRV5
+1. [Demote the old domain controller](#task-5-demote-the-old-domain-controller) VN1-SRV1
+1. [Remove roles from the decommissioned domain controller](#task-6-remove-roles-from-the-decommissioned-domain-controller) VN1-SRV1
 
 *Note:* In this exercise, we add the IP address of the decommissioned domain controller to the new domain controller, so we do not have to reconfigure the DNS client settings on the other computers on the network. If all computers use DHCP, you could reconfigure the DHCP option DNS server instead. You would do this before task 1 and then wait for the DHCP lease period to expire before proceeding. Moreover, you would skip task 2.
 
@@ -631,7 +632,7 @@ Perform this task on CL1.
         -InterfaceAlias $interfaceAlias `
         -IPAddress $oldIPAddress `
         -CimSession $cimSession `
-        -Confirm: $false
+        -Confirm:$false
     ````
 
 1. Remove the CIM session.
@@ -640,7 +641,70 @@ Perform this task on CL1.
     Remove-CimSession $cimSession
     ````
 
-### Task 3: Add the IP address of the decommissioned domain controller to the new domain controller
+### Task 3: Update the Host (A) record of the domain controller to decommission
+
+#### Desktop Experience
+
+Perform this task on CL1.
+
+1. Open **DNS**.
+1. If the dialog **Connect to DNS Server** appears, click **The following computer**, type **VN1-SRV5**, and click **OK**.
+1. In DNS, click **VN1-SRV5**.
+1. Expand **VN1-SRV5**, **Forward Lookup Zones** and click **ad.adatum.com**
+1. In the zone ad.adatum.com, double-click the record with the nae **vn1-srv1** and the type **Host (A)**.
+1. In vn1-srv1 Properties, under **IP address**, type **10.1.1.9** and click **OK**.
+
+#### Windows Admin Center
+
+Perform this task on CL1.
+
+1. Open **Microsoft Edge**.
+1. In Microsoft Edge, navigate to **VN1-SRV9.ad.adatum.com**.
+1. If necessary, install the extension **DNS**.
+
+    1. Click *Settings* (the gear icon) in the top-right corner.
+    1. In Settings, click **Extensions**.
+    1. In Extensions click **DNS**.
+    1. Click **Install**.
+
+1. In Windows Admin Center, click **VN1-SRV5.ad.adatum.com**.
+1. In the VN1-SRV5.ad.adatum.com, unter Tools, click **DNS**. If you do not see DNS there, go to step 3.
+1. If you see a message The DNS PowerShell tools (RSAT) are not installed, click **Install**.
+
+    Wait for the installation to complete. The page will automatically reload.
+
+1. In DNS, click the zone **ad.adatum.com**.
+1. In the Records pane, click the record with the name **vn1-srv1.ad.adatum.com** and the type **Host (A)**.
+1. Click **Edit**.
+1. In the Edit a DNS record, under **IP address**, type **10.1.1.9** and click **Save**.
+
+#### PowerShell
+
+Perform this task on CL1.
+
+1. Open **Terminal**.
+1. In Terminal, configure parameters:
+
+    ```powershell
+    $computerName = 'VN1-SRV5'
+    $zoneName = 'ad.adatum.com'
+    $oldDnsServerResourceRecord = Get-DnsServerResourceRecord `
+        -ZoneName $zoneName `
+        -RRType A `
+        -Name 'vn1-srv1' `
+        -ComputerName $computerName
+
+    $newDnsServerResourceRecord = `
+        [ciminstance]::new($oldDnsServerResourceRecord)
+            
+    $newDnsServerResourceRecord.RecordData.IPv4Address = '10.1.1.9'
+    Set-DnsServerResourceRecord `
+        -ZoneName $zoneName `
+        -OldInputObject $oldDnsServerResourceRecord `
+        -NewInputObject $newDnsServerResourceRecord `
+        -ComputerName $computerName
+
+### Task 4: Add the IP address of the decommissioned domain controller to the new domain controller
 
 Perform this task on CL1.
 
@@ -682,17 +746,73 @@ Perform this task on CL1.
     Remove-CimSession $cimSession
     ````
 
-1. Clear the DNS client cache on VN2-SRV1.
+### Task 5: Demote the old domain controller
+
+#### Desktop experience
+
+Perform this task on CL1.
+
+1. Open **Server Manager**.
+1. In Server Manager, on the menu, click **Manage**, **Remove Roles and Features**.
+1. In Remove Roles and Features Wizard, on page Befor You Begin, click **Next >**.
+1. On page Server Selection, click **VN1-SRV1.ad.adatum.com** and click **Next >**.
+1. On page Remove server roles, deactivate **Active Directory Domain Services**.
+1. In dialog Remove features that require Active Directory Domain Services, click **Remove Features**.
+1. In dialog Validation Results, click **Demote this domain controller**.
+1. In Active Directory Domain Services Configuration Wizard, on page Credentials, click **Change...**.
+1. In the dialog Credentials for deployment operation, enter the credentials for **Administrator@ad.adatum.com** and click **OK**.
+1. On page **Credentials**, click **Next >**.
+1. On page Warnings, activate **Proceed with removal** and click **Next >**.
+1. On page Removal Options, deactivate **Remove DNS delegation** and click **Next >**.
+1. On page New Administrator Password, in **Password** and **Confirm password**, type a secure password, and take a note.
+1. On page Review Options, click **Demote**.
+1. On page Results, click **Close**.
+
+#### PowerShell
+
+Perform this task on CL1.
+
+1. In the context menu of **Start**, click **Terminal**.
+1. Store the new local administrator password in a variable.
 
     ````powershell
-    $cimSession = New-CimSession -ComputerName VN2-SRV1
-    Clear-DnsClientCache -CimSession $cimSession
-    Remove-CimSession $cimSession
+    $localAdministratorPassword = Read-Host `
+        -Prompt 'LocalAdministratorPassword' `
+        -AsSecureString
     ````
 
-### Task 4: Demote the old domain controller
+1. At the prompt **LocalAdministratorPassword** enter a secure password and take a note.
 
-*Note:*: If you receive any error message while demoting the domain controller, perform the following troubleshooting steps on CL1.
+1. Demote the domain controller VN1-SRV1.
+
+    ````powershell
+    $job = Invoke-Command -ComputerName VN1-SRV1 -AsJob -ScriptBlock {
+        $localAdministratorPassword = ConvertTo-SecureString `
+            -String $using:localAdministratorPassword -AsPlainText -Force
+        Uninstall-ADDSDomainController `
+            -LocalAdministratorPassword $localAdministratorPassword -Force
+    }
+    ````
+
+1. Wait for the job to complete.
+
+    ````powershell
+    $job | Wait-Job
+    ````
+
+    This will take a few minutes.
+
+1. Read the output of the job.
+
+    ````powershell
+    $job | Receive-Job
+    ````
+
+    The value of the property **Status** should be **Success**.
+
+#### Troubleshooting
+
+If you receive any error message while demoting the domain controller, perform the following troubleshooting steps on CL1.
 
 1. Open **Terminal**.
 1. Shut down **VN1-SRV1**.
@@ -783,7 +903,7 @@ Perform this task on CL1.
 
 1. Quit the operation target selection.
 
-    `````shell
+    ````shell
     Quit
     ````
 
@@ -809,69 +929,7 @@ Perform this task on CL1.
 
 Leave out task 5 and skip to the next exercise.
 
-#### Desktop experience
-
-Perform this task on CL1.
-
-1. Open **Server Manager**.
-1. In Server Manager, on the menu, click **Manage**, **Remove Roles and Features**.
-1. In Remove Roles and Features Wizard, on page Before You Begin, click **Next >**.
-1. On page Server Selection, click **VN1-SRV1.ad.adatum.com** and click **Next >**.
-1. On page Remove server roles, deactivate **Active Directory Domain Services**.
-1. In dialog Remove features that require Active Directory Domain Services, click **Remove Features**.
-1. In dialog Validation Results, click **Demote this domain controller**.
-1. In Active Directory Domain Services Configuration Wizard, on page Credentials, click **Change...**.
-1. In the dialog Credentials for deployment operation, enter the credentials for **Administrator@ad.adatum.com** and click **OK**.
-1. On page **Credentials**, click **Next >**.
-1. On page Warnings, activate **Proceed with removal** and click **Next >**.
-1. On page Removal Options, deactivate **Remove DNS delegation** and click **Next >**.
-1. On page New Administrator Password, in **Password** and **Confirm password**, type a secure password, and take a note.
-1. On page Review Options, click **Demote**.
-1. On page Results, click **Close**.
-
-#### PowerShell
-
-Perform this task on CL1.
-
-1. In the context menu of **Start**, click **Terminal**.
-1. Store the new local administrator password in a variable.
-
-    ````powershell
-    $localAdministratorPassword = Read-Host `
-        -Prompt 'LocalAdministratorPassword' `
-        -AsSecureString
-    ````
-
-1. At the prompt **LocalAdministratorPassword** enter a secure password and take a note.
-
-1. Demote the domain controller VN1-SRV1.
-
-    ````powershell
-    $job = Invoke-Command -ComputerName VN1-SRV1 -AsJob -ScriptBlock {
-        $localAdministratorPassword = ConvertTo-SecureString `
-            -String $using:localAdministratorPassword -AsPlainText -Force
-        Uninstall-ADDSDomainController `
-            -LocalAdministratorPassword $localAdministratorPassword -Force
-    }
-    ````
-
-1. Wait for the job to complete.
-
-    ````powershell
-    $job | Wait-Job
-    ````
-
-    This will take a few minutes.
-
-1. Read the output of the job.
-
-    ````powershell
-    $job | Receive-Job
-    ````
-
-    The value of the property **Status** should be **Success**.
-
-### Task 5: Remove roles from the decommissioned domain controller
+### Task 6: Remove roles from the decommissioned domain controller
 
 #### Desktop experience
 
