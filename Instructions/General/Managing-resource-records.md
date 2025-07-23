@@ -9,6 +9,11 @@
 
 1. Expand the server node, **Forward Lookup Zones** and click the zone to manage.
 
+    * To update a resource record:
+
+        1. Double-click the record.
+        1. Update the record as required and click **OK**.
+
     * To remove a resource records:
 
         1. In the context menu of the resource record click **Delete**.
@@ -33,6 +38,12 @@
 
 1. In DNS, click the zone to manage.
 
+    * Update a resource record:
+
+        1. In the Records pane, click the resource record to update.
+        1. Click **Edit**.
+        1. Update the record as required and click **Save**.
+
     * To delete a resource record:
 
         1. In the Records pane, click the resource record to delete.
@@ -55,23 +66,53 @@
 
     * List all resource records in a zone:
 
-    ```powershell
-    Get-DnsServerResourceRecord -ComputerName $computerName -ZoneName $zoneName
-    ```
+        ```powershell
+        Get-DnsServerResourceRecord `
+            -ZoneName $zoneName `
+            -ComputerName $computerName
+        ```
+
+    * Update a resource record
+
+        ```powershell
+        $rRType = '' # The resource record type, e.g. 'A'
+        $name = '' # The resource record name
+
+        $oldDnsServerResourceRecord = Get-DnsServerResourceRecord `
+            -ZoneName $zoneName `
+            -RRType $rRType `
+            -Name $name `
+            -ComputerName $computerName
+
+        $newDnsServerResourceRecord = `
+            [ciminstance]::new($oldDnsServerResourceRecord)
+        ```
+
+        * Update the IPv4 address of a Host (A) record
+
+            ```powershell
+            $ipV4Address = '' # The new IP address for the record
+            $newDnsServerResourceRecord.RecordData.IPv4Address = $iPv4Address
+            Set-DnsServerResourceRecord `
+                -ZoneName $zoneName `
+                -OldInputObject $oldDnsServerResourceRecord `
+                -NewInputObject $newDnsServerResourceRecord `
+                -ComputerName $computerName
+            ```
 
     * Delete a resource record:
 
-    ```powershell
-    $rRType = '' # The resource record type, e.g. 'A'
-    $name = '' # The resource record name
-    $recordData = $null # Optional: The record data, e.g. the IP address
+        ```powershell
+        $rRType = '' # The resource record type, e.g. 'A'
+        $name = '' # The resource record name
+        $recordData = $null # Optional: The record data, e.g. the IP address
 
-    Remove-DnsServerResourceRecord `
-        -ZoneName $zoneName `
-        -RRType $rRType `
-        -Name $name `
-        -ComputerName $computerName
-    ```
+        Remove-DnsServerResourceRecord `
+            -ZoneName $zoneName `
+            -RRType $rRType `
+            -Name $name `
+            -ComputerName $computerName
+        ```
 
 ## References
 

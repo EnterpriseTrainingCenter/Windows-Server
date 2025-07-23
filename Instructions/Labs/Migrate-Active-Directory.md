@@ -258,7 +258,7 @@ Perform this task on CL1.
 
 1. Expand **ad.adatum.com**, and click **_tcp**.
 
-    > There should 6 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com and VN1-SRV5.ad.adatum.com.
+    > There should 8 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com and VN1-SRV5.ad.adatum.com.
 
 If any records, are missing, open **Terminal** and execute the following command:
 
@@ -396,9 +396,10 @@ Perform this task on CL1.
 
 1. [Change the DNS client server addresses](#task-1-change-the-dns-client-server-addresses) on CL1 to 10.1.1.40.
 1. [Change the IP address of the domain controller to decommission](#task-2-change-the-ip-address-of-the-domain-controller-to-decommission) VN1-SRV1 to 10.1.1.9 and the DNS client server addresses to 10.1.1.40 and 10.1.2.8
-1. [Add the IP address of the decommissioned domain controller to the new domain controller](#task-3-add-the-ip-address-of-the-decommissioned-domain-controller-to-the-new-domain-controller): Add 10.1.1.8 to VN1-SRV5
-1. [Demote the old domain controller](#task-4-demote-the-old-domain-controller) VN1-SRV1
-1. [Remove roles from the decommissioned domain controller](#task-5-remove-roles-from-the-decommissioned-domain-controller) VN1-SRV1
+1. [Update the Host (A) record of the domain controller to decommission] VN1-SRV1 to 10.1.1.9
+1. [Add the IP address of the decommissioned domain controller to the new domain controller](#task-4-add-the-ip-address-of-the-decommissioned-domain-controller-to-the-new-domain-controller): Add 10.1.1.8 to VN1-SRV5
+1. [Demote the old domain controller](#task-5-demote-the-old-domain-controller) VN1-SRV1
+1. [Remove roles from the decommissioned domain controller](#task-6-remove-roles-from-the-decommissioned-domain-controller) VN1-SRV1
 
 *Note:* In this exercise, we add the IP address of the decommissioned domain controller to the new domain controller, so we do not have to reconfigure the DNS client settings on the other computers on the network. If all computers use DHCP, you could reconfigure the DHCP option DNS server instead. You would do this before task 1 and then wait for the DHCP lease period to expire before proceeding. Moreover, you would skip task 2.
 
@@ -557,7 +558,70 @@ Perform this task on CL1.
     Remove-CimSession $cimSession
     ````
 
-### Task 3: Add the IP address of the decommissioned domain controller to the new domain controller
+### Task 3: Update the Host (A) record of the domain controller to decommission
+
+#### Desktop Experience
+
+Perform this task on CL1.
+
+1. Open **DNS**.
+1. If the dialog **Connect to DNS Server** appears, click **The following computer**, type **VN1-SRV5**, and click **OK**.
+1. In DNS, click **VN1-SRV5**.
+1. Expand **VN1-SRV5**, **Forward Lookup Zones** and click **ad.adatum.com**
+1. In the zone ad.adatum.com, double-click the record with the nae **vn1-srv1** and the type **Host (A)**.
+1. In vn1-srv1 Properties, under **IP address**, type **10.1.1.9** and click **OK**.
+
+#### Windows Admin Center
+
+Perform this task on CL1.
+
+1. Open **Microsoft Edge**.
+1. In Microsoft Edge, navigate to **VN1-SRV9.ad.adatum.com**.
+1. If necessary, install the extension **DNS**.
+
+    1. Click *Settings* (the gear icon) in the top-right corner.
+    1. In Settings, click **Extensions**.
+    1. In Extensions click **DNS**.
+    1. Click **Install**.
+
+1. In Windows Admin Center, click **VN1-SRV5.ad.adatum.com**.
+1. In the VN1-SRV5.ad.adatum.com, unter Tools, click **DNS**. If you do not see DNS there, go to step 3.
+1. If you see a message The DNS PowerShell tools (RSAT) are not installed, click **Install**.
+
+    Wait for the installation to complete. The page will automatically reload.
+
+1. In DNS, click the zone **ad.adatum.com**.
+1. In the Records pane, click the record with the name **vn1-srv1.ad.adatum.com** and the type **Host (A)**.
+1. Click **Edit**.
+1. In the Edit a DNS record, under **IP address**, type **10.1.1.9** and click **Save**.
+
+#### PowerShell
+
+Perform this task on CL1.
+
+1. Open **Terminal**.
+1. In Terminal, configure parameters:
+
+    ```powershell
+    $computerName = 'VN1-SRV5'
+    $zoneName = 'ad.adatum.com'
+    $oldDnsServerResourceRecord = Get-DnsServerResourceRecord `
+        -ZoneName $zoneName `
+        -RRType A `
+        -Name 'vn1-srv1' `
+        -ComputerName $computerName
+
+    $newDnsServerResourceRecord = `
+        [ciminstance]::new($oldDnsServerResourceRecord)
+            
+    $newDnsServerResourceRecord.RecordData.IPv4Address = '10.1.1.9'
+    Set-DnsServerResourceRecord `
+        -ZoneName $zoneName `
+        -OldInputObject $oldDnsServerResourceRecord `
+        -NewInputObject $newDnsServerResourceRecord `
+        -ComputerName $computerName
+
+### Task 4: Add the IP address of the decommissioned domain controller to the new domain controller
 
 Perform this task on CL1.
 
@@ -599,7 +663,7 @@ Perform this task on CL1.
     Remove-CimSession $cimSession
     ````
 
-### Task 4: Demote the old domain controller
+### Task 5: Demote the old domain controller
 
 #### Desktop experience
 
@@ -782,7 +846,7 @@ If you receive any error message while demoting the domain controller, perform t
 
 Leave out task 5 and skip to the next exercise.
 
-### Task 5: Remove roles from the decommissioned domain controller
+### Task 6: Remove roles from the decommissioned domain controller
 
 #### Desktop experience
 
