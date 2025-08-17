@@ -48,7 +48,7 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 1. Configure Active Directory Domain Services as additional domain controller
 
     * Computername: **VN1-SRV5**
-    * Domain **ad.adatum.com**
+    * Domain: **ad.adatum.com**
     * **DNS server**
     * **Global Catalog** at the same time
     * Do not update the DNS delegation (this is not possibly anyways, ignore the warning)
