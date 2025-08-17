@@ -42,6 +42,9 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
     [Installing optional features on Windows 11](../General/Installing-optional-features-on-Windows-11.md)
 
 1. On CL1, install the role **Active Directory Domain Services** (```AD-Domain-Services```) on **VN1-SRV5**.
+
+    [Installing roles and features on Windows Server](../General/Installing-roles-and-features-on-Windows-Server.md)
+
 1. Configure Active Directory Domain Services as additional domain controller
 
     * Computername: **VN1-SRV5**
