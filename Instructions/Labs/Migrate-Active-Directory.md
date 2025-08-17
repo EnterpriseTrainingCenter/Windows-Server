@@ -80,6 +80,9 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     Review any warnings or errors, if present. If time permits, you can try to fix the warning and errors and run the the BPA scan again.
 
+    [Running Best Practices Analyzer scans and managing scan results](../General/Running-Best-Practices-Analyzer-and-managing-scan-results.md)
+
+
 ## Exercise 3: Transfer flexible single master operation roles
 
 1. On CL1, transfer the **RID master**, **PDC emulator** and **Infrastructure master** roles to **VN1-SRV5**.
