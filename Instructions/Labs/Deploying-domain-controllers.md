@@ -23,7 +23,7 @@ You must have completed the practice [Install Windows Admin Center using a scrip
 
 ## Introduction
 
-The domain controller still running Windows Server 2019 must be replaced by a Windows Server 2022 domain controller. Moreover, Adatum is expanding to a new location. An additional domain controller must be installed at the new location. Furthermore, Adatum launches a new subsidiary with the name Contoso. Because it is expected, that the subsidiary will be sold soon, a new forest needs to be created for the subsidiary.
+The domain controller still running Windows Server 2022 must be replaced by a Windows Server 2025 domain controller. Moreover, Adatum is expanding to a new location. An additional domain controller must be installed at the new location. Furthermore, Adatum launches a new subsidiary with the name Contoso. Because it is expected, that the subsidiary will be sold soon, a new forest needs to be created for the subsidiary.
 
 ## Exercises
 
