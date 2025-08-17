@@ -1,4 +1,4 @@
-# Running Best Practices Analyzer Scans and Managing Scan Results
+# Running Best Practices Analyzer scans and managing scan results
 
 ## Desktop experience
 
