@@ -136,7 +136,7 @@ Note: Exercise 6 is not dependent on the other exercises. To safe time, you may 
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
-1. On CL1, remove the IP address  **10.0.1.8** from the interface **Ethernet** on **VN1-SRV1**.
+1. On CL1, remove the IP address  **10.1.1.8** from the interface **Ethernet** on **VN1-SRV1**.
 
     ````powershell
     $computerName = 'VN1-SRV1'
@@ -147,7 +147,7 @@ Note: Exercise 6 is not dependent on the other exercises. To safe time, you may 
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
-1. Change the DNS client settings on **VN1-SRV1** to **10.0.1.40** as the primary DNS server and **10.0.2.8** as the secondary DNS Server.
+1. Change the DNS client settings on **VN1-SRV1** to **10.1.1.40** as the primary DNS server and **10.1.2.8** as the secondary DNS Server.
 
     ````powershell
     $computerName = 'VN1-SRV1'
@@ -157,7 +157,7 @@ Note: Exercise 6 is not dependent on the other exercises. To safe time, you may 
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
-1. On CL1, add the IP address **10.0.1.8** to the interface **VNet1** on **VN1-SRV5**. You need to use PowerShell for this task to leave the old IP address operational.
+1. On CL1, add the IP address **10.1.1.8** to the interface **VNet1** on **VN1-SRV5**. You need to use PowerShell for this task to leave the old IP address operational.
 
     ````powershell
     $computerName = 'VN1-SRV5'
