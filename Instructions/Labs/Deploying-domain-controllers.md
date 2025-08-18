@@ -117,7 +117,7 @@ Note: Exercise 6 is not dependent on the other exercises. To safe time, you may 
 
     [Changing TCP/IP settings on Windows 11](../General/Changing-TCP-IP-settings-on-Windows-11.md)
 
-1. Change the IP address of **VN1-SRV1** to **10.1.1.9** and configure it to use **10.1.1.40** as DNS server. Do not forget to remove the old IP address.
+1. Change the IP address of **VN1-SRV1** to **10.1.1.9** and configure it to use **10.1.1.40** as DNS server. Do not forget to remove the old IP address. This will work with PowerShell only.
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
