@@ -167,6 +167,13 @@ This can be performed locally only.
             -CimSession $cimSession
         ````
 
+1. Remove CIM session.
+
+    ````powershell
+    Remove-CimSession $cimSession
+    ````
+
+
 ## References
 
 [How to change the IP address of a network adapter](https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/change-ip-address-network-adapter)
