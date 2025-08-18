@@ -67,13 +67,18 @@ This can be performed locally only.
 
 ## PowerShell
 
-This should be performed locally.
-
 1. In the context menu of **Start**, click **Terminal**.
+1. Create a CIM session to the server.
+
+    ````powershell
+    $computerName = '' # Between the quotes, insert the server name
+    $cimSession = New-CimSession -ComputerName $computerName
+    ````
+
 1. Find the network interface.
 
     ````powershell
-    Get-NetIPConfiguration
+    Get-NetIPConfiguration -CimSession $cimSession
     ````
 
     Take a note of the interface alias you want to configure.
@@ -93,7 +98,8 @@ This should be performed locally.
         New-NetIPAddress `
             -InterfaceAlias $interfaceAlias `
             -IPAddress $ipAddress `
-            -PrefixLength $prefixLength
+            -PrefixLength $prefixLength `
+            -CimSession $cimSession
         ````
 
     * Set the DNS server addresses.
@@ -102,10 +108,32 @@ This should be performed locally.
         $serverAddresses = '' # Insert an array of DNS servers here
         Set-DnsClientServerAddress `
             -InterfaceAlias $interfaceAlias `
-            -ServerAddresses $serverAddresses
+            -ServerAddresses $serverAddresses `
+            -CimSession $cimSessions
         ````
 
     * Remove an IP address
+
+        1. Remove any old CIM session.
+
+            ````powershell
+            Remove-CimSession $cimSession
+            ````
+
+        1. Remove any A records with the name of the old server from the DNS server.
+
+            [Managing resource records](./Managing-resource-records.md)
+
+        1. Clear the DNS client cache.
+
+            [Managing the DNS client cache](./Managing-the-DNS-client-cache.md)
+
+        1. Create a CIM session to the server.
+
+            ````powershell
+            $cimSession = New-CimSession -ComputerName $computerName
+            ````
+
 
         1. Remove IP addresses:
 
@@ -114,6 +142,7 @@ This should be performed locally.
             Remove-NetIPAddress `
                 -InterfaceAlias $interfaceAlias `
                 -IPAddress $iPAddress `
+                -CimSession $cimSession `
                 -Confirm:$false
             ````
 
@@ -121,7 +150,10 @@ This should be performed locally.
 
         ```powershell
         $nextHop = '' # Provide the IP address of the old default gateway
-        Remove-NetRoute -DestinationPrefix 0.0.0.0/0 -NextHop $nextHop
+        Remove-NetRoute `
+            -DestinationPrefix 0.0.0.0/0 `
+            -NextHop $nextHop `
+            -CimSession $cimSession
         ```
 
     * Add a default gateway
@@ -131,7 +163,8 @@ This should be performed locally.
         New-NetRoute `
             -InterfaceAlias $interfaceAlias `
             -DestinationPrefix 0.0.0.0/0 `
-            -NextHop $nextHop
+            -NextHop $nextHop `
+            -CimSession $cimSession
         ````
 
 ## References
