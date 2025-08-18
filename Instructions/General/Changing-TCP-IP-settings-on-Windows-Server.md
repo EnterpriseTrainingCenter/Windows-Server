@@ -134,7 +134,6 @@ This can be performed locally only.
             $cimSession = New-CimSession -ComputerName $computerName
             ````
 
-
         1. Remove IP addresses:
 
             ````powershell
