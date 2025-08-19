@@ -21,14 +21,14 @@
 
         ````powershell
         $name = '' # Between the quotes, insert the network adapter name/alias
-        Disable-NetAdatper -Name $name -CimSession $cimSession
+        Disable-NetAdapter -Name $name -CimSession $cimSession
         ````
 
     * Enable a network adapter
 
         ````powershell
         $name = '' # Between the quotes, insert the network adapter name/alias
-        Enable-NetAdatper -Name $name -CimSession $cimSession
+        Enable-NetAdapter -Name $name -CimSession $cimSession
         ````
 
 1. Remove CIM session.
