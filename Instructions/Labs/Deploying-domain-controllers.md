@@ -50,6 +50,10 @@ Note: Exercise 6 is not dependent on the other exercises. To safe time, you may 
 
    [Enabling or disabling network adapters](../General/Enabling-or-disabling-network-adapters.md) 
 
+1. On VN1-SRV5 and VN2-SRV1, configure the network profile type for the connection **VNet1** or **Ethernet** as **Private network** on **VN1-SRV5** and **VN2-SRV1**. 
+
+    [Configuring the network profile type](../General/Configuring-the-network-profile-type.md)
+
 1. On CL1, install the role **Active Directory Domain Services** (```AD-Domain-Services```) on **VN1-SRV5** and **VN2-SRV1**.
 
     [Installing roles and features on Windows Server](../General/Installing-roles-and-features-on-Windows-Server.md)
@@ -67,10 +71,6 @@ Note: Exercise 6 is not dependent on the other exercises. To safe time, you may 
     *Note:* In a real-world scenario it is recommended to save the database and logs to a separate volume with host-based write-back caching disabled.
 
     [Configuring Active Directory Domain Services as an additional Domain Controller](../General/Configuring-Active-Directory-Domain-Services-as-an-additional-domain-controller.md)
-
-1. On VN1-SRV5 and VN2-SRV1, configure the network profile type for the connection **VNet1** or **Ethernet** as **Private network** on **VN1-SRV5** and **VN2-SRV1**. 
-
-    [Configuring the network profile type](../General/Configuring-the-network-profile-type.md)
 
 1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** and **VN2-SRV1** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
 
