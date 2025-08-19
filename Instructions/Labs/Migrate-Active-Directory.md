@@ -101,15 +101,46 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Changing TCP/IP settings on Windows 11](../General/Changing-TCP-IP-settings-on-Windows-11.md)
 
-1. Change the IP address of **VN1-SRV1** to **10.1.1.9** and configure it to use **10.1.1.40** as DNS server. Do not forget to remove the old IP address.
+1. On CL1, add the IP address  **10.1.1.9** to the interface **Ethernet** on **VN1-SRV1**. You need to use PowerShell for this task.
+
+    ````powershell
+    $computerName = 'VN1-SRV1'
+    $interfaceAlias = 'Ethernet'
+    $ipAddress = '10.0.0.9'
+    $prefixLength = 24
+    ````
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
-1. On CL1, in DNS on **VN1-SRV5**, update the **Host (A)** record IP address for **VN1-SRV1.ad.adatum.com** to **10.1.1.9**.
+1. On CL1, remove the IP address  **10.1.1.8** from the interface **Ethernet** on **VN1-SRV1**.
 
-    [Managing resource records](../General/Managing-resource-records.md)
+    ````powershell
+    $computerName = 'VN1-SRV1'
+    $interfaceAlias = 'Ethernet'
+    $ipAddress = '10.1.1.8'
+    $prefixLength = 24
+    ````
 
-1. Add the IP address **10.1.1.8** (without a default gateway) to **VN1-SRV5**. You need to use PowerShell for this task to leave the old IP address operational.
+    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
+
+1. Change the DNS client settings on **VN1-SRV1** to **10.1.1.40** as the primary DNS server and **10.1.2.8** as the secondary DNS Server.
+
+    ````powershell
+    $computerName = 'VN1-SRV1'
+    $interfaceAlias = 'Ethernet'
+    $severAddresses = '10.1.1.40', '10.1.2.8'
+    ````
+
+    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
+
+1. On CL1, add the IP address **10.1.1.8** to the interface **VNet1** on **VN1-SRV5**. You need to use PowerShell for this task to leave the old IP address operational.
+
+    ````powershell
+    $computerName = 'VN1-SRV5'
+    $interfaceAlias = 'VNet1'
+    $ipAddress = '10.1.1.8'
+    $prefixLength = 24
+    ````
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
