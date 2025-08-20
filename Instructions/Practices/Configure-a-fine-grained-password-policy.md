@@ -22,7 +22,7 @@ Perform these steps on CL1.
 1. Sign in as **Administrator@ad.adatum.com**.
 1. Open **Active Directory Administrative Center**.
 1. In Active Directory Administrative Center, click **ad (local)**.
-1. In client (local), double-click **System**.
+1. In ad (local), double-click **System**.
 1. In System, double-click **Password Settings Container**.
 1. In Password Settings Container, in the **Tasks** pane, click **New**, **Password Settings**.
 1. In Create Password Settings, configure the following settings:
