@@ -118,7 +118,7 @@ Perform this task on CL1.
 
     ````powershell
     $aDGroup = New-ADGroup `
-        -Path $aDOrganizationalUnit.DistinguishedName `
+        -Path 'ou=Entitling Groups, dc=ad, dc=adatum, dc=com `
         -Name 'VNet3 RODC Administrators' `
         -GroupCategory Security `
         -GroupScope DomainLocal `
