@@ -104,9 +104,7 @@ Perform this task on CL1.
 
 1. Open **Active Directory Administrative Center**.
 1. In Active Directory Administrative Center, in the left pane, click **ad**.
-1. In the context-menu of **ad**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, in **Name**, type **Entitling groups** and click **OK**.
-1. In **Active Directory Administrative Center**, in **ad**, double-click **Entitling groups**.
+1. In ad, double-click **Entitling groups**.
 1. Under Entitling groups, in the context-menu blank space click **New**, **Group**.
 1. In Create Group, in **Group name**, type **VNet3 RODC Administrators**. Under **Group type**, ensure **Security** is selected. Under **Group scope**, click **Domain local**. Click **Members**.
 1. Under Members, click **Add...**.
@@ -116,17 +114,6 @@ Perform this task on CL1.
 #### PowerShell
 
 1. Open **Terminal**.
-1. Create an organizational unit **Entitling groups** in the domain **ad.adatum.com**.
-
-    ````powershell
-    $server = 'ad.adatum.com'
-    $aDOrganizationalUnit = New-ADOrganizationalUnit `
-        -Name 'Entitling groups' `
-        -Path 'dc=ad,dc=adatum,dc=com' `
-        -Server $server `
-        -Passthru
-    ````
-
 1. In the the new OU, create a domain-local security group named **VNet3 RODC Administrators**.
 
     ````powershell
