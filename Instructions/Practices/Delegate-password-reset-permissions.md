@@ -30,7 +30,7 @@ Perform these steps on CL1.
 1. In Select Groups, under **Enter the object names to select**, type **Helpdesk** and click **OK**.
 1. In **Active Directory Users and Computers**, click **Entitling groups**.
 1. In the context-menu of **Entitling Groups**, click **New**, **Group**.
-1. In New Object - Group, in **Group name**, type **OU Sales Password Reset**. Under **Group scope**, click **Domain local**. Under **Group type**, ensure **Security** is selected. Click **OK**.
+1. In New Object - Group, in **Group name**, type **OU Marketing Password Reset**. Under **Group scope**, click **Domain local**. Under **Group type**, ensure **Security** is selected. Click **OK**.
 1. In **Active Directory Users and Computers**, in **Entitling Groups**, double-click **OU Marketing Password Reset**.
 1. In OU Marketing Password Reset Properties, click the tab **Members**.
 1. On tab Members, click **Add...**.
@@ -44,7 +44,7 @@ Perform these steps on CL1.
 1. On page Tasks to Delegate, ensure **Delegate the following common tasks** is selected, activate **Reset user passwords and force password change at next logon** and click **Next >**
 1. On page Completing the Delegation of Control Wizard, click **Finish**.
 1. Sign out.
-1. Sign in as **Ida@ad.adatum.com**.
+1. Sign in as **ad\ida**.
 1. Open **Active Directory Administrative Center**.
 1. In Active Directory Administrative Center, on the menu, click **Manage**, **Add Navigation Nodes...**.
 1. In Add Navigation Nodes, in the middle pane, click **Marketing**, click **>>**, and click **OK**.
@@ -55,6 +55,6 @@ Perform these steps on CL1.
 
 1. In Abbie Parsons, click **Cancel**.
 1. In **Active Directory Administrative Center**, in **ad-Sales**, in the context-menu of **Abbie Parsons**, click **Reset password...**.
-1. In Reset Password, in **Password** and **Confirm password**, type a secure password. Click to deactivate **User msut change password at next log on** and click **OK**.
+1. In Reset Password, in **Password** and **Confirm password**, type a secure password. Click to deactivate **User must change password at next log on** and click **OK**.
 
     > You have reset the password of a user successfully.
