@@ -185,6 +185,8 @@ Add-ADDSReadOnlyDomainControllerAccount `
 
 ### Task 5: Install read-only domain controller
 
+*Important*: If the promotion of VN3-SRV1 does not work (error messages regarding permissions), wait for at least 15 minutes and try again.
+
 #### Desktop experience
 
 Perform this task on VN3-SRV1.
@@ -382,11 +384,13 @@ Perform this task on CL2.
     $env:LOGONSERVER
     ````
 
-    > This will return \\\\VN1-SRV5, because the password of Ida is not not present on VN1-SRV3.
+    > This will return \\\\VN1-SRV5, because the password of Ida is not present on VN1-SRV3.
 
 1. Sign out.
 
 ### Task 4: Configure password replication
+
+*Important*: If you receive an error trying to pre-populate the passwords, wait for at least 15 minutes and try again.
 
 #### Desktop experience
 
