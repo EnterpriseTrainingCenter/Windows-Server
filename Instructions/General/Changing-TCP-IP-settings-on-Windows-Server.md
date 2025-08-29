@@ -68,7 +68,8 @@ This can be performed locally only.
 ## PowerShell
 
 1. In the context menu of **Start**, click **Terminal**.
-1. Create a CIM session to the server.
+1. Configure the parameters:
+1. If you want to do this remote: Create a CIM session to the server. If you do not create a CIM session in this step and want to run the commands locally, leave out the -CimSession parameter in all of the following commands.
 
     ````powershell
     $computerName = '' # Between the quotes, insert the server name
@@ -114,21 +115,21 @@ This can be performed locally only.
 
     * Remove an IP address
 
-        1. Remove any old CIM session.
+        1. If necessary, remove any old CIM session.
 
             ````powershell
             Remove-CimSession $cimSession
             ````
 
-        1. Remove any A records with the name of the old server from the DNS server.
+        1. If you do this remotely, remove any A records with the name of the old server from the DNS server.
 
             [Managing resource records](./Managing-resource-records.md)
 
-        1. Clear the DNS client cache.
+        1. If you do this remotely, clear the DNS client cache.
 
             [Managing the DNS client cache](./Managing-the-DNS-client-cache.md)
 
-        1. Create a CIM session to the server.
+        1. If you want to continue remotely, create a CIM session to the server.
 
             ````powershell
             $cimSession = New-CimSession -ComputerName $computerName
@@ -166,12 +167,11 @@ This can be performed locally only.
             -CimSession $cimSession
         ````
 
-1. Remove CIM session.
+1. If you created a CIM session, remove it.
 
     ````powershell
     Remove-CimSession $cimSession
     ````
-
 
 ## References
 

@@ -47,10 +47,6 @@ Note: Exercise 4 is not dependent on the other exercises. To save time, you may 
 
    [Enabling or disabling network adapters](../General/Enabling-or-disabling-network-adapters.md) 
 
-1. On VN1-SRV5 and VN2-SRV1, configure the network profile type for the connection **VNet1** or **Ethernet** as **Private network** on **VN1-SRV5** and **VN2-SRV1**. 
-
-    [Configuring the network profile type](../General/Configuring-the-network-profile-type.md)
-
 1. On CL1, install the role **Active Directory Domain Services** (```AD-Domain-Services```) on **VN1-SRV5** and **VN2-SRV1**.
 
     [Installing roles and features on Windows Server](../General/Installing-roles-and-features-on-Windows-Server.md)
@@ -69,17 +65,21 @@ Note: Exercise 4 is not dependent on the other exercises. To save time, you may 
 
     [Configuring Active Directory Domain Services as an additional Domain Controller](../General/Configuring-Active-Directory-Domain-Services-as-an-additional-domain-controller.md)
 
+1. On VN1-SRV5 and VN2-SRV1, configure the network profile type for the connection **VNet1** or **Ethernet** as **Private network** on **VN1-SRV5** and **VN2-SRV1**. 
+
+    [Configuring the network profile type](../General/Configuring-the-network-profile-type.md)
+
 1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** and **VN2-SRV1** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
 
     [Configuring forwarders](../General/Configuring-forwarders.md)
 
 1. On CL1 or, if you want to use SConfig, on VN1-SRV5 configure the DNS client settings for VN1-SRV5 as follows:
 
-    Preferred DNS server: 10.0.2.1 (VN1-SRV2)
+    Preferred DNS server: 10.1.2.8 (VN1-SRV2)
     Secondary DNS server: 127.0.0.1
 
     ````powershell
-    $serverAddresses = '10.0.2.1', '127.0.0.1'
+    $serverAddresses = '10.1.2.8', '127.0.0.1'
     ````
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
@@ -134,7 +134,7 @@ Note: Exercise 4 is not dependent on the other exercises. To save time, you may 
 
     *Note:* In a real-world scenario it is recommended to save the database and logs to a separate volume with host-based write-back caching disabled.
 
-    [Configuring Active Directory Domain Services as an additional Domain Controller](../General/Configuring-Active-Directory-Domain-Services-as-an-additional-domain-controller.md)
+    [Configuring Active Directory Domain Services as a new forest](../General/Configuring-Active-Directory-Domain-Services-as-a-new-forest.md)
 
 1. On VN2-SRV2, configure the forwarders of the DNS Server to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
 

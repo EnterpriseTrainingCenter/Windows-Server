@@ -954,7 +954,7 @@ Perform this task on the host.
 
     If WIN-VN1-SRV1 is not running anymore, do not select it.
 
-1. In the context menu of **WIN-VN1-SRV1**, **WIN-VN1-SRV5**, or **WIN-VN2-SRV1**, click **Suspend**.
+1. In the context menu of **WIN-VN1-SRV1**, **WIN-VN1-SRV5**, or **WIN-VN2-SRV1**, click **Pause**.
 
 #### PowerShell
 
@@ -1126,7 +1126,7 @@ Perform this task on the host.
 
     If WIN-VN1-SRV1 is not running anymore, do not select it.
 
-1. In the context menu of **WIN-VN1-SRV1**, **WIN-VN1-SRV5**, or **WIN-VN2-SRV1**, click **Suspend**.
+1. In the context menu of **WIN-VN1-SRV1**, **WIN-VN1-SRV5**, or **WIN-VN2-SRV1**, click **Resume**.
 
 #### PowerShell
 
@@ -1138,7 +1138,7 @@ Perform this task on the host.
     ````powershell
     Get-VM -Name WIN-VN1-SRV1, WIN-VN1-SRV5, WIN-VN2-SRV1 |
     Where-Object { $PSItem.State -eq 'Running' } |
-    Suspend-VM
+    Resume-VM
     ````
 
 ## Exercise 5: Create and validate a forest trust

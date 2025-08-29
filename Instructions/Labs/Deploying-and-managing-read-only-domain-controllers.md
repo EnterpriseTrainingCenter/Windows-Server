@@ -7,7 +7,7 @@
 * VN2-SRV2
 * VN3-SRV1
 * CL1
-* CL4
+* CL2
 
 If you did not complete the lab [Deploying domain controllers](Deploying-domain-controllers.md), in addition to the VMs above, **VN1-SRV1** is required. If VN1-SRV1 is already shut down after the lab, do not start it.
 
@@ -15,7 +15,7 @@ If you did not complete the lab [Deploying domain controllers](Deploying-domain-
 
 1. On VN3-SRV1, sign in as **ad\Administrator**.
 1. On CL1, sign in as **ad\Administrator**.
-1. On CL4, sign in as **.\Administrator**.
+1. On CL2, sign in as **.\Administrator**.
 
 If you skipped the practice [Install Remote Server Administration Tools](Practices/Install-Remote-Server-Administration-Tools.md), on **CL1**, in **Terminal**, execute ````C:\LabResources\Solutions\Install-RemoteServerAdministrationTools.ps1````.
 
@@ -104,9 +104,7 @@ Perform this task on CL1.
 
 1. Open **Active Directory Administrative Center**.
 1. In Active Directory Administrative Center, in the left pane, click **ad**.
-1. In the context-menu of **ad**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, in **Name**, type **Entitling groups** and click **OK**.
-1. In **Active Directory Administrative Center**, in **ad**, double-click **Entitling groups**.
+1. In ad, double-click **Entitling groups**.
 1. Under Entitling groups, in the context-menu blank space click **New**, **Group**.
 1. In Create Group, in **Group name**, type **VNet3 RODC Administrators**. Under **Group type**, ensure **Security** is selected. Under **Group scope**, click **Domain local**. Click **Members**.
 1. Under Members, click **Add...**.
@@ -116,22 +114,11 @@ Perform this task on CL1.
 #### PowerShell
 
 1. Open **Terminal**.
-1. Create an organizational unit **Entitling groups** in the domain **ad.adatum.com**.
-
-    ````powershell
-    $server = 'ad.adatum.com'
-    $aDOrganizationalUnit = New-ADOrganizationalUnit `
-        -Name 'Entitling groups' `
-        -Path 'dc=ad,dc=adatum,dc=com' `
-        -Server $server `
-        -Passthru
-    ````
-
 1. In the the new OU, create a domain-local security group named **VNet3 RODC Administrators**.
 
     ````powershell
     $aDGroup = New-ADGroup `
-        -Path $aDOrganizationalUnit.DistinguishedName `
+        -Path 'ou=Entitling Groups, dc=ad, dc=adatum, dc=com `
         -Name 'VNet3 RODC Administrators' `
         -GroupCategory Security `
         -GroupScope DomainLocal `
@@ -302,11 +289,11 @@ Perform this task on VN3-SRV1.
 
 ## Exercise 2: Manage password replication
 
-1. [Connect client to site with read-only domain controller](#task-1-connect-client-to-site-with-read-only-domain-controller): CL4
-1. [Configure IP address of client for new site](#task-2-configure-ip-address-of-client-for-new-site) on CL4
-1. [Verify sign in](#task-3-verify-sign-in) from client CL4
+1. [Connect client to site with read-only domain controller](#task-1-connect-client-to-site-with-read-only-domain-controller): CL2
+1. [Configure IP address of client for new site](#task-2-configure-ip-address-of-client-for-new-site) on CL2
+1. [Verify sign in](#task-3-verify-sign-in) from client CL2
 1. [Configure password replication](#task-4-configure-password-replication)
-1. [Verify sign in](#task-5-verify-sign-in) from client CL4
+1. [Verify sign in](#task-5-verify-sign-in) from client CL2
 
 ### Task 1: Connect client to site with read-only domain controller
 
@@ -413,7 +400,7 @@ Perform this task on CL1.
 1. Under Members, click **Add...**.
 1. In Select Users, Groups, Computers, Service Accounts, or Groups, click **Object Types...**
 1. In Object Types, activate **Computers** and click **OK**.
-1. In **Select Users, Groups, Computers, Service Accounts**, under **Enter the object names to select**, type **Ida; CL4** and click **OK**.
+1. In **Select Users, Groups, Computers, Service Accounts**, under **Enter the object names to select**, type **Ida; CL2** and click **OK**.
 1. In **Create Group: VNet3 RODC password replication allowed**, click **OK**.
 1. In **Active Directory Administrative Center**, click **ad**.
 1. Under ad, double-click **Domain Controllers**.
@@ -476,7 +463,7 @@ Perform this task on CL1.
 
 ### Task 5: Verify sign in
 
-Perform this task on CL4.
+Perform this task on CL2.
 
 1. Click *Power*, **Restart**.
 1. Sign in as **ad\Ida**.
