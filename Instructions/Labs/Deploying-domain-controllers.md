@@ -30,8 +30,9 @@ You want to introduce new domain controllers to the domain running the latest ve
 
 1. [Deploy additional domain controllers](#exercise-1-deploy-additional-domain-controllers)
 1. [Check domain controller health](#exercise-2-check-domain-controller-health)
-1. [Transfer flexible single master operation roles](#exercise-3-transfer-flexible-single-master-operation-roles)
-1. [Deploy a new forest](#exercise-4-deploy-a-new-forest)
+1. [Optimize DNS](#exercise-3-optimize-dns)
+1. [Transfer flexible single master operation roles](#exercise-4-transfer-flexible-single-master-operation-roles)
+1. [Deploy a new forest](#exercise-5-deploy-a-new-forest)
 
 Note: Exercise 5 is not dependent on the other exercises. To save time, you may run the tasks of exercise 4 while you are waiting for execution of tasks in the other exercises.
 
@@ -65,24 +66,9 @@ Note: Exercise 5 is not dependent on the other exercises. To save time, you may 
 
     [Configuring Active Directory Domain Services as an additional Domain Controller](../General/Configuring-Active-Directory-Domain-Services-as-an-additional-domain-controller.md)
 
-1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** and **VN2-SRV1** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
-
-    [Configuring forwarders](../General/Configuring-forwarders.md)
-
-1. On CL1 or, if you want to use SConfig, on VN1-SRV5 configure the DNS client settings for VN1-SRV5 as follows:
-
-    Preferred DNS server: 10.1.2.8 (VN1-SRV2)
-    Secondary DNS server: 127.0.0.1
-
-    ````powershell
-    $serverAddresses = '10.1.2.8', '127.0.0.1'
-    ````
-
-    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
-
 ## Exercise 2: Check domain controller health
 
-1. On CL1, list the resource records in the zones **_msdcs.ad.adatum.com** and **ad.adatum.com** on VN1-SRV5.
+1. On CL1, list the resource records in the zones **_msdcs.ad.adatum.com** and **ad.adatum.com** on VN1-SRV1, VN1-SRV5, and VN2-SRV1.
 
     In _msdcs.ad.adatum.com, there should be three CNAME records pointing to VN1-SRV1.ad.adatum.com, VN1-SRV5.ad.adatum.com, and VN2-SRV1.ad.adatum.com. Moreover, there should be several SRV records in the sub-domains dc, domains, gc, and pdc pointing to all three domain controllers.
 
@@ -102,7 +88,24 @@ Note: Exercise 5 is not dependent on the other exercises. To save time, you may 
 
     [Running Best Practices Analyzer scans and managing scan results](../General/Running-Best-Practices-Analyzer-and-managing-scan-results.md)
 
-## Exercise 3: Transfer flexible single master operation roles
+## Exercise 3: Optimize DNS
+
+1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** and **VN2-SRV1** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
+
+    [Configuring forwarders](../General/Configuring-forwarders.md)
+
+1. On CL1 or, if you want to use SConfig, on VN1-SRV5 configure the DNS client settings for VN1-SRV5 as follows:
+
+    Preferred DNS server: 10.1.2.8 (VN1-SRV2)
+    Secondary DNS server: 127.0.0.1
+
+    ````powershell
+    $serverAddresses = '10.1.2.8', '127.0.0.1'
+    ````
+
+    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
+
+## Exercise 4: Transfer flexible single master operation roles
 
 1. On CL1, transfer the **RID master**, **PDC emulator** and **Infrastructure master** roles to **VN1-SRV5**.
 
@@ -112,7 +115,7 @@ Note: Exercise 5 is not dependent on the other exercises. To save time, you may 
 
     [Transferring flexible single master operation roles](../General/Transferring-flexible-single-master-operation-roles.md)
 
-## Exercise 4: Deploy a new forest
+## Exercise 5: Deploy a new forest
 
 1. On CL1, install the role **Active Directory Domain Services** (```AD-Domain-Services```) on **VN2-SRV2**.
 
