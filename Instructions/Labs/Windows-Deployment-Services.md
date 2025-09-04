@@ -419,7 +419,7 @@ Perform these steps on the host computer.
 1. In Windows PowerShell, execute
 
     ````powershell
-    C:\Labs\Resources\New-VM.ps1 -Name VN1-SRV21
+    C:\LabResources\New-VM.ps1 -Name VN1-SRV21
     ````
 
 1. In **Hyper-V Manager**, double-click **WIN-VN1-SRV21** to open the virtual machine connection.
