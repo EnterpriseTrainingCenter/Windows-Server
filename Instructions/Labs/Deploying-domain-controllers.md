@@ -30,10 +30,10 @@ You want to introduce new domain controllers to the domain running the latest ve
 
 1. [Deploy additional domain controllers](#exercise-1-deploy-additional-domain-controllers)
 1. [Deploy a new forest](#exercise-2-deploy-a-new-forest)
-1. [Check domain controller health](#exercise-3-check-domain-controller-health)
-1. [Optimize DNS](#exercise-4-optimize-dns)
-1. [Transfer flexible single master operation roles](#exercise-5-transfer-flexible-single-master-operation-roles)
-1. [Join client to new forest](#exercise-6-join-client-to-new-forest)
+1. [Join client to new forest](#exercise-3-join-client-to-new-forest)
+1. [Check domain controller health](#exercise-4-check-domain-controller-health)
+1. [Optimize DNS](#exercise-5-optimize-dns)
+1. [Transfer flexible single master operation roles](#exercise-6-transfer-flexible-single-master-operation-roles)
 
 ## Exercise 1: Deploy additional domain controllers
 
@@ -115,7 +115,17 @@ You want to introduce new domain controllers to the domain running the latest ve
 
     [Configuring Active Directory Domain Services as a new forest](../General/Configuring-Active-Directory-Domain-Services-as-a-new-forest.md)
 
-## Exercise 3: Check domain controller health
+## Exercise 3: Join client to new forest
+
+1. On CL3, change the DNS client server addresses to **10.1.2.16**.
+
+    [Changing TCP/IP settings on Windows 11](../General/Changing-TCP-IP-settings-on-Windows-11.md)
+
+1. Join CL3 to the domain **ad.contoso.com**.
+
+    [Joining Windows 11 to a local Active Directory domain](../General/Joining-Windows-11-to-a-local-Active-Directory-domain.md)
+
+## Exercise 4: Check domain controller health
 
 1. On CL1, retrieve the expected DNS records from VN1-SRV5 and VN2-SRV1.
 
@@ -218,7 +228,7 @@ You want to introduce new domain controllers to the domain running the latest ve
 
     [Running Best Practices Analyzer scans and managing scan results](../General/Running-Best-Practices-Analyzer-and-managing-scan-results.md)
 
-## Exercise 4: Optimize DNS
+## Exercise 5: Optimize DNS
 
 1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** and **VN2-SRV1** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
 
@@ -239,7 +249,7 @@ You want to introduce new domain controllers to the domain running the latest ve
 
     [Configuring forwarders](../General/Configuring-forwarders.md)
 
-## Exercise 5: Transfer flexible single master operation roles
+## Exercise 6: Transfer flexible single master operation roles
 
 1. On CL1, transfer the **RID master**, **PDC emulator** and **Infrastructure master** roles to **VN1-SRV5**.
 
@@ -248,13 +258,3 @@ You want to introduce new domain controllers to the domain running the latest ve
 1. On CL1, transfer the **Domain Naming master** and the **Schema master** role to **VN1-SRV5**.
 
     [Transferring flexible single master operation roles](../General/Transferring-flexible-single-master-operation-roles.md)
-
-## Exercise 6: Join client to new forest
-
-1. On CL3, change the DNS client server addresses to **10.1.2.16**.
-
-    [Changing TCP/IP settings on Windows 11](../General/Changing-TCP-IP-settings-on-Windows-11.md)
-
-1. Join CL3 to the domain **ad.contoso.com**.
-
-    [Joining Windows 11 to a local Active Directory domain](../General/Joining-Windows-11-to-a-local-Active-Directory-domain.md)
