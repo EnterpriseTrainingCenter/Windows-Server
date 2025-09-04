@@ -192,7 +192,6 @@ You want to introduce new domain controllers to the domain running the latest ve
             }
 
             # If record found write information
-
             if (-not $missingRecord) {
                 Write-Host `
                     "$type record $name targeting $target found on $server"
