@@ -29,12 +29,11 @@ You want to introduce new domain controllers to the domain running the latest ve
 ## Exercises
 
 1. [Deploy additional domain controllers](#exercise-1-deploy-additional-domain-controllers)
-1. [Check domain controller health](#exercise-2-check-domain-controller-health)
-1. [Optimize DNS](#exercise-3-optimize-dns)
-1. [Transfer flexible single master operation roles](#exercise-4-transfer-flexible-single-master-operation-roles)
-1. [Deploy a new forest](#exercise-5-deploy-a-new-forest)
-
-Note: Exercise 5 is not dependent on the other exercises. To save time, you may run the tasks of exercise 4 while you are waiting for execution of tasks in the other exercises.
+1. [Deploy a new forest](#exercise-2-deploy-a-new-forest)
+1. [Check domain controller health](#exercise-3-check-domain-controller-health)
+1. [Optimize DNS](#exercise-4-optimize-dns)
+1. [Transfer flexible single master operation roles](#exercise-5-transfer-flexible-single-master-operation-roles)
+1. [Join client to new forest](#exercise-6-join-client-to-new-forest)
 
 ## Exercise 1: Deploy additional domain controllers
 
@@ -52,7 +51,7 @@ Note: Exercise 5 is not dependent on the other exercises. To save time, you may 
 
     [Installing roles and features on Windows Server](../General/Installing-roles-and-features-on-Windows-Server.md)
 
-1. Configure Active Directory Domain Services as additional domain controller
+1. Configure Active Directory Domain Services as additional domain controller. Start with VN1-SRV5. Then, continue to the next exercise. As soon as you finished the next exercise, repeat this task for VN2-SRV1.
 
     * Computername: **VN1-SRV5**, **VN2-SRV1**
     * Domain **ad.adatum.com**
@@ -64,9 +63,59 @@ Note: Exercise 5 is not dependent on the other exercises. To save time, you may 
 
     *Note:* In a real-world scenario it is recommended to save the database and logs to a separate volume with host-based write-back caching disabled.
 
+    ```powershell
+    # Replace this with VN2-SRV1.ad.adatum.com on the second run
+    $computerName = 'VN1-SRV5.ad.adatum.com' 
+
+    $domainName = 'ad.adatum.com'
+    $siteName = $null
+    $installDns = $true
+    $noGlobalCatalog = $false
+    $createDnsDelegation = $false
+    $dnsDelegationCredential = $null
+    $replicationSourceDC = $null
+    $databasePath = 'C:\Windows\NTDS'
+    $logPath = 'C:\Windows\NTDS'
+    $sysvolPath = 'C:\Windows\SYSVOL'
+    ```
+
     [Configuring Active Directory Domain Services as an additional Domain Controller](../General/Configuring-Active-Directory-Domain-Services-as-an-additional-domain-controller.md)
 
-## Exercise 2: Check domain controller health
+## Exercise 2: Deploy a new forest
+
+1. On CL1, install the role **Active Directory Domain Services** (```AD-Domain-Services```) on **VN2-SRV2**.
+
+    [Installing roles and features on Windows Server](../General/Installing-roles-and-features-on-Windows-Server.md)
+
+1. Configure Active Directory Domain Services as a new forest. If you want to use PowerShell, perform this task on VN2-SRV2 locally.
+
+    * Computername: **VN2-SRV2**
+    * Root domain name: **ad.contoso.com**
+    * **DNS server**
+    * NetBIOS domain name: **CONTOSO**
+    * Do not update the DNS delegation (this is not possibly anyways, ignore the warning)
+
+    Leave all other parameters as default.
+
+    *Note:* In a real-world scenario it is recommended to save the database and logs to a separate volume with host-based write-back caching disabled.
+
+    ```powershell
+
+    $domainName = 'ad.contoso.com'
+    $domainNetbiosName = 'CONTOSO'
+    $installDns = $true
+    $domainMode = 'Default'
+    $forestMode = 'Default'
+    $createDnsDelegation = $false
+    $dnsDelegationCredential = $null
+    $databasePath = 'C:\Windows\NTDS'
+    $logPath = 'C:\Windows\NTDS'
+    $sysvolPath = 'C:\Windows\SYSVOL'
+    ```
+
+    [Configuring Active Directory Domain Services as a new forest](../General/Configuring-Active-Directory-Domain-Services-as-a-new-forest.md)
+
+## Exercise 3: Check domain controller health
 
 1. On CL1, list the resource records in the zones **_msdcs.ad.adatum.com** and **ad.adatum.com** on VN1-SRV1, VN1-SRV5, and VN2-SRV1.
 
@@ -88,7 +137,7 @@ Note: Exercise 5 is not dependent on the other exercises. To save time, you may 
 
     [Running Best Practices Analyzer scans and managing scan results](../General/Running-Best-Practices-Analyzer-and-managing-scan-results.md)
 
-## Exercise 3: Optimize DNS
+## Exercise 4: Optimize DNS
 
 1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** and **VN2-SRV1** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
 
@@ -105,7 +154,11 @@ Note: Exercise 5 is not dependent on the other exercises. To save time, you may 
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
-## Exercise 4: Transfer flexible single master operation roles
+1. On VN2-SRV2, configure the forwarders of the DNS Server to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
+
+    [Configuring forwarders](../General/Configuring-forwarders.md)
+
+## Exercise 5: Transfer flexible single master operation roles
 
 1. On CL1, transfer the **RID master**, **PDC emulator** and **Infrastructure master** roles to **VN1-SRV5**.
 
@@ -115,29 +168,7 @@ Note: Exercise 5 is not dependent on the other exercises. To save time, you may 
 
     [Transferring flexible single master operation roles](../General/Transferring-flexible-single-master-operation-roles.md)
 
-## Exercise 5: Deploy a new forest
-
-1. On CL1, install the role **Active Directory Domain Services** (```AD-Domain-Services```) on **VN2-SRV2**.
-
-    [Installing roles and features on Windows Server](../General/Installing-roles-and-features-on-Windows-Server.md)
-
-1. Configure Active Directory Domain Services as a new forest
-
-    * Computername: **VN2-SRV2**
-    * Root domain name: **ad.contoso.com**
-    * **DNS server**
-    * NetBIOS domain name: **CONTOSO**
-    * Do not update the DNS delegation (this is not possibly anyways, ignore the warning)
-
-    Leave all other parameters as default.
-
-    *Note:* In a real-world scenario it is recommended to save the database and logs to a separate volume with host-based write-back caching disabled.
-
-    [Configuring Active Directory Domain Services as a new forest](../General/Configuring-Active-Directory-Domain-Services-as-a-new-forest.md)
-
-1. On VN2-SRV2, configure the forwarders of the DNS Server to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
-
-    [Configuring forwarders](../General/Configuring-forwarders.md)
+## Exercise 6: Join client to new forest
 
 1. On CL3, change the DNS client server addresses to **10.1.2.16**.
 
