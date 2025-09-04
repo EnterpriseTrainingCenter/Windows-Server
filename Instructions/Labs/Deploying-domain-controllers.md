@@ -117,15 +117,97 @@ You want to introduce new domain controllers to the domain running the latest ve
 
 ## Exercise 3: Check domain controller health
 
-1. On CL1, list the resource records in the zones **_msdcs.ad.adatum.com** and **ad.adatum.com** on VN1-SRV1, VN1-SRV5, and VN2-SRV1.
+1. On CL1, retrieve the expected DNS records from VN1-SRV5 and VN2-SRV1.
 
-    In _msdcs.ad.adatum.com, there should be three CNAME records pointing to VN1-SRV1.ad.adatum.com, VN1-SRV5.ad.adatum.com, and VN2-SRV1.ad.adatum.com. Moreover, there should be several SRV records in the sub-domains dc, domains, gc, and pdc pointing to all three domain controllers.
+    ````powershell
+    $computerName = 'VN1-SRV5.ad.adatum.com', 'VN2-SRV1.ad.adatum.com'
+    $expectedDNSRecords = Invoke-Command `
+        -ComputerName $computerName -ScriptBlock {
+            Get-Content -Path 'C:\Windows\System32\config\netlogon.dns'
+        }
+    $expectedDNSRecords
+    ````
 
-    In ad.adatum.com, under _tcp, there should 12 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com, VN1-SRV5.ad.adatum.com, and VN2-SRV1.ad.adatum.com.
+    Notice, that the file is space separated. The first column contains the name of the record. The fourth column contains the type of the record. Depending on the type, additional columns may follow. The last column contains the target name.
+
+    Do not close the terminal! You will need the variables of the session in the next task.
+
+1. On CL1, query the DNS servers **10.1.1.8**, **10.1.1.40**, and **10.1.2.8** for the expected DNS records and ensure, all are present. You can use this PowerShell script. Alternatively, you can either check the records in the DNS console on each server or resolve the records manually.
+
+    ````powershell
+    $dnsServers = '10.1.1.8', '10.1.1.40', '10.1.2.8'
+
+    # Query each DNS server
+    foreach ($server in $dnsServers) {
+
+        # Go through the list of all expected DNS records line by line
+        foreach ($expectedDNSRecord in $expectedDNSRecords) {
+
+            # Split the line into columns using the space delimiter
+            $expectedDNSRecordSplit = $expectedDNSRecord -split ' '
+
+            # First column is the name
+            $name = $expectedDNSRecordSplit[0]
+            # Fourth column is the type
+            $type = $expectedDNSRecordSplit[3]
+            # Last column is the target
+            $target = $expectedDNSRecordSplit[-1]
+
+            <# 
+                If the target ends with a dot, remove it.
+                Resolve-DnsName will return the target without the ending dot.
+            #>
+            if ($target[-1] -eq '.' ) {
+                $target = $target.Substring(0, $target.Length - 1)
+            }
+
+            # Try to resolve the record
+            $dnsRecords = Resolve-DnsName -Name $name -Type $type -Server $server
+
+            <# 
+                Check if target is in the result.
+                Unfortunately the property name for the target varies depending
+                on the type. Therefore, we mus handle each type separately.
+            #>
+            $missingRecord = $false
+            switch ($type) { 
+                'A' {  
+                    if ($dnsRecords.IPAddress -notcontains $target) {
+                        $missingRecord = $true
+                    }
+                }
+                'SRV' {  
+                    if ($dnsRecords.NameTarget -notcontains $target) {
+                        $missingRecord = $true
+                    }
+                }
+                'CNAME' {
+                    if ($dnsRecords.NameHost -notcontains $target) {
+                        $missingRecord = $true
+                    }
+                }
+                Default {
+                    Write-Warning "Type $type not expected."
+                }
+            }
+
+            # If record found write information
+
+            if (-not $missingRecord) {
+                Write-Host `
+                    "$type record $name targeting $target found on $server"
+            }
+
+            # If record is missing write a warning
+            if ($missingRecord) {
+                Write-Warning `
+                    "$type record $name targeting $target missing on $server"
+            }
+        }
+    }
+    ````
 
     If any records, are missing, wait for at least 15 minutes and check again. If the problem persists, ask the instructor.
-
-    [Managing resource records](../General/Managing-resource-records.md)
 
 1. On CL1, verify that the shares **NETLOGON** and **SYSVOL** are present on **VN1-SRV5** and **VN2-SRV1**.
 
