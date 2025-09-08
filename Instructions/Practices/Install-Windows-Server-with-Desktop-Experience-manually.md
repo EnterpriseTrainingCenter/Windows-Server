@@ -2,7 +2,7 @@
 
 ## Task
 
-Run ````C:\Labs\Resources\New-VM.ps1 VN1-SRV20```` to create a new VM and install Windows Server Datacenter Edition with Desktop Experience on it.
+Run ````C:\LabResources\New-VM.ps1 VN1-SRV20```` to create a new VM and install Windows Server Datacenter Edition with Desktop Experience on it.
 
 ## Instructions
 
@@ -12,7 +12,7 @@ Perform these steps on the host.
 1. In Windows PowerShell, execute
 
     ````powershell
-    C:\Labs\Resources\New-VM.ps1 -Name VN1-SRV20
+    C:\LabResources\New-VM.ps1 -Name VN1-SRV20
     ````
 
 1. Open **Hyper-V Manager**.

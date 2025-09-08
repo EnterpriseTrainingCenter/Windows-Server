@@ -30,7 +30,7 @@ If this still fails, shut down the server and do not start it again.
 
 Additionally, you must remove the orphaned domain controller objects from Active Directory.
 
-[Removing an orphaned domain controller from Active Directory](./Removing-roles-and-features-on-Windows-Server.md)
+[Removing an orphaned domain controller from Active Directory](./Removing-an-orphaned-domain-controller-from-Active-Directory.md)
 
 ## PowerShell
 

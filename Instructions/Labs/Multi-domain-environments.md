@@ -55,9 +55,9 @@ If you did not complete the lab [Deploying domain controllers](Deploying-domain-
 1. On **CL4**, sign in as **.\\Administrator**.
 1. On **VN2-SRV2** sign in as **contoso\\Administrator**.
 
-You must have completed the lab [Deploying Domain Controllers](Deploying-domain-controllers.md). If you skipped the lab, on **CL1**, in **Terminal**, run ````Get-WindowsCapability -Online -Name 'Rsat.Dns.Tools*' | Add-WindowsCapability -Online````. You do not have to wait for the command to complete until exercise 2, task 3.
+You must have completed the lab [Deploying Domain Controllers](Deploying-domain-controllers.md). If you skipped the lab, on **CL3**, in **Terminal**, run ````Get-WindowsCapability -Online -Name 'Rsat.Dns.Tools*' | Add-WindowsCapability -Online````. You do not have to wait for the command to complete until exercise 2, task 3.
 
-For exercises 5 and 6, if you skipped exercise 6 of the lab [Deploying Domain Controllers](Deploying-domain-controllers.md#exercise-6-deploy-a-new-forest) (meaning, you do not have the CONTOSO domain), on **CL3**, in **Terminal**, on **CL3**, sign in as **.\\Administrator** and, in **Terminal**, run run ````C:\LabResources\Solutions\Install-Forest.ps1````. You do not have to wait for the command to complete until exercise 5.
+For exercises 5 and 6, if you skipped exercise 5 of the lab [Deploying Domain Controllers](Deploying-domain-controllers.md#exercise-6-deploy-a-new-forest) (meaning, you do not have the CONTOSO domain), on **CL3**, in **Terminal**, on **CL3**, sign in as **.\\Administrator** and, in **Terminal**, run run ````C:\LabResources\Solutions\Install-DomainControllers.ps1````. You do not have to wait for the command to complete until exercise 5. However, the script will need 30 - 60 minutes to complete.
 
 ## Introduction
 
@@ -954,7 +954,7 @@ Perform this task on the host.
 
     If WIN-VN1-SRV1 is not running anymore, do not select it.
 
-1. In the context menu of **WIN-VN1-SRV1**, **WIN-VN1-SRV5**, or **WIN-VN2-SRV1**, click **Suspend**.
+1. In the context menu of **WIN-VN1-SRV1**, **WIN-VN1-SRV5**, or **WIN-VN2-SRV1**, click **Pause**.
 
 #### PowerShell
 
@@ -1126,7 +1126,7 @@ Perform this task on the host.
 
     If WIN-VN1-SRV1 is not running anymore, do not select it.
 
-1. In the context menu of **WIN-VN1-SRV1**, **WIN-VN1-SRV5**, or **WIN-VN2-SRV1**, click **Suspend**.
+1. In the context menu of **WIN-VN1-SRV1**, **WIN-VN1-SRV5**, or **WIN-VN2-SRV1**, click **Resume**.
 
 #### PowerShell
 
@@ -1138,7 +1138,7 @@ Perform this task on the host.
     ````powershell
     Get-VM -Name WIN-VN1-SRV1, WIN-VN1-SRV5, WIN-VN2-SRV1 |
     Where-Object { $PSItem.State -eq 'Running' } |
-    Suspend-VM
+    Resume-VM
     ````
 
 ## Exercise 5: Create and validate a forest trust

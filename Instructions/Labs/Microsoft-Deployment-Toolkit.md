@@ -191,7 +191,7 @@ Perform this task on the host.
 1. Create the virtual machine.
 
     ````powershell
-    C:\Labs\Resources\New-VM.ps1 -Name VN1-SRV20
+    C:\LabResources\New-VM.ps1 -Name VN1-SRV20
     ````
 
 ### Task 2: Run the Microsoft Deployment Kit Wizard
