@@ -63,7 +63,7 @@ Perform this task on CL1.
 1. In Choose Update Classifications, deactivate **Critical Updates** and **Definition Updates**. Click **OK**.
 1. In **Add Rule**, under **Step 2: Edit the properties (click an underlined value)**, click **all computers**.
 1. In Choose Computer Groups, deactivate **Insider** and **Target**. Click **OK**.
-1. In **Add Rule**, under **Step 2: Edit the properties (click an underlined value)**, click **14 days after the approval at 03:00**.
+1. In **Add Rule**, under **Step 2: Edit the properties (click an underlined value)**, click **7 days after the approval at 03:00**.
 1. In Choose Deadline, beside **Days**, type **14**. and click **OK**.
 1. In **Add Rule**, under **Step 3: Specify a name**, type **Standard updates** and click **OK**.
 1. In **Automatic Approvals**, click **OK**.
