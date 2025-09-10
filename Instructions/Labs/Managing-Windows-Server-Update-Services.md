@@ -206,7 +206,7 @@ Perform this task on CL1.
 
 1. Under Critical Windows 11 updates, beside **Approval**, click **Any Except Declined**, beside **Status**, click **Any**, and click **Refresh**.
 1. In the context-menu of an update for x64-based Systems not superseded by another update (e.g., KB5007575), click **Approve...**.
-1. In Approve Updates, click the icon left to **All Computers**, and click **Aproved for Install**. Click the icon again, and cick **Apply to Children**.
+1. In Approve Updates, click the icon left to **All Computers**, and click **Aproved for Install**. Click the icon again, and click **Apply to Children**.
 1. Click **OK**.
 1. In Approval Progress, wait for the approval to have a result of **Success** and click **Close**.
 
@@ -337,7 +337,7 @@ Perform these steps on CL1.
 Perform this task on CL1.
 
 1. Open **Active Directory Administrative Center**.
-1. In Active Directory Administrative Center, cick **ad (local)**.
+1. In Active Directory Administrative Center, click **ad (local)**.
 1. Under **ad (local)**, double-click **Devices**.
 1. Under **devices**, in the context-menu of **Clients**, click **New**, **Organizational Unit**.
 1. In Create Organizational Unit, beside **Name**, type **Branch office** and click **OK**.
@@ -427,7 +427,7 @@ Perform this task on CL1.
 1. On page Ready to Install the Program, click **Install**.
 1. On page Completing the Microsoft System CLR Types for SQL Server 2012 installation, click **Finish**.
 1. Switch to **Microsoft Edge**.
-1. Navigate to <https://www.microsoft.com/en-us/download/confirmation.aspx?id=35747>.
+1. Navigate to <https://www.microsoft.com/de-de/download/details.aspx?id=35747>.
 1. On page Download MICROSOFT REPORT VIEWER 2012 RUNTIME, beside **Select Language**, ensure **English** is selected and click **Download**.
 1. Under Microsoft Edge's **Downloads** icon, under **ReportViewer.msi**, click **Open file**.
 1. In Microsoft Report Viewer 2012 Runtime, on page Welcome to the Installation Wizard for Microsoft Report Viewer 2012 Runtime, click **Next >**.
@@ -449,9 +449,9 @@ Perform this task on CL1.
 
 1. Under Reports, click **Update Status Summary**.
 
-    Updates Reports for VN2-SRV1 opens. You might want to configure report options by clicking the links at the top of the report.
+    Updates Reports for VN1-SRV5 opens. You might want to configure report options by clicking the links at the top of the report.
 
-1. In Reports for VN2-SRV1 opens, in the menu, click **Run Report**.
+1. In Reports for VN1-SRV5 opens, in the menu, click **Run Report**.
 
     Generation of the report take a few seconds. Review the report. Be sure to review the additional pages. You can click on the buttons of the page navigation icons at the top or click a specific update in the tree on the left-hand side.
 
@@ -476,7 +476,7 @@ If time permits, you might want to review other reports.
 Perform this task on CL1.
 
 1. Open **Active Directory Administrative Center**.
-1. In Active Directory Administrative Center, cick **ad (local)**.
+1. In Active Directory Administrative Center, click **ad (local)**.
 1. Under **ad (local)**, double-click **Devices**.
 1. Under **devices**, in the context-menu of **Clients**, click **New**, **Organizational Unit**.
 1. In Create Organizational Unit, beside **Name**, type **Remote office** and click **OK**.
@@ -497,7 +497,7 @@ Perform this task on CL1.
 
 1. Open **Group Policy Management**.
 1. In Group Policy Management, expand **Domains**, **ad.adatum.com**, **Devices**, **Clients**, and click **Remote office**.
-1. In the context-menu of **Branch office**, click **Create a GPO in this domain, and Link it here...**
+1. In the context-menu of **Remote Office**, click **Create a GPO in this domain, and Link it here...**
 1. In New GPO, under **Name**, type **Custom Computer Windows Update remote office client** and click **OK**.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer Windows Update remote office client**, click **Edit**.
 1. In Group Policy Management Editor, expand **Computer Configuration**, **Polcicies**, **Administrative Templates**, **Windows Components** and click **Delivery Optimization**.
