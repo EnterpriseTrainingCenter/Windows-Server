@@ -35,6 +35,28 @@ You may revisit this lab and complete these tasks later.
 1. In the dialog Enter the password of the local Administrator account of WIN-CL3, enter the password for **.\Adminstrator**.
 1. In the dialog Enter credentials of an account with permissions to join the computer to domain ad.adatum.com, enter the credentials for **Administrator@ad.adatum.com**.
 1. On CL1, sign in as **Administrator@ad.adatum.com**.
+1. Open **Active Directory Administrative Center**.
+1. In Active Directory Administrative Center, click **ad (local)**.
+
+    If there is no OU with the name **Devices**:
+
+    1. In the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
+    1. In Create Organizational Unit, beside **Name**, type **Devices** and click **OK**.
+
+1. In **Active Directory Administrative Center**, double-click **Devices**.
+
+    If there is no OU with the name **Clients**:
+
+    1. In the task pane under **Devices**, click **New**, **Organizational Unit**.
+    1. In Create Organizational Unit, beside **Name**, type **Clients** and click **OK**.
+
+1. In **Active Directory Administrative Center**, double-click **Computers**.
+
+    If there are computer accounts for CL1, CL2, or CL3:
+
+    Under Computers, click the first computer account starting with **CL** (e.g., CL1), hold down the Shift key and click the last computer account starting with  **CL** (e.g., CL3).
+1. In the context-menu of the selected computer accounts, click **Move...**
+1. In the dialog Move, in the middle column, click **Devices**, and, in the right column, click **Clients**. Click **OK**.
 
 ## Introduction
 
@@ -51,7 +73,6 @@ To finish configuration of Windows Server Update Services, you need to configure
 
 ## Exercise 1: Configure clients for Windows Server Update Services
 
-1. Create Organizational Units and move computer accounts: Devices and, under Devices, Clients; move CL1, CL2, and CL3 into Clients.
 1. [Configure Windows Update settings](#task-1-configure-windows-update-settings):
 
     * Auto-restart must not happen during 8 AM and 6 PM.
@@ -63,21 +84,6 @@ To finish configuration of Windows Server Update Services, you need to configure
 1. [Update group policies on clients](#task-3-update-group-policies-on-clients) CL1, CL2, and CL3
 1. [Check for Windows updates](#task-4-check-for-windows-updates) on CL1, CL2, and CL3
 1. [Move computers into computer groups](#task-5-move-computers-into-groups): CL1 to Insider, CL2 to Target, and CL3 to Standard
-
-### Task 1: Create Organizational Units and move computer accounts
-
-Perform this task on CL1.
-
-1. Open **Active Directory Administrative Center**.
-1. In Active Directory Administrative Center, click **ad (local)**.
-1. In the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, beside **Name**, type **Devices** and click **OK**.
-1. In **Active Directory Administrative Center**, in the context-menu of **Devices**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, beside **Name**, type **Clients** and click **OK**.
-1. In **Active Directory Administrative Center**, double-click **Computers**.
-1. Under Computers, click **CL1**, hold down the Shift key and click **CL3** to select CL1, CL2, and CL3.
-1. In the context-menu of **CL1**, **CL2**, or **CL3**, click **Move...**
-1. In the dialog Move, in the middle column, click **Devices**, and, in the right column, click **Clients**. Click **OK**.
 
 ### Task 1: Configure Windows Update settings
 
