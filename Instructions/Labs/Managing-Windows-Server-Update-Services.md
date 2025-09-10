@@ -510,7 +510,7 @@ Perform this task on CL1.
 1. Under Manage updates offered from Windows Update, double-click **Select when Preview Builds and Feature Updates are received**.
 1. In Select when Preview Builds and Feature Updates are received, click **Enabled**. Under **How many days after a Feature Update is release would you like to defer the update before it is offered to this device?**, type **30**. Click **OK**.
 1. In **Group Policy Management Editor**, under **Manage updates offered from Windows Update**, double-click **Select when Quality Updates are received**.
-1. In Select when Quality Updates are received, click **Enabled**. Under **After a qulity update is release, defer receiving it for this many days**, type **14**. Click **OK**.
+1. In Select when Quality Updates are received, click **Enabled**. Under **After a quality update is release, defer receiving it for this many days**, type **14**. Click **OK**.
 1. Close **Group Policy Management Editor**.
 
 ### Task 4: Update group policies on remote office client
