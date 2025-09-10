@@ -23,6 +23,19 @@
 
 You may revisit this lab and complete these tasks later.
 
+## Setup
+
+1. On the host computer, open **Terminal**.
+1. In Terminal, run this command:
+
+    ````powershell
+    c:\Labs\WS2025\LabResources\Add-VMToDomain.ps1 -VMName WIN-CL3
+    `````
+
+1. In the dialog Enter the password of the local Administrator account of WIN-CL3, enter the password for **.\Adminstrator**.
+1. In the dialog Enter credentials of an account with permissions to join the computer to domain ad.adatum.com, enter the credentials for **Administrator@ad.adatum.com**.
+1. On CL1, sign in as **Administrator@ad.adatum.com**.
+
 ## Introduction
 
 To finish configuration of Windows Server Update Services, you need to configure the clients. To save on bandwith, Adatum decides to install a replica server in the branch office (VNet2). Because Adatum does not want to have a Windows Server Update Services server in the remote office VNet3, clients in this location should use Windows Update for Business. To validate the benefits of Windows Server Update Services, you want to test the manual approval of a critical updates, as well as the reporting features.
@@ -38,6 +51,7 @@ To finish configuration of Windows Server Update Services, you need to configure
 
 ## Exercise 1: Configure clients for Windows Server Update Services
 
+1. Create Organizational Units and move computer accounts: Devices and, under Devices, Clients; move CL1, CL2, and CL3 into Clients.
 1. [Configure Windows Update settings](#task-1-configure-windows-update-settings):
 
     * Auto-restart must not happen during 8 AM and 6 PM.
@@ -50,25 +64,39 @@ To finish configuration of Windows Server Update Services, you need to configure
 1. [Check for Windows updates](#task-4-check-for-windows-updates) on CL1, CL2, and CL3
 1. [Move computers into computer groups](#task-5-move-computers-into-groups): CL1 to Insider, CL2 to Target, and CL3 to Standard
 
+### Task 1: Create Organizational Units and move computer accounts
+
+Perform this task on CL1.
+
+1. Open **Active Directory Administrative Center**.
+1. In Active Directory Administrative Center, click **ad (local)**.
+1. In the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
+1. In Create Organizational Unit, beside **Name**, type **Devices** and click **OK**.
+1. In **Active Directory Administrative Center**, in the context-menu of **Devices**, click **New**, **Organizational Unit**.
+1. In Create Organizational Unit, beside **Name**, type **Clients** and click **OK**.
+1. In **Active Directory Administrative Center**, double-click **Computers**.
+1. Under Computers, click **CL1**, hold down the Shift key and click **CL3** to select CL1, CL2, and CL3.
+1. In the context-menu of **CL1**, **CL2**, or **CL3**, click **Move...**
+1. In the dialog Move, in the middle column, click **Devices**, and, in the right column, click **Clients**. Click **OK**.
+
 ### Task 1: Configure Windows Update settings
 
 Perform this task on CL1.
 
 1. Open **Group Policy Management**.
-1. In Group Policy Management, expand **Domains**, **ad.adatum.com**, **Devices**, and click **Clients**.
+1. In Group Policy Management, expand **Domains**, **ad.adatum.com**, **Devices** and click **Clients**.
 1. In the context-menu of **Clients**, click **Create a GPO in this domain, and Link it here...**
 1. In New GPO, under **Name**, type **Custom Computer Windows Update** and click **OK**.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer Windows Update**, click **Edit**.
-1. In Group Policy Management Editor, expand **Computer Configuration**, **Polcicies**, **Administrative Templates**, **Windows Components**, **Windows Update** and click **Manage end user experience**.
+1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Administrative Templates**, **Windows Components**, **Windows Update** and click **Manage end user experience**.
 1. Under Manage end user experience, double-click **Turn off auto-restart for updates during active hours**.
 1. In Turn off auto-restart for updates during active hours, click **Enabled**. Beside **End**, click **6 PM**. Click **OK**.
-1. In **Group Policy Management Editor**, under **Manage end user experience**, double-click **Specify deadlines for automatic updates and restarts**.
-1. In Specify deadlines for automatic updates and restarts, click **Enabled**. Under **Quality Updates**, ensure that for **Deadline (days)** **7** is selected. Beside **Grace period (days)**, click **1**. Under **Feature Updates**, beside **Deadline (days)**, click **30**. Beside **Grace period (days)**, click **7**. Click **OK**.
+1. In **Group Policy Management Editor**, under **Manage end user experience**, double-click **Specify deadlines for automatic updates and restarts for quality update**.
+1. In Specify deadlines for automatic updates and restarts for quality update, click **Enabled**. Ensure that for **Deadline (days)** **7** is selected. Beside **Grace period (days)**, click **1**. Click **OK**.
+1. In **Group Policy Management Editor**, under **Manage end user experience**, double-click **Specify deadlines for automatic updates and restarts for feature update**.
+1. In Specify deadlines for automatic updates and restarts for feature update, click **Enabled**. Beside **Deadline (days)**, click **30**. Beside **Grace period (days)**, click **7**. Click **OK**.
 1. In **Group Policy Management Editor**, under **Manage end user experience**, double-click **Remove access to "Pause updates" feature**.
 1. In Remove access to "Pause updates" feature, click **Enabled** and click **OK**.
-1. In **Group Policy Management Editor**, under **Administrative Templates**, click **System**.
-1. Under System, double-click **Specify settings for optional component installation and component repair**.
-1. In Specify settings for optional component installation and component repair, click **Enabled** and **Download repair content and optional features directly from Windows Update instead of Windows Server Update Services (WSUS)**. Click **OK**.
 1. Close **Group Policy Management Editor**.
 
 ### Task 2: Configure clients to use WSUS server
@@ -80,7 +108,7 @@ Perform this task on CL1.
 1. In the context-menu of **Clients**, click **Create a GPO in this domain, and Link it here...**
 1. In New GPO, under **Name**, type **Custom Computer WSUS HQ client** and click **OK**.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer WSUS HQ client**, click **Edit**.
-1. In Group Policy Management Editor, expand **Computer Configuration**, **Polcicies**, **Administrative Templates**, **Windows Components**, **Windows Update** and click **Manage updates offered from Windows Server Update Service**.
+1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Administrative Templates**, **Windows Components**, **Windows Update** and click **Manage updates offered from Windows Server Update Service**.
 1. Under Manage updates offered from Windows Server Update Service, double-click **Specify intranet Microsoft update service location**.
 1. In Specify intranet Microsoft update service location, click **Enabled**. Under **Set the intranet update service for detecting updates** and beside **Set the intranet statics server**, type **http://vn1-srv5.ad.adatum.com:8530**. Click **OK**.
 1. Close **Group Policy Management Editor**.
