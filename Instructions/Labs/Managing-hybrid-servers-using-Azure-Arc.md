@@ -25,9 +25,10 @@ In some cases, the permissions to create policies must be assigned in the Azure 
 ## Exercises
 
 1. [Working with policies](#exercise-1-working-with-policies)
-1. [Monitor a hybrid machine with VM insights](#exercise-2-monitor-a-hybrid-machine-with-vm-insights)
-1. [Tracking changes](#exercise-3-tracking-changes)
-1. [Azure update management](#exercise-4-azure-update-management)
+1. [Using Windows Admin Center in the Azure Portal](#exercise-2-using-windows-admin-center-in-the-azure-portal)
+1. [Monitor a hybrid machine with VM insights](#exercise-3-monitor-a-hybrid-machine-with-vm-insights)
+1. [Tracking changes](#exercise-4-tracking-changes)
+1. [Azure update management](#exercise-5-azure-update-management)
 
 ## Exercise 1: Working with policies
 
@@ -86,7 +87,97 @@ Perform this task on the host computer.
 
     You may want to click one or the other of the policy to review details.
 
-## Exercise 2: Monitor a hybrid machine with VM insights
+## Exercise 2: Using Windows Admin Center in the Azure Portal
+
+1. [Install Windows Admin Center in the Azure portal](#task-1-install-windows-admin-center-in-the-azure-portal) for VN1-SRV5
+1. [Assign user to the role Windows Admin Center Administrator login](#task-2-assign-user-to-the-role-windows-admin-center-administrator-login)
+1. [Validate Windows Admin Center in the Azure portal](#task-3-validate-windows-admin-center-in-the-azure-portal)
+
+    > Can you establish a Remote Desktop connection?
+    
+    > Can you establish a remote PowerShell connection?
+
+    > How does the connection between the client and the server work?
+
+### Task 1: Install Windows Admin Center in the Azure portal
+
+Perform this task on the host computer.
+
+1. Open **Microsoft Edge** and navigate to <https://portal.azure.com>
+1. Sign in to Azure.
+1. In **Search resources, services and docs (G+/)**, type **VN1-SRV5** and click it.
+1. In VN1-SRV5, under **Licenses**, click **Windows Server**.
+1. In VN1-SRV5 | Windows Server, under **Azure Benefits**, click to activate **By checking this box, you attest that your Windows Server licenses have active Software Assurance or your Windows Server licenses are active subscription licenses.** Click **Confirm**.
+1. In VN1-SRV5, under **Settings**, click **Windows Admin Center (preview)**.
+1. In VN1-SRV5 | Windows Admin Center (preview), click **Set up**.
+1. In the pane Windows Admin Center, take a note of the **Listening port**, e.g., 6516 and click **Install**.
+
+    The deployment will take a few minutes. You may continue with the lab. The deployment has to complete before you can use Windows Admin Center.
+
+### Task 2: Assign user to the role Windows Admin Center Administrator login
+
+Perform this task on the host computer.
+
+1. Open **Microsoft Edge** and navigate to <https://portal.azure.com>
+1. Sign in to Azure.
+1. In **Search resources, services and docs (G+/)**, type **VN1-SRV5** and click it.
+1. In VN1-SRV5, click **Access control (IAM)**.
+1. In VN1-SRV5 | Access control (IAM), click **Add**, **Add role assignment**.
+1. In Add role assignment, on tab Role, click **Windows Admin Center Administrator login** and click **Next**.
+1. On tab Members, ensure **User, group, or service principal** is selected and click **+ Select members**.
+1. In the pane Select members, search and click your Azure AD user account and click **Select**.
+1. In **Add role assignment**, click **Review + assign**.
+1. On tab Review + assign, click **Review + assign**.
+
+### Task 3: Validate Windows Admin Center in the Azure portal
+
+Before continuing with this task, ensure the deployment of Windows Admin Center in the portal has finished. You may continue with the lab and return to this task later.
+
+Perform this task on the host computer.
+
+1. Open **Microsoft Edge** and navigate to <https://portal.azure.com>
+1. Sign in to Azure.
+1. In **Search resources, services and docs (G+/)**, type **VN1-SRV5** and click it.
+1. In VN1-SRV5, under **Settings**, click **Windows Admin Center (preview)**.
+1. In VN1-SRV5 | Windows Admin Center (preview), click **Connect**.
+1. In Windows Admin Center, unter **Tools**, click **Settings**.
+1. In Settings, click **Remote Desktop**.
+1. In Settings | Remote Desktop, click **Allow remote connections to this computer** and click **Save**.
+1. Under **Tools**, click **Remote Desktop**.
+1. In Remote Desktop, type the credentials of **ad\Administrator**, activate **Automatically connect with the certificate presented by this machine** and click **Connect**.
+
+    > A Remote Desktop connection should be established successfully.
+
+    > No direct connection between the computer connected to Windows Admin Center and the target computer is necessary.
+
+1. In SConfig, enter **12**.
+1. At the prompt Are You sure you want to log off, enter **y**.
+1. Under **Tools**, click **PowerShell**.
+1. In PowerShell, enter the credentials for **ad\Administrator**.
+
+    > A remote PowerShell connection should be established successfully.
+
+    > No direct connection between the computer connected to Windows Admin Center and the target computer is necessary.
+
+1. Query computer info.
+
+    ````powershell
+    Get-ComputerInfo
+    ````
+
+    Confirm, that you see the information of VN1-SRV5.
+
+1. Exit from the remote PowerShell session.
+
+    ````powershell
+    Exit-PSSession
+    ````
+
+1. Under **Tools**, click **Roles & features**.
+1. In Roles and Features, click **Windows Server Update Services**. Deactivate the checkbox beside **SQL Server Connectivity**. Click **Install**.
+1. In the pane Install roles and Features, click **Yes**.
+
+## Exercise 3: Monitor a hybrid machine with VM insights
 
 1. [Enable VM insights](#task-1-enable-vm-insights) for VN1-SRV8
 1. [View data collected](#task-2-view-data-collected)
@@ -128,7 +219,7 @@ Perform this task on the host computer.
 1. In the breadcrumb navigation at the top, click **VN1-SRV8 | Insights**.
 1. In VN1-SRV8 | Insights, at the top, click **View Workbooks**, **Connections Overview** and review the information.
 
-## Exercise 3: Tracking changes
+## Exercise 4: Tracking changes
 
 1. [Enable change tracking](#task-1-enable-change-tracking) for VN1-SRV8
 1. [Validate change tracking](#task-2-validate-change-tracking)
@@ -169,7 +260,7 @@ Perform this task on the host computer.
 
 You might want to revisit this task at the end of the lab to see changes.
 
-## Exercise 4: Azure update management
+## Exercise 5: Azure update management
 
 1. [Using Update management center, check for updates](#task-1-using-update-management-center-check-for-updates) on VN1-SRV8
 1. [Enable periodic assessment](#task-2-enable-periodic-assessment) on VN1-SRV8
