@@ -263,7 +263,7 @@ Perform this task on VN1-SRV4.
 Perform this task on CL1.
 
 1. Open **DNS**.
-1. In Connet to DNS Server, click **The following computer**, type **vn1-srv1.ad.adatum.com** below and click **OK**.
+1. In Connect to DNS Server, click **The following computer**, type **vn1-srv1.ad.adatum.com** below and click **OK**.
 1. Expand **vn1-srv1.ad.adatum.com**, **Forward Lookup Zones**, and click **ad.adatum.com**.
 1. In the context-menu of **adatum.com**, click **New Host (A or AAAA)...**
 1. In New Host, under **Name (uses parent domain name if blank)**, type **admincenter**. Under IP address, type **10.1.1.32**. Click **Add Host**.

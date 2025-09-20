@@ -23,6 +23,41 @@
 
 You may revisit this lab and complete these tasks later.
 
+## Setup
+
+1. On the host computer, open **Terminal**.
+1. In Terminal, run this command:
+
+    ````powershell
+    c:\Labs\WS2025\LabResources\Add-VMToDomain.ps1 -VMName WIN-CL3
+    `````
+
+1. In the dialog Enter the password of the local Administrator account of WIN-CL3, enter the password for **.\Adminstrator**.
+1. In the dialog Enter credentials of an account with permissions to join the computer to domain ad.adatum.com, enter the credentials for **Administrator@ad.adatum.com**.
+1. On CL1, sign in as **Administrator@ad.adatum.com**.
+1. Open **Active Directory Administrative Center**.
+1. In Active Directory Administrative Center, click **ad (local)**.
+
+    If there is no OU with the name **Devices**:
+
+    1. In the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
+    1. In Create Organizational Unit, beside **Name**, type **Devices** and click **OK**.
+
+1. In **Active Directory Administrative Center**, double-click **Devices**.
+
+    If there is no OU with the name **Clients**:
+
+    1. In the task pane under **Devices**, click **New**, **Organizational Unit**.
+    1. In Create Organizational Unit, beside **Name**, type **Clients** and click **OK**.
+
+1. In **Active Directory Administrative Center**, double-click **Computers**.
+
+    If there are computer accounts for CL1, CL2, or CL3:
+
+    Under Computers, click the first computer account starting with **CL** (e.g., CL1), hold down the Shift key and click the last computer account starting with  **CL** (e.g., CL3).
+1. In the context-menu of the selected computer accounts, click **Move...**
+1. In the dialog Move, in the middle column, click **Devices**, and, in the right column, click **Clients**. Click **OK**.
+
 ## Introduction
 
 To finish configuration of Windows Server Update Services, you need to configure the clients. To save on bandwith, Adatum decides to install a replica server in the branch office (VNet2). Because Adatum does not want to have a Windows Server Update Services server in the remote office VNet3, clients in this location should use Windows Update for Business. To validate the benefits of Windows Server Update Services, you want to test the manual approval of a critical updates, as well as the reporting features.
@@ -55,20 +90,19 @@ To finish configuration of Windows Server Update Services, you need to configure
 Perform this task on CL1.
 
 1. Open **Group Policy Management**.
-1. In Group Policy Management, expand **Domains**, **ad.adatum.com**, **Devices**, and click **Clients**.
+1. In Group Policy Management, expand **Domains**, **ad.adatum.com**, **Devices** and click **Clients**.
 1. In the context-menu of **Clients**, click **Create a GPO in this domain, and Link it here...**
 1. In New GPO, under **Name**, type **Custom Computer Windows Update** and click **OK**.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer Windows Update**, click **Edit**.
-1. In Group Policy Management Editor, expand **Computer Configuration**, **Polcicies**, **Administrative Templates**, **Windows Components**, **Windows Update** and click **Manage end user experience**.
+1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Administrative Templates**, **Windows Components**, **Windows Update** and click **Manage end user experience**.
 1. Under Manage end user experience, double-click **Turn off auto-restart for updates during active hours**.
 1. In Turn off auto-restart for updates during active hours, click **Enabled**. Beside **End**, click **6 PM**. Click **OK**.
-1. In **Group Policy Management Editor**, under **Manage end user experience**, double-click **Specify deadlines for automatic updates and restarts**.
-1. In Specify deadlines for automatic updates and restarts, click **Enabled**. Under **Quality Updates**, ensure that for **Deadline (days)** **7** is selected. Beside **Grace period (days)**, click **1**. Under **Feature Updates**, beside **Deadline (days)**, click **30**. Beside **Grace period (days)**, click **7**. Click **OK**.
+1. In **Group Policy Management Editor**, under **Manage end user experience**, double-click **Specify deadlines for automatic updates and restarts for quality update**.
+1. In Specify deadlines for automatic updates and restarts for quality update, click **Enabled**. Ensure that for **Deadline (days)** **7** is selected. Beside **Grace period (days)**, click **1**. Click **OK**.
+1. In **Group Policy Management Editor**, under **Manage end user experience**, double-click **Specify deadlines for automatic updates and restarts for feature update**.
+1. In Specify deadlines for automatic updates and restarts for feature update, click **Enabled**. Beside **Deadline (days)**, click **30**. Beside **Grace period (days)**, click **7**. Click **OK**.
 1. In **Group Policy Management Editor**, under **Manage end user experience**, double-click **Remove access to "Pause updates" feature**.
 1. In Remove access to "Pause updates" feature, click **Enabled** and click **OK**.
-1. In **Group Policy Management Editor**, under **Administrative Templates**, click **System**.
-1. Under System, double-click **Specify settings for optional component installation and component repair**.
-1. In Specify settings for optional component installation and component repair, click **Enabled** and **Download repair content and optional features directly from Windows Update instead of Windows Server Update Services (WSUS)**. Click **OK**.
 1. Close **Group Policy Management Editor**.
 
 ### Task 2: Configure clients to use WSUS server
@@ -80,7 +114,7 @@ Perform this task on CL1.
 1. In the context-menu of **Clients**, click **Create a GPO in this domain, and Link it here...**
 1. In New GPO, under **Name**, type **Custom Computer WSUS HQ client** and click **OK**.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer WSUS HQ client**, click **Edit**.
-1. In Group Policy Management Editor, expand **Computer Configuration**, **Polcicies**, **Administrative Templates**, **Windows Components**, **Windows Update** and click **Manage updates offered from Windows Server Update Service**.
+1. In Group Policy Management Editor, expand **Computer Configuration**, **Policies**, **Administrative Templates**, **Windows Components**, **Windows Update** and click **Manage updates offered from Windows Server Update Service**.
 1. Under Manage updates offered from Windows Server Update Service, double-click **Specify intranet Microsoft update service location**.
 1. In Specify intranet Microsoft update service location, click **Enabled**. Under **Set the intranet update service for detecting updates** and beside **Set the intranet statics server**, type **http://vn1-srv5.ad.adatum.com:8530**. Click **OK**.
 1. Close **Group Policy Management Editor**.
@@ -178,7 +212,7 @@ Perform this task on CL1.
 
 1. Under Critical Windows 11 updates, beside **Approval**, click **Any Except Declined**, beside **Status**, click **Any**, and click **Refresh**.
 1. In the context-menu of an update for x64-based Systems not superseded by another update (e.g., KB5007575), click **Approve...**.
-1. In Approve Updates, click the icon left to **All Computers**, and click **Aproved for Install**. Click the icon again, and cick **Apply to Children**.
+1. In Approve Updates, click the icon left to **All Computers**, and click **Aproved for Install**. Click the icon again, and click **Apply to Children**.
 1. Click **OK**.
 1. In Approval Progress, wait for the approval to have a result of **Success** and click **Close**.
 
@@ -309,7 +343,7 @@ Perform these steps on CL1.
 Perform this task on CL1.
 
 1. Open **Active Directory Administrative Center**.
-1. In Active Directory Administrative Center, cick **ad (local)**.
+1. In Active Directory Administrative Center, click **ad (local)**.
 1. Under **ad (local)**, double-click **Devices**.
 1. Under **devices**, in the context-menu of **Clients**, click **New**, **Organizational Unit**.
 1. In Create Organizational Unit, beside **Name**, type **Branch office** and click **OK**.
@@ -399,7 +433,7 @@ Perform this task on CL1.
 1. On page Ready to Install the Program, click **Install**.
 1. On page Completing the Microsoft System CLR Types for SQL Server 2012 installation, click **Finish**.
 1. Switch to **Microsoft Edge**.
-1. Navigate to <https://www.microsoft.com/en-us/download/confirmation.aspx?id=35747>.
+1. Navigate to <https://www.microsoft.com/de-de/download/details.aspx?id=35747>.
 1. On page Download MICROSOFT REPORT VIEWER 2012 RUNTIME, beside **Select Language**, ensure **English** is selected and click **Download**.
 1. Under Microsoft Edge's **Downloads** icon, under **ReportViewer.msi**, click **Open file**.
 1. In Microsoft Report Viewer 2012 Runtime, on page Welcome to the Installation Wizard for Microsoft Report Viewer 2012 Runtime, click **Next >**.
@@ -421,9 +455,9 @@ Perform this task on CL1.
 
 1. Under Reports, click **Update Status Summary**.
 
-    Updates Reports for VN2-SRV1 opens. You might want to configure report options by clicking the links at the top of the report.
+    Updates Reports for VN1-SRV5 opens. You might want to configure report options by clicking the links at the top of the report.
 
-1. In Reports for VN2-SRV1 opens, in the menu, click **Run Report**.
+1. In Reports for VN1-SRV5 opens, in the menu, click **Run Report**.
 
     Generation of the report take a few seconds. Review the report. Be sure to review the additional pages. You can click on the buttons of the page navigation icons at the top or click a specific update in the tree on the left-hand side.
 
@@ -448,7 +482,7 @@ If time permits, you might want to review other reports.
 Perform this task on CL1.
 
 1. Open **Active Directory Administrative Center**.
-1. In Active Directory Administrative Center, cick **ad (local)**.
+1. In Active Directory Administrative Center, click **ad (local)**.
 1. Under **ad (local)**, double-click **Devices**.
 1. Under **devices**, in the context-menu of **Clients**, click **New**, **Organizational Unit**.
 1. In Create Organizational Unit, beside **Name**, type **Remote office** and click **OK**.
@@ -469,7 +503,7 @@ Perform this task on CL1.
 
 1. Open **Group Policy Management**.
 1. In Group Policy Management, expand **Domains**, **ad.adatum.com**, **Devices**, **Clients**, and click **Remote office**.
-1. In the context-menu of **Branch office**, click **Create a GPO in this domain, and Link it here...**
+1. In the context-menu of **Remote Office**, click **Create a GPO in this domain, and Link it here...**
 1. In New GPO, under **Name**, type **Custom Computer Windows Update remote office client** and click **OK**.
 1. In **Group Policy Management**, in the context-menu of **Custom Computer Windows Update remote office client**, click **Edit**.
 1. In Group Policy Management Editor, expand **Computer Configuration**, **Polcicies**, **Administrative Templates**, **Windows Components** and click **Delivery Optimization**.
@@ -482,7 +516,7 @@ Perform this task on CL1.
 1. Under Manage updates offered from Windows Update, double-click **Select when Preview Builds and Feature Updates are received**.
 1. In Select when Preview Builds and Feature Updates are received, click **Enabled**. Under **How many days after a Feature Update is release would you like to defer the update before it is offered to this device?**, type **30**. Click **OK**.
 1. In **Group Policy Management Editor**, under **Manage updates offered from Windows Update**, double-click **Select when Quality Updates are received**.
-1. In Select when Quality Updates are received, click **Enabled**. Under **After a qulity update is release, defer receiving it for this many days**, type **14**. Click **OK**.
+1. In Select when Quality Updates are received, click **Enabled**. Under **After a quality update is release, defer receiving it for this many days**, type **14**. Click **OK**.
 1. Close **Group Policy Management Editor**.
 
 ### Task 4: Update group policies on remote office client

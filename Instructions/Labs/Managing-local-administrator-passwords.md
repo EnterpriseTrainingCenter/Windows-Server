@@ -9,6 +9,41 @@
 ## Setup
 
 1. On **CL1**, sign in as **ad\Administrator**.
+1. Open **Active Directory Administrative Center**.
+1. In Active Directory Administrative Center, click **ad (local)**.
+
+    If there is no OU with the name **Devices**:
+
+    1. In the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
+    1. In Create Organizational Unit, beside **Name**, type **Devices** and click **OK**.
+
+1. In **Active Directory Administrative Center**, double-click **Devices**.
+
+    If there is no OU with the name **Clients**:
+
+    1. In the task pane under **Devices**, click **New**, **Organizational Unit**.
+    1. In Create Organizational Unit, beside **Name**, type **Clients** and click **OK**.
+
+    If there is no OU with the name **Servers**:
+
+    1. In the task pane under **Devices**, click **New**, **Organizational Unit**.
+    1. In Create Organizational Unit, beside **Name**, type **Servers** and click **OK**.
+
+1. In **Active Directory Administrative Center**, double-click **Computers**.
+
+    If there are computer accounts for CL1, CL2, or CL3:
+
+    Under Computers, click the first computer account starting with **CL** (e.g., CL1), hold down the Shift key and click the last computer account starting with  **CL** (e.g., CL3).
+
+1. In the context-menu of the selected computer accounts, click **Move...**
+1. In the dialog Move, in the middle column, click **Devices**, and, in the right column, click **Clients**. Click **OK**.
+
+    In **Active Directory Administrative Center**, under **Computers**, if there are computer accounts for servers starting with **PM** or **VN**, except for VN1-SRV1:
+
+    1. In Active Directory Administrative Center, under **Computers**, click the first computer starting with **PM**, hold down SHIFT, and click the last computer starting with **VN**.
+    1. In the context-menu of one selected computer, click **Move...**
+    1. In Move, in the middle pane, click **Devices**, and, in the right pane, click **Servers**. Click **OK**.
+
 1. On **CL2**, sign in as **Administrator**.
 
 ## Introduction
@@ -22,9 +57,8 @@ Your helpdesk users all use a well-known password for the local Administrator. B
 
 ## Exercise 1: Implement Local Administrator Password Solution
 
-1. [Create organization units and move all servers and clients](#task-1-create-organizational-unit-and-move-all-servers-and-clients): At domain level, create an OU named Devices, then within the OU Devices, create OUs Clients and Servers. Move all computers starting with CL to the OU clients. Move all servers starting with VN or PM, except for VN1-SRV1 into the OU Servers.
-1. [Prepare Active Directory for LAPS](#task-2-prepare-active-directory-for-laps)
-1. [Configure the policy for LAPS](#task-3-configure-the-policy-for-laps) and apply it to the domain. The Policy should configure the following settings:
+1. [Prepare Active Directory for LAPS](#task-1-prepare-active-directory-for-laps)
+1. [Configure the policy for LAPS](#task-2-configure-the-policy-for-laps) and apply it to the domain. The Policy should configure the following settings:
 
     * Backup passwords to Active Directory
     * Enable the default administrator account and randomize its name
@@ -36,29 +70,7 @@ Your helpdesk users all use a well-known password for the local Administrator. B
     * Enable password encryption
     * Configure the post-authentication actions to reset the password, logoff the managed account, and terminate any remaining processes after 8 hours
 
-### Task 1: Create organizational unit and move all servers and clients
-
-Perform this task on CL1.
-
-1. Open **Active Directory Administrative Center**.
-1. In Active Directory Administrative Center, click **ad (local)**.
-1. In Active Directory Administrative Center, in the context-menu of **ad (local)**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, beside **Name**, type **Devices** and click **OK**.
-1. Under **ad (local)**, in the context-menu of **Devices**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, beside **Name**, type **Servers** and click **OK**.
-1. Under **ad (local)**, in the context-menu of **Devices**, click **New**, **Organizational Unit**.
-1. In Create Organizational Unit, beside **Name**, type **Clients** and click **OK**.
-1. In **Active Directory Administrative Center**, click **ad (local)**.
-1. Under **ad (local)**, double-click **Computers**.
-1. Under **Computers**, ensure the list is sorted by **Name**. If not, click on the column header **Name**.
-1. Click the first computer starting with **CL**, hold down SHIFT, and click the last computer starting with **CL**.
-1. In the context-menu of one computer starting with **CL**, click **Move...**
-1. In Move, in the middle pane, click **Devices**, and, in the right pane, click **Clients**. Click **OK**.
-1. In **Active Directory Administrative Center**, under **Computers**, click the first computer starting with **PM**, hold down SHIFT, and click the last computer starting with **VN**.
-1. In the context-menu of one selected computer, click **Move...**
-1. In Move, in the middle pane, click **Devices**, and, in the right pane, click **Servers**. Click **OK**.
-
-### Task 2: Prepare Active Directory for LAPS
+### Task 1: Prepare Active Directory for LAPS
 
 Perform this task on CL1.
 
@@ -85,7 +97,7 @@ Perform this task on CL1.
 
     The property ExtendRightHolders should contain NT AUTHORITY\SYSTEM and AD\Domain Admins only.
 
-### Task 3: Configure the policy for LAPS
+### Task 2: Configure the policy for LAPS
 
 Perform this task on CL1.
 
@@ -168,7 +180,7 @@ Perform this task on CL2.
     Invoke-LapsPolicyProcessing
     ````
 
-    If the settings still differ, go back to [Task 2: Configure the policy for LAPS](#task-3-configure-the-policy-for-laps).
+    If the settings still differ, go back to [Task 2: Configure the policy for LAPS](#task-2-configure-the-policy-for-laps).
 
     Look for the latest event with the **Event Id** **10009**. The event text should read as follows:
 
