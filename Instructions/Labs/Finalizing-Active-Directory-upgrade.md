@@ -39,7 +39,7 @@ After deploying the new domain controllers running the latest version of Windows
     ````powershell
     $computerName = 'VN1-SRV1'
     $interfaceAlias = 'Ethernet'
-    $ipAddress = '10.0.0.9'
+    $ipAddress = '10.1.1.9'
     $prefixLength = 24
     ````
 
@@ -52,16 +52,6 @@ After deploying the new domain controllers running the latest version of Windows
     $interfaceAlias = 'Ethernet'
     $ipAddress = '10.1.1.8'
     $prefixLength = 24
-    ````
-
-    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
-
-1. Change the DNS client settings on **VN1-SRV1** to **10.1.1.40** as the primary DNS server and **10.1.2.8** as the secondary DNS Server.
-
-    ````powershell
-    $computerName = 'VN1-SRV1'
-    $interfaceAlias = 'Ethernet'
-    $severAddresses = '10.1.1.40', '10.1.2.8'
     ````
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
@@ -79,9 +69,33 @@ After deploying the new domain controllers running the latest version of Windows
 
     Note: In this exercise, we add the IP address of the decommissioned domain controller to the new domain controller, so we do not have to reconfigure the DNS client settings on the other computers on the network. If all computers use DHCP, you could reconfigure the DHCP option DNS server instead. You would do this before task 1 and then wait for the DHCP lease period to expire before proceeding. Moreover, you would skip tasks 2 and 3.
 
+1. On CL1, restart **VN1-SRV1**.
+
+    ````powershell
+    $computerName = 'VN1-SRV1'
+    ````
+
+    [Restarting a server](../General/Restarting-a-server.md)
+
+1. On CL1, restart **VN1-SRV5**.
+
+    ````powershell
+    $computerName = 'VN1-SRV5'
+    ````
+
+    [Restarting a server](../General/Restarting-a-server.md)
+
+1. On CL1, clear the DNS client cache.
+
+    ````powershell
+    Clear-DnsClientCache
+    ````
+
 1. Demote **VN1-SRV1** as domain controller.
 
     [Demoting a domain controller](../General/Demoting-a-domain-controller.md)
+
+    If you have trouble demoting the domain controller, wait for at least 15 minutes and try again.
 
 1. On CL1, remove the roles **Active Directory Domain Services** (```AD-Domain-Services```), **DNS Server** (```DNS```), and **File Server** (```FS-FileServer```) from VN1-SRV1.
 
