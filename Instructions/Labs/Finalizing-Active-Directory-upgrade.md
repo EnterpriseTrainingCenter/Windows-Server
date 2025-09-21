@@ -32,6 +32,11 @@ After deploying the new domain controllers running the latest version of Windows
 
 1. On CL1, change the DNS client server addresses to 10.1.1.40.
 
+    ```powershell
+    $interfaceAlias = 'Ethernet'
+    $serverAddresses = '10.1.1.40'
+    ```
+
     [Changing TCP/IP settings on Windows 11](../General/Changing-TCP-IP-settings-on-Windows-11.md)
 
 1. On CL1, add the IP address  **10.1.1.9** to the interface **Ethernet** on **VN1-SRV1**. You need to use PowerShell for this task.
@@ -68,22 +73,6 @@ After deploying the new domain controllers running the latest version of Windows
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
     Note: In this exercise, we add the IP address of the decommissioned domain controller to the new domain controller, so we do not have to reconfigure the DNS client settings on the other computers on the network. If all computers use DHCP, you could reconfigure the DHCP option DNS server instead. You would do this before task 1 and then wait for the DHCP lease period to expire before proceeding. Moreover, you would skip tasks 2 and 3.
-
-1. On CL1, restart **VN1-SRV1**.
-
-    ````powershell
-    $computerName = 'VN1-SRV1'
-    ````
-
-    [Restarting a server](../General/Restarting-a-server.md)
-
-1. On CL1, restart **VN1-SRV5**.
-
-    ````powershell
-    $computerName = 'VN1-SRV5'
-    ````
-
-    [Restarting a server](../General/Restarting-a-server.md)
 
 1. On CL1, clear the DNS client cache.
 
