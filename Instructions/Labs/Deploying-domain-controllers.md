@@ -245,9 +245,16 @@ You want to introduce new domain controllers to the domain running the latest ve
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
-1. On VN2-SRV2, configure the forwarders of the DNS Server to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
+1. On CL1 or, if you want to use SConfig, on VN1-SRV1 configure the DNS client settings for VN1-SRV1 as follows:
 
-    [Configuring forwarders](../General/Configuring-forwarders.md)
+    Preferred DNS server: 10.1.1.40 (VN1-SRV5)
+    Secondary DNS server: 10.1.2.8 (VN1-SRV2)
+
+    ````powershell
+    $serverAddresses = '10.1.1.40', '10.1.2.8'
+    ````
+
+    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
 ## Exercise 6: Transfer flexible single master operation roles
 
