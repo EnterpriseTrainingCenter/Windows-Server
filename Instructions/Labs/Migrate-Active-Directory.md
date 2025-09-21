@@ -28,10 +28,11 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 1. [Deploy an additional domain controller](#exercise-1-deploy-an-additional-domain-controller)
 1. [Check domain controller health](#exercise-2-check-domain-controller-health)
 1. [Transfer flexible single master operation roles](#exercise-3-transfer-flexible-single-master-operation-roles)
-1. [Decommission a domain controller](#exercise-4-decommission-a-domain-controller)
-1. [Raise domain and forest functional level](#exercise-5-raise-the-domain-and-forest-functional-level)
-1. [Enable database 32K pages](#exercise-6-enable-database-32k-pages)
-1. [Validate delegated managed service accounts](#exercise-7-validate-delegated-managed-service-accounts)
+1. [Optimize DNS](#exercise-4-optimize-dns)
+1. [Decommission a domain controller](#exercise-5-decommission-a-domain-controller)
+1. [Raise domain and forest functional level](#exercise-6-raise-the-domain-and-forest-functional-level)
+1. [Enable database 32K pages](#exercise-7-enable-database-32k-pages)
+1. [Validate delegated managed service accounts](#exercise-8-validate-delegated-managed-service-accounts)
 
 ## Exercise 1: Deploy an additional domain controller
 
@@ -57,6 +58,21 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     *Note:* In a real-world scenario it is recommended to save the database and logs to a separate volume with host-based write-back caching disabled.
 
+    ```powershell
+    $computerName = 'VN1-SRV5.ad.adatum.com' 
+
+    $domainName = 'ad.adatum.com'
+    $siteName = $null
+    $installDns = $true
+    $noGlobalCatalog = $false
+    $createDnsDelegation = $false
+    $dnsDelegationCredential = $null
+    $replicationSourceDC = $null
+    $databasePath = 'C:\Windows\NTDS'
+    $logPath = 'C:\Windows\NTDS'
+    $sysvolPath = 'C:\Windows\SYSVOL'
+    ```
+
     [Configuring Active Directory Domain Services as an additional Domain Controller](../General/Configuring-Active-Directory-Domain-Services-as-an-additional-domain-controller.md)
 
 1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
@@ -65,21 +81,102 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
 ## Exercise 2: Check domain controller health
 
-1. On CL1, list the resource records in the zones **_msdcs.ad.adatum.com** and **ad.adatum.com** on VN1-SRV5.
+1. On CL1, retrieve the expected DNS records from VN1-SRV5 and VN2-SRV1.
 
-    In _msdcs.ad.adatum.com, there should be two CNAME records pointing to VN1-SRV1.ad.adatum.com and VN1-SRV5.ad.adatum.com. Moreover, there should be several SRV records in the sub-domains dc, domains, gc, and pdc pointing to both domain controllers.
+    ````powershell
+    $computerName = 'VN1-SRV5.ad.adatum.com', 'VN2-SRV1.ad.adatum.com'
+    $expectedDNSRecords = Invoke-Command `
+        -ComputerName $computerName -ScriptBlock {
+            Get-Content -Path 'C:\Windows\System32\config\netlogon.dns'
+        }
+    $expectedDNSRecords
+    ````
 
-    In ad.adatum.com, under _tcp, there should 8 SRV records for the services \_gc, \_kerberos, \_kpasswd, and \_ldap, pointing to VN1-SRV1.ad.adatum.com and VN1-SRV5.ad.adatum.com.
+    Notice, that the file is space separated. The first column contains the name of the record. The fourth column contains the type of the record. Depending on the type, additional columns may follow. The last column contains the target name.
+
+    Do not close the terminal! You will need the variables of the session in the next task.
+
+1. On CL1, query the DNS servers **10.1.1.8**, **10.1.1.40**, and **10.1.2.8** for the expected DNS records and ensure, all are present. You can use this PowerShell script. Alternatively, you can either check the records in the DNS console on each server or resolve the records manually.
+
+    ````powershell
+    $dnsServers = '10.1.1.8', '10.1.1.40', '10.1.2.8'
+
+    # Query each DNS server
+    foreach ($server in $dnsServers) {
+
+        # Go through the list of all expected DNS records line by line
+        foreach ($expectedDNSRecord in $expectedDNSRecords) {
+
+            # Split the line into columns using the space delimiter
+            $expectedDNSRecordSplit = $expectedDNSRecord -split ' '
+
+            # First column is the name
+            $name = $expectedDNSRecordSplit[0]
+            # Fourth column is the type
+            $type = $expectedDNSRecordSplit[3]
+            # Last column is the target
+            $target = $expectedDNSRecordSplit[-1]
+
+            <# 
+                If the target ends with a dot, remove it.
+                Resolve-DnsName will return the target without the ending dot.
+            #>
+            if ($target[-1] -eq '.' ) {
+                $target = $target.Substring(0, $target.Length - 1)
+            }
+
+            # Try to resolve the record
+            $dnsRecords = Resolve-DnsName -Name $name -Type $type -Server $server
+
+            <# 
+                Check if target is in the result.
+                Unfortunately the property name for the target varies depending
+                on the type. Therefore, we mus handle each type separately.
+            #>
+            $missingRecord = $false
+            switch ($type) { 
+                'A' {  
+                    if ($dnsRecords.IPAddress -notcontains $target) {
+                        $missingRecord = $true
+                    }
+                }
+                'SRV' {  
+                    if ($dnsRecords.NameTarget -notcontains $target) {
+                        $missingRecord = $true
+                    }
+                }
+                'CNAME' {
+                    if ($dnsRecords.NameHost -notcontains $target) {
+                        $missingRecord = $true
+                    }
+                }
+                Default {
+                    Write-Warning "Type $type not expected."
+                }
+            }
+
+            # If record found write information
+            if (-not $missingRecord) {
+                Write-Host `
+                    "$type record $name targeting $target found on $server"
+            }
+
+            # If record is missing write a warning
+            if ($missingRecord) {
+                Write-Warning `
+                    "$type record $name targeting $target missing on $server"
+            }
+        }
+    }
+    ````
 
     If any records, are missing, wait for at least 15 minutes and check again. If the problem persists, ask the instructor.
 
-    [Managing resource records](../General/Managing-resource-records.md)
-
-1. On CL1, verify that the shares **NETLOGON** and **SYSVOL** are present on **VN1-SRV5**.
+1. On CL1, verify that the shares **NETLOGON** and **SYSVOL** are present on **VN1-SRV5** and **VN2-SRV1**.
 
     [Managing shares](../General/Managing-shares.md)
 
-1. On CL1, run the Best Practices Analyzer for **DNS** (```Microsoft/Windows/DNSServer```) and **AD DS** (```Microsoft/Windows/DirectoryServices```) on **VN1-SRV5**.
+1. On CL1, run the Best Practices Analyzer for **DNS** (```Microsoft/Windows/DNSServer```) and **AD DS** (```Microsoft/Windows/DirectoryServices```) on **VN1-SRV5** and **VN2-SRV1**.
 
     Review any warnings or errors, if present. If time permits, you can try to fix the warning and errors and run the the BPA scan again.
 
@@ -95,7 +192,35 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Transferring flexible single master operation roles](../General/Transferring-flexible-single-master-operation-roles.md)
 
-## Exercise 4: Decommission a domain controller
+## Exercise 4: Optimize DNS
+
+1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
+
+    [Configuring forwarders](../General/Configuring-forwarders.md)
+
+1. On CL1 or, if you want to use SConfig, on VN1-SRV5 configure the DNS client settings for VN1-SRV5 as follows:
+
+    Preferred DNS server: 10.1.2.8 (VN1-SRV2)
+    Secondary DNS server: 127.0.0.1
+
+    ````powershell
+    $serverAddresses = '10.1.2.8', '127.0.0.1'
+    ````
+
+    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
+
+1. On CL1 or, if you want to use SConfig, on VN1-SRV1 configure the DNS client settings for VN1-SRV1 as follows:
+
+    Preferred DNS server: 10.1.1.40 (VN1-SRV5)
+    Secondary DNS server: 10.1.2.8 (VN1-SRV2)
+
+    ````powershell
+    $serverAddresses = '10.1.1.40', '10.1.2.8'
+    ````
+
+    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
+
+## Exercise 5: Decommission a domain controller
 
 1. On CL1, change the DNS client server addresses to 10.1.1.40.
 
@@ -123,16 +248,6 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
 
-1. Change the DNS client settings on **VN1-SRV1** to **10.1.1.40** as the primary DNS server and **10.1.2.8** as the secondary DNS Server.
-
-    ````powershell
-    $computerName = 'VN1-SRV1'
-    $interfaceAlias = 'Ethernet'
-    $severAddresses = '10.1.1.40', '10.1.2.8'
-    ````
-
-    [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
-
 1. On CL1, add the IP address **10.1.1.8** to the interface **VNet1** on **VN1-SRV5**. You need to use PowerShell for this task to leave the old IP address operational.
 
     ````powershell
@@ -154,7 +269,7 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Removing roles and features on Windows Server](../General/Removing-roles-and-features-on-Windows-Server.md)
 
-## Exercise 5: Raise the domain and forest functional level
+## Exercise 6: Raise the domain and forest functional level
 
 1. On CL1, raise the domain functional level of **ad.adatum.com**.
 
@@ -164,7 +279,7 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Raising the forest functional level](../General/Raising-the-forest-functional-level.md)
 
-## Exercise 6: Enable database 32K pages
+## Exercise 7: Enable database 32K pages
 
 1. On CL1, verify the that the domain **DC=ad, DC=adatum, DC=com** has a 32k page capable database.
 
@@ -174,7 +289,7 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Enabling the Database 32k pages option](../General/Enabling-the-Database-32k-pages-option.md)
 
-## Exercise 7: Validate delegated managed service accounts
+## Exercise 8: Validate delegated managed service accounts
 
 1. On VN1-SRV9, inspect the service **PSService** and the file c:\LabResources\service.ps1. Verify, the startup type is Automatic and the service is running. Verify the executable.
 

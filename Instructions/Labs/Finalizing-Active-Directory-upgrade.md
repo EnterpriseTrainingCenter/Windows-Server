@@ -56,7 +56,6 @@ After deploying the new domain controllers running the latest version of Windows
     $computerName = 'VN1-SRV1'
     $interfaceAlias = 'Ethernet'
     $ipAddress = '10.1.1.8'
-    $prefixLength = 24
     ````
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
