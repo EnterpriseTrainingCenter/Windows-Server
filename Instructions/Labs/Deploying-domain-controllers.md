@@ -45,7 +45,7 @@ You want to introduce new domain controllers to the domain running the latest ve
 
 1. On CL1, disable the network adapters **SAN1**, **SAN2**, and **CLST1** on **VN1-SRV5**.
 
-   [Enabling or disabling network adapters](../General/Enabling-or-disabling-network-adapters.md) 
+   [Enabling or disabling network adapters](../General/Enabling-or-disabling-network-adapters.md)
 
 1. On CL1, install the role **Active Directory Domain Services** (```AD-Domain-Services```) on **VN1-SRV5** and **VN2-SRV1**.
 
