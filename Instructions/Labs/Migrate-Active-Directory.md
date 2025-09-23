@@ -42,6 +42,10 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Installing optional features on Windows 11](../General/Installing-optional-features-on-Windows-11.md)
 
+1. On CL1, disable the network adapters **SAN1**, **SAN2**, and **CLST1** on **VN1-SRV5**.
+
+   [Enabling or disabling network adapters](../General/Enabling-or-disabling-network-adapters.md)
+
 1. On CL1, install the role **Active Directory Domain Services** (```AD-Domain-Services```) on **VN1-SRV5**.
 
     [Installing roles and features on Windows Server](../General/Installing-roles-and-features-on-Windows-Server.md)
@@ -200,11 +204,11 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
 1. On CL1 or, if you want to use SConfig, on VN1-SRV5 configure the DNS client settings for VN1-SRV5 as follows:
 
-    Preferred DNS server: 10.1.2.8 (VN1-SRV2)
+    Preferred DNS server: 10.1.1.8
     Secondary DNS server: 127.0.0.1
 
     ````powershell
-    $serverAddresses = '10.1.2.8', '127.0.0.1'
+    $serverAddresses = '10.1.1.8', '127.0.0.1'
     ````
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
@@ -212,10 +216,10 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 1. On CL1 or, if you want to use SConfig, on VN1-SRV1 configure the DNS client settings for VN1-SRV1 as follows:
 
     Preferred DNS server: 10.1.1.40 (VN1-SRV5)
-    Secondary DNS server: 10.1.2.8 (VN1-SRV2)
+    Secondary DNS server: 10.1.1.8 (VN1-SRV1)
 
     ````powershell
-    $serverAddresses = '10.1.1.40', '10.1.2.8'
+    $serverAddresses = '10.1.1.40', '10.1.1.8'
     ````
 
     [Changing TCP/IP settings on Windows Server](../General/Changing-TCP-IP-settings-on-Windows-Server.md)
