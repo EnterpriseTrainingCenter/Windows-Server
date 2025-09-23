@@ -85,10 +85,10 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
 ## Exercise 2: Check domain controller health
 
-1. On CL1, retrieve the expected DNS records from VN1-SRV5 and VN2-SRV1.
+1. On CL1, retrieve the expected DNS records from VN1-SRV5.
 
     ````powershell
-    $computerName = 'VN1-SRV5.ad.adatum.com', 'VN2-SRV1.ad.adatum.com'
+    $computerName = 'VN1-SRV5.ad.adatum.com'
     $expectedDNSRecords = Invoke-Command `
         -ComputerName $computerName -ScriptBlock {
             Get-Content -Path 'C:\Windows\System32\config\netlogon.dns'
@@ -100,10 +100,10 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     Do not close the terminal! You will need the variables of the session in the next task.
 
-1. On CL1, query the DNS servers **10.1.1.8**, **10.1.1.40**, and **10.1.2.8** for the expected DNS records and ensure, all are present. You can use this PowerShell script. Alternatively, you can either check the records in the DNS console on each server or resolve the records manually.
+1. On CL1, query the DNS servers **10.1.1.8** and **10.1.1.40** for the expected DNS records and ensure, all are present. You can use this PowerShell script. Alternatively, you can either check the records in the DNS console on each server or resolve the records manually.
 
     ````powershell
-    $dnsServers = '10.1.1.8', '10.1.1.40', '10.1.2.8'
+    $dnsServers = '10.1.1.8', '10.1.1.40'
 
     # Query each DNS server
     foreach ($server in $dnsServers) {
