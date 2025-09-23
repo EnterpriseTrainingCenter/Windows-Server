@@ -235,7 +235,7 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
     ````powershell
     $computerName = 'VN1-SRV1'
     $interfaceAlias = 'Ethernet'
-    $ipAddress = '10.0.0.9'
+    $ipAddress = '10.1.1.9'
     $prefixLength = 24
     ````
 
