@@ -33,10 +33,10 @@ Perform these steps on CL1.
     ````
 
 1. At the prompt NuGet provider is required to continue, enter **y**.
-1. List the security baselines available.
+1. List the available security baselines.
 
     ````powershell
-    Get-OSConfigScenario
+    Get-OSConfigMetadata
     ````
 
 1. Configure the security baseline for member servers.
