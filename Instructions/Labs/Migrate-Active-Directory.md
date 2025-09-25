@@ -176,11 +176,11 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     If any records, are missing, wait for at least 15 minutes and check again. If the problem persists, ask the instructor.
 
-1. On CL1, verify that the shares **NETLOGON** and **SYSVOL** are present on **VN1-SRV5** and **VN2-SRV1**.
+1. On CL1, verify that the shares **NETLOGON** and **SYSVOL** are present on **VN1-SRV5**.
 
     [Managing shares](../General/Managing-shares.md)
 
-1. On CL1, run the Best Practices Analyzer for **DNS** (```Microsoft/Windows/DNSServer```) and **AD DS** (```Microsoft/Windows/DirectoryServices```) on **VN1-SRV5** and **VN2-SRV1**.
+1. On CL1, run the Best Practices Analyzer for **DNS** (```Microsoft/Windows/DNSServer```) and **AD DS** (```Microsoft/Windows/DirectoryServices```) on **VN1-SRV5**.
 
     Review any warnings or errors, if present. If time permits, you can try to fix the warning and errors and run the the BPA scan again.
 
