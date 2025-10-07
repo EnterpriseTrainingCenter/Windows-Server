@@ -20,14 +20,13 @@ Perform these steps on CL1.
 1. In Settings, click **System**.
 1. In System, click **Optional features**.
 1. In Optional features, click the button **View features**.
-1. In Add an optional feature, in the text field **Find an available optional feature**, type **RSAT**.
-1. Activate the check boxes of these tools:
+1. In View features, if necessary, click **See available features**. In the text field **Find an available optional feature**, type **RSAT**. Activate the check boxes of these tools:
     * RSAT: Active Directory Domain Services and Lightweight Directory Services Tools
     * RSAT: File Services tools
     * RSAT: Group Policy Management Tools
     * RSAT: Server Manager
-1. Click **Next**.
-1. Click **Install**.
+
+    Click **Add (4)**.
 1. If required, restart the computer.
 
 ### PowerShell
