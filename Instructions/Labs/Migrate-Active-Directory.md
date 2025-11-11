@@ -326,6 +326,8 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
     $value = 1
     ```
 
+    [Adding a registry value](../General/Adding-a-registry-value.md)
+
 1. Migrate the service account to the dMSA.
 
     ```powershell
