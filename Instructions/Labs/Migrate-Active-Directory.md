@@ -79,10 +79,6 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
 
     [Configuring Active Directory Domain Services as an additional Domain Controller](../General/Configuring-Active-Directory-Domain-Services-as-an-additional-domain-controller.md)
 
-1. On CL1, configure the forwarders of the DNS Server on **VN1-SRV5** to **8.8.8.8** and **8.8.4.4**. Other forwarders should be deleted.
-
-    [Configuring forwarders](../General/Configuring-forwarders.md)
-
 ## Exercise 2: Check domain controller health
 
 1. On CL1, retrieve the expected DNS records from VN1-SRV5.
@@ -329,6 +325,8 @@ The domain controller still running Windows Server 2022 must be replaced by a Wi
     $type = 'DWORD'
     $value = 1
     ```
+
+    [Adding a registry value](../General/Adding-a-registry-value.md)
 
 1. Migrate the service account to the dMSA.
 
