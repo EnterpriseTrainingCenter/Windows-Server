@@ -12,6 +12,9 @@
 * VN1-SRV8
 * VN1-SRV9
 * VN1-SRV10
+* VN1-SRV11
+* VN1-SRV12
+* VN1-SRV13
 * CL1
 
 ## Task

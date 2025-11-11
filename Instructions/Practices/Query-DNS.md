@@ -101,7 +101,7 @@ Perform this task on CL1.
 1. Query the SRV record for **_sip._tls.microsoft.com**.
 
     ````powershell
-    Resolve-DnsName -Name _sip._tls.easyon.at -Type SRV
+    Resolve-DnsName -Name _sip._tls.microsoft.com -Type SRV
     ````
 
 1. Resolve the SOA record for **microsoft.com**. Make sure, all properties are in the output on the screen.

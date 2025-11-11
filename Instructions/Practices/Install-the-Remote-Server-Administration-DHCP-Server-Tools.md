@@ -20,10 +20,7 @@ Perform these steps on CL1.
 1. In Settings, click **System**.
 1. In System, click **Optional features**.
 1. In Optional features, click the button **View features**.
-1. In Add an optional feature, in the text field **Find an available optional feature**, type **RSAT**.
-1. Activate the check box beside **RSAT: DHCP Server Tools**.
-1. Click **Next**.
-1. Click **Install**.
+1. In View features, if necessary, click **See available features**. In the text field **Find an available optional feature**, type **RSAT**. Activate the check box beside **RSAT: DHCP Server Tools**. Click **Add (1)**.
 1. If required, restart the computer.
 
 You do not need to wait for the completion of the installation

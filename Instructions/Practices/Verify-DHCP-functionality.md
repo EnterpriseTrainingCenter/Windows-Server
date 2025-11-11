@@ -11,11 +11,14 @@
 * VN1-SRV8
 * VN1-SRV9
 * VN1-SRV10
+* VN1-SRV11
+* VN1-SRV12
+* VN1-SRV13
 * CL1
 
 ## Task
 
-On all servers on VNet1, except for VN1-SRV6, VN1-SRV7, and CL1, change the IP assignment mode of the network adapter connected to VNet1 to use DHCP.
+On CL1 and all servers on VNet1, except for VN1-SRV6 and VN1-SRV7, change the IP assignment mode of the network adapter connected to VNet1 to use DHCP.
 
 ## Instructions
 
@@ -57,7 +60,7 @@ Perform this task on CL1.
     ipconfig.exe /renew
     ````
 
-Repeat these steps for VN1-SRV2, VN1-SRV3, VN1-SRV4, VN1-SRV5, VN1-SRV8, VN1-SRV9,VN1-SRV10, and CL1. To save time, you may define $computerName as an array, like
+Repeat these steps for VN1-SRV2, VN1-SRV3, VN1-SRV4, VN1-SRV5, VN1-SRV8, VN1-SRV9,VN1-SRV10, VN1-SRV11, VN1-SRV12, VN1-SRV13, and CL1. To save time, you may define $computerName as an array, like
 
 ````powershell
 $computerName = @(
@@ -69,6 +72,9 @@ $computerName = @(
         'VN1-SRV8'
         'VN1-SRV9'
         'VN1-SRV10'
+        'VN1-SRV11'
+        'VN1-SRV12'
+        'VN1-SRV13'
         'CL1'
     )
 ````
@@ -81,7 +87,7 @@ $computerName | ForEach-Object { Get-NetIPConfiguration -ComputerName $PSItem }
 
 ### SConfig
 
-Perform this task on VN1-SRV1, VN1-SRV2, VN1-SRV3, VN1-SRV4, and VN1-SRV5.
+Perform this task on VN1-SRV1, VN1-SRV3, VN1-SRV4, VN1-SRV5, VN1-SRV11, VN1-SRV12, and VN1-SRV13.
 
 1. Sign in as **ad\Administrator**.
 1. On **VN1-SRV1** only: Start **SConfig**.
@@ -118,9 +124,9 @@ Perform this task on VN1-SRV1, VN1-SRV2, VN1-SRV3, VN1-SRV4, and VN1-SRV5.
     logoff.exe
     ````
 
-### Desktop experience (Windows Server 2022 Desktop Experience)
+### Desktop experience (Windows Server)
 
-Perform this task on VN1-SRV8, VN1-SRV9, and VN1-SRV10.
+Perform this task on VN1-SRV2, VN1-SRV8, VN1-SRV9, and VN1-SRV10.
 
 1. Sign in as **.\Administrator**.
 1. In **Server Manager**, click **Local Server**.
@@ -185,6 +191,6 @@ Perform this task on CL1.
 
 1. In the top-left corner, click **Windows Admin Center**.
 
-Repeat from step 3 for VN1-SRV2, VN1-SRV3, VN1-SRV4, VN1-SRV5, VN1-SRV8, VN1-SRV9,VN1-SRV10, and CL1.
+Repeat from step 3 for VN1-SRV2, VN1-SRV3, VN1-SRV4, VN1-SRV5, VN1-SRV8, VN1-SRV9,VN1-SRV10, VN1-SRV11, VN1-SRV12, VN1-SRV13, and CL1.
 
 To add CL1 to the Windows Admin Center, on the connections page, click **Add**. In the pane Add or create resources, under **Windows PCs**, click **Add**. In **Computer name**, type **CL1** and click **Add**.

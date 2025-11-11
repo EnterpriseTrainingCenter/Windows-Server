@@ -20,14 +20,9 @@ Perform these steps on CL1.
 1. In Settings, click **System**.
 1. In System, click **Optional features**.
 1. In Optional features, click the button **View features**.
-1. In Add an optional feature, in the text field **Find an available optional feature**, type **RSAT**.
-1. Activate the checkbox beside **RSAT: Group Policy Management Tools**.
-1. Click **Next**.
-1. Click **Install**.
-1. If required, restart the computer and Sign in as **ad\Administrator** again.
-1. In **Settings**, **Apps** > **Optional feautre**, click **More windows features** (scroll to the bottom).
-1. In Windows features, expand **Hyper-V**, activate the checkbox **Hyper-V Management Tools**, and click **OK**.
-1. If required, restart the computer, otherwise sign out.
+1. In View features, if necessary, click **See available features**. In the text field **Find an available optional feature**, type **RSAT**. Activate the checkbox beside **RSAT: Group Policy Management Tools**. Click **Add (1)**.
+
+If required, restart the computer.
 
 ### PowerShell
 
