@@ -140,7 +140,7 @@ Perform this task on VN1-SRV4.
 Perform this task on CL1.
 
 1. In the context menu of **Start**, click **Terminal**.
-1. In Terminal, create a remote PowerShell session to **VN1-SRV5**.
+1. In Terminal, create a remote PowerShell session to **VN1-SRV4**.
 
     ````powershell
     Enter-PSSession VN1-SRV4
@@ -236,7 +236,7 @@ You do not need to wait for the completion of the installation
 Perform these steps on CL1.
 
 1. In the context menu of **Start**, click **Terminal (Admin)**.
-1. Add the windows capabilities **RSAT: Server DNS Server tools**.
+1. Add the windows capabilities **RSAT: Failover Clustering Tools**.
 
     ````powershell
     Get-WindowsCapability `
@@ -339,18 +339,18 @@ Perform this task on CL1.
     ````powershell
     $cluster = 'VN1-CLST1'
     $cimSession = New-CimSession -ComputerName $cluster
-    Get-ClusterResource -Cluster $cluster | 
-    Where-Object { $PSItem.ResourceType -eq 'Physical Disk' } | 
-    Get-ClusterParameter -Name DiskGuid | ForEach-Object { 
+    Get-ClusterResource -Cluster $cluster |
+    Where-Object { $PSItem.ResourceType -eq 'Physical Disk' } |
+    Get-ClusterParameter -Name DiskGuid | ForEach-Object {
         $name = $PSItem.ClusterObject
-        Get-Disk -CimSession $cimSession -Path "\\?\Disk$($PSItem.Value)" | 
+        Get-Disk -CimSession $cimSession -Path "\\?\Disk$($PSItem.Value)" |
         Select-Object `
             @{ label = 'Name'; expression = { $name } }, `
             PartitionStyle, `
-            @{ 
+            @{
                 label = 'Total Size'
-                expression = { "$($PSItem.Size / 1GB) GB" } 
-            } 
+                expression = { "$($PSItem.Size / 1GB) GB" }
+            }
     }
     Remove-CimSession -CimSession $cimSession
     ````
@@ -394,18 +394,18 @@ Perform this task on CL1.
     $cimSession = New-CimSession -ComputerName $cluster
     $cluster = 'VN1-CLST1'
     $cimSession = New-CimSession -ComputerName $cluster
-    Get-ClusterResource -Cluster $cluster | 
-    Where-Object { $PSItem.ResourceType -eq 'Physical Disk' } | 
-    Get-ClusterParameter -Name DiskGuid | ForEach-Object { 
+    Get-ClusterResource -Cluster $cluster |
+    Where-Object { $PSItem.ResourceType -eq 'Physical Disk' } |
+    Get-ClusterParameter -Name DiskGuid | ForEach-Object {
         $name = $PSItem.ClusterObject
-        Get-Disk -CimSession $cimSession -Path "\\?\Disk$($PSItem.Value)" | 
+        Get-Disk -CimSession $cimSession -Path "\\?\Disk$($PSItem.Value)" |
         Select-Object `
             @{ label = 'Name'; expression = { $name } }, `
             PartitionStyle, `
-            @{ 
+            @{
                 label = 'Total Size'
-                expression = { "$($PSItem.Size / 1GB) GB" } 
-            } 
+                expression = { "$($PSItem.Size / 1GB) GB" }
+            }
     }
 
     Remove-CimSession -CimSession $cimSession
@@ -427,7 +427,7 @@ Perform this task on CL1.
 1. Query the paths of the cluster shared volumes and fill the column path in the table above.
 
     ````powershell
-    Get-ClusterSharedVolume -Cluster $cluster | 
+    Get-ClusterSharedVolume -Cluster $cluster |
     Select-Object Name, SharedVolumeInfo
     ````
 
