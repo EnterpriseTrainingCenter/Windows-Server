@@ -140,7 +140,7 @@ Perform this task on VN1-SRV4.
 Perform this task on CL1.
 
 1. In the context menu of **Start**, click **Terminal**.
-1. In Terminal, create a remote PowerShell session to **VN1-SRV5**.
+1. In Terminal, create a remote PowerShell session to **VN1-SRV4**.
 
     ````powershell
     Enter-PSSession VN1-SRV4
