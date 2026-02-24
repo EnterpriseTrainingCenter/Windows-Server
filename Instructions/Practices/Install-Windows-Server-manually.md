@@ -12,7 +12,7 @@ Perform these steps on the host.
 1. In Windows PowerShell, execute
 
     ````powershell
-    C:\LabResources\New-VM.ps1 -Name VN1-SRV21
+    C:\Labs\WS2025\LabResources\New-VM.ps1 -Name VN1-SRV21
     ````
 
 1. Open **Hyper-V-Manager**
