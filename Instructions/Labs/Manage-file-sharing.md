@@ -14,9 +14,11 @@ On **CL1**, logon as **ad\Administrator**.
 
 On **VN1-SRV10**, logon as **ad\Administrator**.
 
-If you skipped the lab [Manage local storage](../Labs/Manage-local-storage.md), on VN1-SRV10, run ````C:\LabResources\Solutions\New-Volumes.ps1````.
-
 If you skipped the lab [Explore Windows Admin Center](../Labs/Explore-Windows-Admin-Center.md), on VN1-SRV4, run ````C:\LabResources\Solutions\Add-WACServers.ps1````.
+
+If you skipped the practice [Install roles using Server Manager](../Practices/Install-roles-using-Server-Manager.md), on CL1, run ````C:\LabResources\Solutions\Install-FileServer.ps1````.
+
+If you skipped the lab [Manage local storage](../Labs/Manage-local-storage.md), on VN1-SRV10, run ````C:\LabResources\Solutions\New-Volumes.ps1````.
 
 ## Introduction
 
