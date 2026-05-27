@@ -110,7 +110,7 @@ This can be performed locally only.
         Set-DnsClientServerAddress `
             -InterfaceAlias $interfaceAlias `
             -ServerAddresses $serverAddresses `
-            -CimSession $cimSessions
+            -CimSession $cimSession
         ````
 
     * Remove an IP address
