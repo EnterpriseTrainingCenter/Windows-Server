@@ -120,7 +120,7 @@ If time allows, you can install additional distributions. This will take less ti
 Perform this task on VN1-SRV9.
 
 1. Open **Terminal**.
-1. In Terminal, run the command ````hostname -I```in the Linux distribution.
+1. In Terminal, run the command ```hostname -I``` in the Linux distribution.
 
     ````powershell
     wsl --distribution Ubuntu hostname -I

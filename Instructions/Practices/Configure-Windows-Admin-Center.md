@@ -103,8 +103,8 @@ Perform these steps on CL1.
     Copy-Item `
         -FromSession $pSSession `
         -Path `
-            "$env:ProgramFiles\Windows Admin Center\PowerShell\Modules\*\" `
-        -Destination '~\Documents\WindowsPowerShell\' `
+            "$env:ProgramFiles\WindowsAdminCenter\PowerShellModules\*\" `
+        -Destination '~\Documents\WindowsPowerShell\Modules\' `
         -Container `
         -Recurse `
         -Force
@@ -114,7 +114,7 @@ Perform these steps on CL1.
 1. Import connections.
 
     ```powershell
-    Import-Connection `
+    Import-WACConnection `
         -GatewayEndpoint https://admincenter.ad.adatum.com `
         -fileName $path
     ```
