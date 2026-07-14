@@ -338,7 +338,7 @@ Perform this task on CL1.
 1. Retrieve all entries from the security event log on VN1-SRV10 and store them in a variable.
 
     ````powershell
-    $log Get-EventLog `
+    $log = Get-EventLog `
         -LogName Security `
         -Newest 20 `
         -InstanceId 4663 `
