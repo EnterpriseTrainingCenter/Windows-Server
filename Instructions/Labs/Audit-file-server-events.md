@@ -117,7 +117,7 @@ Perform these steps on CL1.
     ````powershell
     $organizationalUnit = New-ADOrganizationalUnit `
         -Name 'Servers' `
-        -Path $organizationalUnit.DistinguishedName
+        -Path $organizationalUnit.DistinguishedName `
         -PassThru
     ````
 
@@ -126,7 +126,7 @@ Perform these steps on CL1.
     ````powershell
     $organizationalUnit = New-ADOrganizationalUnit `
         -Name 'File Servers' `
-        -Path $organizationalUnit.DistinguishedName
+        -Path $organizationalUnit.DistinguishedName `
         -PassThru
     ````
 
